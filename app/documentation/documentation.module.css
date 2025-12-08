@@ -1,0 +1,56 @@
+.container {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.sidebar {
+    border-right: 1px solid var(--card-border);
+    padding-right: 2rem;
+}
+
+.sidebarTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar li a:hover {
+    background-color: var(--card-background-hover);
+    color: var(--text-primary);
+}
+
+.mainContent {
+    min-width: 0; /* Prevents overflow issues with grid */
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        display: none; /* Hiding sidebar on mobile for simplicity */
+    }
+}

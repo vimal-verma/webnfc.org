@@ -77,7 +77,7 @@ export default function BlogPage() {
 
       <div className={styles.postsGrid}>
         {blogPosts.map((post) => (
-          <Link key={post.id} href={`/blog/${post.slug}`} className={styles.postCard}>
+          <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.postCard}>
             <div className={styles.postImageWrapper}>
               <Image
                 src={post.image}

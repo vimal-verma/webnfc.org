@@ -158,7 +158,7 @@ export default function Home() {
         </p>
         <div className={styles.postsGrid}>
           {latestPosts.map((post) => (
-            <Link key={post.id} href={`/blog/${post.slug}`} className={styles.postCard}>
+            <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.postCard}>
               <div className={styles.postImage}>
                 <Image
                   src={post.image}
