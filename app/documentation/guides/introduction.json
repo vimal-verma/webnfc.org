@@ -1,0 +1,5 @@
+{
+    "slug": "introduction",
+    "title": "Introduction",
+    "content": "<h3>Introduction</h3><p>The Web NFC API allows web applications to interact with NFC (Near Field Communication) tags. It's a powerful tool for bridging the gap between the physical and digital worlds, right from a browser. This guide provides the technical details and code snippets you need to get started.</p>"
+}

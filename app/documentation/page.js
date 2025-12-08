@@ -1,7 +1,4 @@
-import guide from './web-nfc-api-guide.json';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.css';
-import styles from './page.module.css';
+
 import './syntax.css';
 
 export { generateMetadata } from './[slug]/page';

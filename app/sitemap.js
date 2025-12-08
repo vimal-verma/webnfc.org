@@ -2,6 +2,16 @@ import { templates } from './templates';
 import fs from 'fs';
 import path from 'path';
 
+const documentationSlugs = [
+    'introduction',
+    'browser-support',
+    'nfc-use-cases',
+    'read-nfc',
+    'write-nfc',
+    'lock-nfc',
+    'clone-and-format',
+];
+
 function getAllPosts() {
     const postsDirectory = path.join(process.cwd(), 'app/blog/posts');
     const filenames = fs.readdirSync(postsDirectory);
@@ -26,6 +36,7 @@ export default function sitemap() {
         { url: `${baseUrl}/write-tag`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/nfc-tool`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/blog`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${baseUrl}/documentation`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
         { url: `${baseUrl}/about`, lastModified, changeFrequency: 'yearly', priority: 0.5 },
         { url: `${baseUrl}/contact`, lastModified, changeFrequency: 'yearly', priority: 0.6 },
         { url: `${baseUrl}/terms`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
@@ -38,6 +49,12 @@ export default function sitemap() {
         priority: 0.7,
     }));
 
+    const documentationRoutes = documentationSlugs.map((slug) => ({
+        url: `${baseUrl}/documentation/${slug}`,
+        lastModified,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    }));
 
-    return [...staticRoutes, ...blogPostRoutes];
+    return [...staticRoutes, ...blogPostRoutes, ...documentationRoutes];
 }

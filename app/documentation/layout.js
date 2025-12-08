@@ -4,6 +4,7 @@ import styles from './documentation.module.css';
 const navItems = [
     { slug: 'introduction', title: 'Introduction' },
     { slug: 'browser-support', title: 'Browser Support' },
+    { slug: 'nfc-use-cases', title: 'NFC Use Cases' },
     { slug: 'read-nfc', title: 'How to Read an NFC Tag' },
     { slug: 'write-nfc', title: 'How to Write to an NFC Tag' },
     { slug: 'lock-nfc', title: 'How to Lock an NFC Tag' },

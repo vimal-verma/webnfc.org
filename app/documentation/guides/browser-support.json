@@ -1,0 +1,5 @@
+{
+    "slug": "browser-support",
+    "title": "Supported Browsers & Devices",
+    "content": "<h3>Supported Browsers & Devices</h3><p>Before you start coding, it's crucial to understand the current limitations:</p><ul><li><strong>Browser:</strong> Web NFC is primarily supported on <strong>Chrome for Android</strong> (version 89 and newer).</li><li><strong>Device:</strong> It requires an Android smartphone with NFC hardware.</li><li><strong>Security:</strong> The API is only available on secure contexts (<strong>HTTPS</strong>) and requires a user gesture (like a button click) to initiate any action.</li></ul>"
+}

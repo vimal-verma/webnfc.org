@@ -1,0 +1,5 @@
+{
+    "slug": "clone-and-format",
+    "title": "What About Cloning, and Formatting?",
+    "content": "<h3>What About Cloning, and Formatting?</h3><ul><li><strong>Cloning:</strong> The Web NFC API does not provide a direct 'clone' method. Cloning a tag involves reading all the NDEF records from one tag and then writing those exact records to another tag. You can implement this by combining the read and write functions shown above.</li><li><strong>Formatting:</strong> Formatting a tag to remove all data is not explicitly supported by the Web NFC API. The standard way to 'clear' a tag is to simply overwrite it with a new message containing an empty NDEF record, like <code>writer.write({ records: [{ recordType: 'empty' }] })</code>.</li></ul>"
+}

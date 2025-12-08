@@ -1,30 +1,25 @@
 import { notFound } from 'next/navigation';
-import guide from '../web-nfc-api-guide.json';
 import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.css';
 import '../syntax.css';
 import styles from '../page.module.css';
 
 const sections = {
     'introduction': "Introduction",
     'browser-support': "Supported Browsers & Devices",
+    'nfc-use-cases': "NFC Use Cases",
     'read-nfc': "How to Read an NFC Tag",
     'write-nfc': "How to Write to an NFC Tag",
     'lock-nfc': "How to Lock an NFC Tag (Make Read-Only)",
     'clone-and-format': "What About Cloning, and Formatting?",
 };
 
-function getSectionContent(slug) {
-    const title = sections[slug];
-    if (!title) return null;
-
-    // Find the h3 tag by its title, which is more reliable than the slug-derived ID.
-    // The regex now looks for an h3 tag with any ID, captures the title, and then the content until the next h3 or the end of the string.
-    const contentRegex = new RegExp(`<h3 id="[^"]*">${title}</h3>([\\s\\S]*?)(?=<h3|$)`, 'i');
-    const match = guide.content.match(contentRegex);
-
-    // Reconstruct the content with its original h3 tag to preserve the ID for linking.
-    return match ? `<h3 id="${slug}">${title}</h3>${match[1]}` : null;
+async function getSectionContent(slug) {
+    try {
+        const guide = await import(`../guides/${slug}.json`);
+        return guide.default;
+    } catch (error) {
+        return null;
+    }
 }
 
 export async function generateStaticParams() {
@@ -42,14 +37,14 @@ export async function generateMetadata({ params }) {
 export default async function DocumentationContent({ params }) {
     // Await params to resolve the promise-like object in newer Next.js versions
     const { slug } = await params;
-    const content = getSectionContent(slug);
+    const section = await getSectionContent(slug);
 
-    if (!content) {
+    if (!section) {
         notFound();
     }
 
     // Apply syntax highlighting to code blocks on the server
-    const highlightedContent = content.replace(
+    const highlightedContent = section.content.replace(
         /<pre><code class="language-js">([\s\S]*?)<\/code><\/pre>/g,
         (match, code) => {
             const highlightedCode = hljs.highlight(code, { language: 'javascript' }).value;

@@ -91,8 +91,8 @@ export default function Home() {
             <Link href="/nfc-tool" className={styles.primary}>
               Explore NFC Tools
             </Link>
-            <Link href="/blog" className={styles.secondary}>
-              Read The Blog
+            <Link href="/documentation" className={styles.secondary}>
+              Read Guides
             </Link>
           </div>
         </div>
