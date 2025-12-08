@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import hljs from 'highlight.js';
 import '../syntax.css';
 import styles from '../page.module.css';
@@ -39,6 +40,19 @@ export default async function DocumentationContent({ params }) {
     const { slug } = await params;
     const section = await getSectionContent(slug);
 
+    const sectionSlugs = Object.keys(sections);
+    const currentIndex = sectionSlugs.indexOf(slug);
+
+    const prevSection = currentIndex > 0 ? {
+        slug: sectionSlugs[currentIndex - 1],
+        title: sections[sectionSlugs[currentIndex - 1]]
+    } : null;
+
+    const nextSection = currentIndex < sectionSlugs.length - 1 ? {
+        slug: sectionSlugs[currentIndex + 1],
+        title: sections[sectionSlugs[currentIndex + 1]]
+    } : null;
+
     if (!section) {
         notFound();
     }
@@ -71,6 +85,19 @@ export default async function DocumentationContent({ params }) {
                     dangerouslySetInnerHTML={{ __html: highlightedContent }}
                 />
             </article>
+
+            <div className={styles.pagination}>
+                {prevSection && (
+                    <Link href={`/documentation/${prevSection.slug}`} className={styles.prevLink}>
+                        &larr; {prevSection.title}
+                    </Link>
+                )}
+                {nextSection && (
+                    <Link href={`/documentation/${nextSection.slug}`} className={styles.nextLink}>
+                        {nextSection.title} &rarr;
+                    </Link>
+                )}
+            </div>
         </>
     );
 }

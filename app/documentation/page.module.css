@@ -171,3 +171,32 @@
 .copyButton:hover {
     background-color: var(--color-primary-light);
 }
+
+
+/* Pagination for docs */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.prevLink,
+.nextLink {
+  display: inline-block;
+  margin-top: 3rem;
+  padding: 0.75rem 1.5rem;
+  gap: 2rem;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.prevLink:hover,
+.nextLink:hover {
+  background-color: var(--card-bg-color);
+  border-color: var(--primary-color);
+}

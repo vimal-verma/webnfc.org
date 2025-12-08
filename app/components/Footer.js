@@ -31,6 +31,8 @@ export default function Footer() {
                 <div className={styles.footerBrand}>
                     <Link href="/" className={styles.logo}>WebNfc</Link>
                     <p>learn, build, and use Web NFC technology directly in your browser.</p>
+                    <br />
+                    <a href="https://github.com/vimal-verma/webnfc" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
                 <div className={styles.linksGrid}>
                     <div className={styles.linkColumn}>

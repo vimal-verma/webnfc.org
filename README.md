@@ -18,19 +18,51 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contributing
 
-## Learn More
+Contributions are welcome! We're excited to see what you can add. Please follow these guidelines to contribute to the project.
 
-To learn more about Next.js, take a look at the following resources:
+### Adding a Blog Post
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To add a new blog post, follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  Create a new JSON file in the `app/blog/posts/` directory. The filename will be used as the URL slug for the post (e.g., `my-new-post.json`).
+2.  The JSON file should have the following structure:
 
-## Deploy on Vercel
+    ```json
+    {
+      "slug": "my-new-post",
+      "title": "My New Blog Post",
+      "author": "Your Name",
+      "date": "YYYY-MM-DD",
+      "excerpt": "A short summary of the blog post.",
+      "description": "A longer description for SEO purposes.",
+      "tags": ["tag1", "tag2"],
+      "image": "/previews/blog/my-new-post.png",
+      "content": "<p>Your content here, written in HTML.</p>"
+    }
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding a Documentation Page
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To add a new documentation page:
+
+1.  Create a new JSON file in the `app/documentation/guides/` directory (e.g., `new-feature.json`).
+2.  The content of the JSON file should be an object containing the guide's content in HTML format.
+3.  Open `app/documentation/[slug]/page.js` and add a new entry to the `sections` object. The key should be the filename (without `.json`) and the value should be the title of the documentation page.
+
+    ```javascript
+    const sections = {
+      introduction: 'Introduction',
+      // ... other sections
+      'new-feature': 'New Amazing Feature',
+    }
+    ```
+
+### General Contribution Guidelines
+
+1.  Fork the repository.
+2.  Create a new branch for your feature or bug fix.
+3.  Make your changes and commit them with a clear message.
+4.  Push your branch to your fork.
+5.  Create a pull request to the main repository.
