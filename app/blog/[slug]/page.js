@@ -1,14 +1,39 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import blogPosts from '../../blog.json';
 import styles from './page.module.css';
+import fs from 'fs';
+import path from 'path';
 
-function getPost(slug) {
-  return blogPosts.find((p) => p.slug === slug);
+const postsDirectory = path.join(process.cwd(), 'app', 'blog', 'posts');
+
+function getAllPosts() {
+  const filenames = fs.readdirSync(postsDirectory);
+  const posts = filenames.map(filename => {
+    if (path.extname(filename) === '.json') {
+      const filePath = path.join(postsDirectory, filename);
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(fileContents);
+    }
+  }).filter(Boolean); // Filter out any undefined entries if non-json files exist
+  return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
-export async function generateStaticParams() {
+function getPost(slug) {
+  const filePath = path.join(postsDirectory, `${slug}.json`);
+  try {
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileContents);
+  } catch (error) {
+    // If the file doesn't exist by slug name, search all posts.
+    // This is a fallback for robustness.
+    const allPosts = getAllPosts();
+    return allPosts.find((p) => p.slug === slug) || null;
+  }
+}
+
+export function generateStaticParams() {
+  const blogPosts = getAllPosts();
   return blogPosts.map((post) => ({
     slug: post.slug,
   }));
@@ -31,9 +56,12 @@ export default async function BlogPostPage({ params }) {
   const { slug } = await params;
   const post = getPost(slug);
 
-  const postIndex = blogPosts.findIndex((p) => p.slug === slug);
-  const prevPost = postIndex > 0 ? blogPosts[postIndex - 1] : null;
-  const nextPost = postIndex < blogPosts.length - 1 ? blogPosts[postIndex + 1] : null;
+  // For prev/next navigation, we still need the full sorted list.
+  // This is a trade-off for having that feature.
+  const sortedPosts = getAllPosts();
+  const postIndex = sortedPosts.findIndex((p) => p.slug === slug);
+  const prevPost = postIndex > 0 ? sortedPosts[postIndex - 1] : null;
+  const nextPost = postIndex < sortedPosts.length - 1 ? sortedPosts[postIndex + 1] : null;
 
   if (!post) {
     notFound();
@@ -44,17 +72,17 @@ export default async function BlogPostPage({ params }) {
     '@type': 'Article',
     'headline': post.title,
     'description': post.description,
-    'image': `https://nfcbuzz.com${post.image}`,
+    'image': `https://webnfc.org${post.image}`,
     'author': {
       '@type': 'Person',
       'name': post.author,
     },
     'publisher': {
       '@type': 'Organization',
-      'name': 'NFCBuzz',
+      'name': 'WebNfc',
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://nfcbuzz.com/logo.png'
+        'url': 'https://webnfc.org/logo.png'
       }
     },
     'datePublished': post.date,
@@ -84,7 +112,6 @@ export default async function BlogPostPage({ params }) {
           />
         </div>
         <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }} />
-        {/* Add JSON-LD to the head */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

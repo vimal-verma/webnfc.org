@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import blogPosts from '../blog.json';
 import styles from './page.module.css';
+import fs from 'fs';
+import path from 'path';
 
 export const metadata = {
   title: 'Blog | WebNfc',
@@ -20,7 +21,21 @@ export const metadata = {
   },
 };
 
+function getAllPosts() {
+  const postsDirectory = path.join(process.cwd(), 'app/blog/posts');
+  const filenames = fs.readdirSync(postsDirectory);
+
+  const posts = filenames.map(filename => {
+    const filePath = path.join(postsDirectory, filename);
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileContents);
+  });
+
+  return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
 export default function BlogPage() {
+  const blogPosts = getAllPosts();
   const blogSchema = {
     '@context': 'https://schema.org',
     '@type': 'Blog',

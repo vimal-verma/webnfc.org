@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
-import posts from './blog.json';
+import fs from 'fs';
+import path from 'path';
 
 export const metadata = {
   title: "WebNfc | Learn, Build, and Use Web NFC Technology",
@@ -36,9 +37,21 @@ const faqs = [
   },
 ];
 
-export default function Home() {
+function getLatestPosts() {
+  const postsDirectory = path.join(process.cwd(), 'app/blog/posts');
+  const filenames = fs.readdirSync(postsDirectory);
 
-  const latestPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+  const posts = filenames.map(filename => {
+    const filePath = path.join(postsDirectory, filename);
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileContents);
+  });
+
+  return posts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+}
+
+export default function Home() {
+  const latestPosts = getLatestPosts();
 
   const organizationSchema = {
     '@context': 'https://schema.org',

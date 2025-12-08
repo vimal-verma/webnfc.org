@@ -1,7 +1,20 @@
 import { templates } from './templates';
-import posts from './blog.json';
+import fs from 'fs';
+import path from 'path';
+
+function getAllPosts() {
+    const postsDirectory = path.join(process.cwd(), 'app/blog/posts');
+    const filenames = fs.readdirSync(postsDirectory);
+
+    return filenames.map(filename => {
+        const filePath = path.join(postsDirectory, filename);
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        return JSON.parse(fileContents);
+    });
+}
 
 export default function sitemap() {
+    const posts = getAllPosts();
     const baseUrl = 'https://webnfc.org';
     const lastModified = new Date().toISOString(); // Or a static date of last deployment
 

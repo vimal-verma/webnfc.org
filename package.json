@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run generate-previews; next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate-previews": "node scripts/generate-blog-previews.js"
   },
   "dependencies": {
+    "@vercel/og": "^0.8.5",
     "next": "16.0.7",
     "qrcode.react": "^4.2.0",
     "react": "19.2.0",

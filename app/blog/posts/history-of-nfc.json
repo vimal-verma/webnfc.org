@@ -1,0 +1,18 @@
+{
+    "slug": "history-of-nfc",
+    "title": "From RFID to Apple Pay: A Brief History of NFC Technology",
+    "author": "WebNfc Team",
+    "date": "2026-02-25",
+    "excerpt": "Near Field Communication feels like magic, but its roots go back decades. Join us as we trace the history of NFC from its origins in radio-frequency identification to the contactless world of today.",
+    "description": "Explore the history of NFC (Near Field Communication) technology, from Charles Walton's first RFID patent in 1983 to the formation of the NFC Forum and the rise of contactless payments and digital business cards.",
+    "tags": [
+        "NFC",
+        "History",
+        "Technology",
+        "RFID",
+        "Innovation"
+    ],
+    "image": "/previews/blog/history-of-nfc.png",
+    "keywords": "history of NFC, NFC technology, Charles Walton RFID, NFC Forum, first NFC phone, contactless technology, evolution of NFC, RFID history",
+    "content": "<p>The simple tap of an <a href=\"/products\">NFC card</a> feels futuristic, but the technology behind it has a rich history spanning several decades. Its journey from a niche radio technology to a feature in billions of smartphones is a story of innovation and collaboration.</p><h3>The Roots: RFID</h3><p>NFC's story begins with its parent technology, RFID (Radio-Frequency Identification). The concept of using radio waves to identify objects dates back to World War II, but the first patent for a passive RFID tag—one that is powered by the reader's signal—was granted to inventor Charles Walton in 1983. This laid the groundwork for all modern contactless communication.</p><h3>2002: The Birth of 'Near Field Communication'</h3><p>In 2002, two tech giants, Sony and Philips, collaborated to create a new, more secure, and interoperable short-range wireless standard. They developed a protocol that was intentionally limited to a few centimeters, making it perfect for secure interactions. They called it Near Field Communication.</p><h3>2004: The NFC Forum is Formed</h3><p>To ensure the new technology would be universal, Sony, Philips, and Nokia joined forces to create the NFC Forum. This non-profit industry association was tasked with standardizing NFC technology to ensure that devices and tags from different manufacturers could all work together seamlessly. Today, the NFC Forum has hundreds of member companies, including Apple, Google, and Samsung.</p><h3>2006: The First NFC-Enabled Phone</h3><p>The first commercially available mobile phone with integrated NFC was the Nokia 6131, launched in 2006. This clamshell phone allowed users to 'tap' to read information from posters or pair accessories, giving the world a first glimpse of the technology's potential beyond simple identification.</p><h3>2010s: The Rise of Contactless Payments</h3><p>The 2010s saw NFC's breakout application: contactless payments. With the launch of Google Wallet in 2011 and Apple Pay in 2014, NFC became a household name. The ability to pay securely with a simple tap of a phone transformed the retail experience and paved the way for wider adoption.</p><h3>Today: A World of Taps</h3><p>Today, NFC is built into virtually every new smartphone. Its use has expanded far beyond payments. We use it to board public transport, unlock hotel doors, pair our headphones, and—most importantly for modern professionals—instantly share our identity with a digital business card. What started as a simple radio patent has become the invisible thread connecting our physical and digital lives.</p>"
+}

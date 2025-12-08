@@ -30,7 +30,7 @@ export default function Header() {
 
                 <nav className={`${styles.nav} ${isNavOpen ? styles.navOpen : ''}`}>
                     <Link href="/" onClick={() => setIsNavOpen(false)}>Home</Link>
-                    <Link href="/vacrd" onClick={() => setIsNavOpen(false)}>vCard</Link>
+                    <Link href="/vcard" onClick={() => setIsNavOpen(false)}>vCard</Link>
                     <Link href="/upi" onClick={() => setIsNavOpen(false)}>UPI Tool</Link>
                     <Link href="/nfc-tool" onClick={() => setIsNavOpen(false)}>NFC Tool</Link>
                     <Link href="/blog" onClick={() => setIsNavOpen(false)}>Blog</Link>

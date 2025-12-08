@@ -2,10 +2,10 @@ const fs = require('fs/promises');
 const path = require('path');
 const React = require('react');
 const { ImageResponse } = require('@vercel/og');
-const posts = require('../app/blog.json');
 
 const blogPreviewsDir = path.join(process.cwd(), 'public', 'previews', 'blog');
 const publicDir = path.join(process.cwd(), 'public');
+const postsDir = path.join(process.cwd(), 'app', 'blog', 'posts');
 
 /**
  * Reads an image file from the public directory and returns it as a data URI.
@@ -75,8 +75,8 @@ const BlogPostCard = ({ title, backgroundImage }) => {
     return React.createElement('div', { style: cardStyle }, [
         React.createElement('h1', { key: 'title', style: titleStyle }, title),
         React.createElement('div', { key: 'branding-container', style: brandingContainerStyle }, [
-            React.createElement('p', { key: 'main-branding', style: mainBrandingStyle }, 'NFCBuzz.com'),
-            React.createElement('p', { key: 'sub-branding', style: subBrandingStyle }, 'buy NFC business card')
+            React.createElement('p', { key: 'main-branding', style: mainBrandingStyle }, 'WebNfc.org'),
+            React.createElement('p', { key: 'sub-branding', style: subBrandingStyle }, 'Learn, Build, and Use Web NFC')
         ])
     ]
     );
@@ -101,6 +101,19 @@ async function generateBlogPreview(post, backgroundImageData) {
     console.log(`   ✅ Saved to ${path.relative(process.cwd(), outputPath)}`);
 }
 
+async function getAllPosts() {
+    const filenames = await fs.readdir(postsDir);
+    const posts = [];
+    for (const filename of filenames) {
+        if (path.extname(filename) === '.json') {
+            const filePath = path.join(postsDir, filename);
+            const fileContents = await fs.readFile(filePath, 'utf8');
+            posts.push(JSON.parse(fileContents));
+        }
+    }
+    return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
 async function main() {
     try {
         console.log('🚀 Starting blog preview image generation...');
@@ -111,6 +124,8 @@ async function main() {
             console.error('❌ Could not load background image. Aborting.');
             process.exit(1);
         }
+
+        const posts = await getAllPosts();
 
         for (const post of posts) {
             try {
