@@ -34,7 +34,7 @@ export default function Header() {
                     <Link href="/upi" onClick={() => setIsNavOpen(false)}>UPI Tool</Link>
                     <Link href="/nfc-tool" onClick={() => setIsNavOpen(false)}>NFC Tool</Link>
                     <Link href="/blog" onClick={() => setIsNavOpen(false)}>Blog</Link>
-                    <Link href="/contact" onClick={() => setIsNavOpen(false)}>Contact</Link>
+                    <Link href="/documentation" onClick={() => setIsNavOpen(false)}>Documentation</Link>
                 </nav>
 
                 <div className={styles.headerActions}>

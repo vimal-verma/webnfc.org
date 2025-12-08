@@ -27,7 +27,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-    const title = sections[params.slug] || "Documentation";
+    const title = sections[params] || "Documentation";
     return {
         title: `${title} | Documentation`,
         description: `Learn ${title.toLowerCase()} with the Web NFC API.`,

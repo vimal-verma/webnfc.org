@@ -54,3 +54,25 @@
         display: none; /* Hiding sidebar on mobile for simplicity */
     }
 }
+
+.codeBlockWrapper {
+    position: relative;
+}
+
+.copyButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--card-border);
+    color: var(--text-secondary);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.copyButton:hover {
+    background-color: var(--color-primary-light);
+}
