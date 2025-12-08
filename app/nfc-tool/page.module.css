@@ -1,0 +1,487 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--warning-border);
+    max-width: 800px;
+    margin: 1rem auto 0;
+}
+
+.ctaSection {
+    text-align: center;
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.ctaSection h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.ctaSection p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ctaButton {
+    display: inline-block;
+    background: var(--primary-accent);
+    color: var(--button-primary-text);
+    padding: 0.8rem 1.8rem;
+    border-radius: 9999px;
+    font-weight: 600;
+}
+
+.toolGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .toolGrid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+}
+
+.toolSection {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.toolSection.scanning {
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 8px rgba(var(--primary-accent-rgb), 0.3);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.sectionDescription {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.actionButton {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #007bff;
+    color: var(--button-primary-text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.actionButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.actionButton:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+}
+
+.eraseButton {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.eraseButton:hover:not(:disabled) {
+    background-color: #c82333;
+}
+
+.formatButton {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.formatButton:hover:not(:disabled) {
+    background-color: #0069d9;
+}
+
+.lockButton {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.lockButton:hover:not(:disabled) {
+    background-color: #e0a800;
+}
+
+.logContainer {
+    margin-top: 1.5rem;
+}
+
+.logHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.logContainer h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+.clearLogButton {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.clearLogButton:hover:not(:disabled) {
+    background-color: var(--button-secondary-hover);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.clearLogButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.log {
+    background-color: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 1rem;
+    height: 300px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.log p {
+    margin: 0 0 0.5rem;
+    word-break: break-all;
+}
+
+.log p:first-child {
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.emptyLogMessage {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.instructionText {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.vcardForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+}
+
+.faqSection {
+    width: 100%;
+    max-width: 900px;
+    margin: 4rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--card-border);
+}
+
+.faqSection .sectionTitle {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.faqList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faqItem {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.faqItem[open] {
+    background-color: var(--button-secondary-hover);
+}
+
+.faqQuestion {
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    list-style: none;
+}
+
+.faqQuestion::-webkit-details-marker {
+    display: none;
+}
+
+.faqAnswer {
+    padding-top: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.modalContent {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.modalContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.modalContent p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.modalActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modalButton {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.confirmButton {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cloneStatusMessage {
+    text-align: center;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-secondary-hover);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.cloningStep1 {
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 12px rgba(var(--primary-accent-rgb), 0.4);
+}
+
+.cloningStep2 {
+    border-color: #28a745; /* A green color for success/ready */
+    box-shadow: 0 0 12px rgba(40, 167, 69, 0.4);
+}
+
+.cloneSteps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cloneButton:disabled {
+    background-color: var(--button-secondary-hover);
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.resetCloneButton {
+    width: 100%;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.resetCloneButton:hover:not(:disabled) {
+    background-color: var(--button-secondary-hover);
+    color: var(--text-primary);
+}
+.writeInputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.recordTypeSelect {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.writeButton {
+    margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+    .writeInputGroup {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.dark .cloningStep1 {
+    box-shadow: 0 0 12px rgba(var(--primary-accent-rgb), 0.6);
+}
+
+.dark .cloningStep2 {
+    box-shadow: 0 0 12px rgba(40, 167, 69, 0.6);
+}
+
+.dark .toolSection.scanning {
+    box-shadow: 0 0 8px rgba(var(--primary-accent-rgb), 0.5);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    .hero {
+        padding: 2rem 1rem;
+    }
+    .title {
+        font-size: 2rem;
+    }
+    .log {
+        height: 220px;
+    }
+
+    .ctaSection {
+        padding: 2rem 1.5rem;
+    }
+}
+
+.writeInput {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+}

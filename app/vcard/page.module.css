@@ -1,0 +1,311 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 800px;
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    color: var(--text-secondary);
+}
+
+.toolContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.mainContent {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    width: 100%;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.phonePreviewContainer {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+
+.vcardForm {
+    max-width: 800px;
+}
+
+.vcardForm {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.formGroup.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.formGroup label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.formGroup input {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background-color: var(--background-start-rgb);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formGroup input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 2px var(--primary-accent-glow);
+}
+
+.formGroup textarea {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background-color: var(--background-start-rgb);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: inherit; /* Ensure textarea uses the same font as inputs */
+}
+
+.actionButton {
+    margin-top: 1rem;
+    width: 100%;
+    background: var(--primary-accent);
+    color: var(--button-primary-text);
+    padding: 0.875rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.actionButton:hover:not(:disabled) {
+    background: var(--button-primary-hover);
+    transform: translateY(-2px);
+}
+
+.actionButton:disabled {
+    background-color: var(--button-secondary-hover);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.qrCodeContainer {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.qrCodeContainer h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.qrCodeContainer p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.qrCodeWrapper {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.downloadButton {
+    width: 100%;
+    background: var(--button-secondary-bg);
+    border: 1px solid var(--button-secondary-border);
+    color: var(--text-primary);
+    padding: 0.875rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+.downloadButton:hover:not(:disabled) {
+    background: var(--button-secondary-hover);
+    transform: translateY(-2px);
+}
+
+.downloadButton:disabled {
+    background-color: var(--button-secondary-hover);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.downloadButtonsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.vcfButton {
+    background: var(--button-secondary-bg);
+    border: 1px solid var(--button-secondary-border);
+}
+.shareSection {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--card-border);
+    width: 100%;
+}
+
+.shareSection p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.socialShareButtons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+}
+
+.socialButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #fff;
+}
+
+.socialButton svg {
+    width: 24px;
+    height: 24px;
+}
+
+.twitterButton { background-color: #1DA1F2; }
+.facebookButton { background-color: #1877F2; }
+.whatsappButton { background-color: #25D366; }
+.copyButton {
+    background-color: var(--button-secondary-hover);
+    color: var(--text-primary);
+    border-color: var(--card-border);
+}
+
+.logContainer {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.logHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 0.75rem;
+}
+
+.logHeader h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.clearLogButton {
+    background: transparent;
+    border: 1px solid var(--button-secondary-border);
+    color: var(--text-primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.clearLogButton:hover:not(:disabled) {
+    background-color: var(--button-secondary-hover);
+}
+
+.clearLogButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.log {
+    height: 200px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.log .success { color: #28a745; }
+.log .error { color: #dc3545; }
+.log .info { color: var(--text-secondary); }
+
+@media (min-width: 768px) {
+    .formGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .mainContent {
+        grid-template-columns: 1fr;
+    }
+}
