@@ -1,0 +1,18 @@
+{
+    "slug": "getting-started-with-web-nfc",
+    "title": "Getting Started with Web NFC: A Beginner's Guide",
+    "author": "WebNfc Team",
+    "date": "2026-03-04",
+    "excerpt": "New to Web NFC? This guide will walk you through the essentials, from what you need to get started to reading and writing your first NFC tag directly from your browser.",
+    "description": "A beginner-friendly guide to using Web NFC. Learn about browser and device compatibility and follow our step-by-step instructions for reading and writing NFC tags with our free online tools.",
+    "tags": [
+        "WebNFC",
+        "How-To",
+        "Guide",
+        "Beginner",
+        "Technology"
+    ],
+    "image": "/previews/blog/getting-started-with-web-nfc.png",
+    "keywords": "Web NFC guide, how to use Web NFC, getting started with NFC, NFC tutorial, read NFC tag browser, write NFC tag browser, WebNFC for beginners, NFC basics",
+    "content": "<p>Welcome to the world of Web NFC! This technology allows websites to interact with physical NFC (Near Field Communication) tags, opening up a world of possibilities right from your browser—no native app needed. This guide will get you up and running in no time.</p><h3>What You'll Need</h3><p>Before you start, make sure you have the following:</p><ul><li><strong>An NFC-enabled Smartphone:</strong> Most modern Android phones have NFC capabilities. Currently, Web NFC is not supported on iOS.</li><li><strong>A Compatible Browser:</strong> Web NFC is primarily supported by <strong>Chrome for Android</strong> (version 89 or newer).</li><li><strong>An NFC Tag:</strong> This could be an NFC business card, a sticker, or any other writable NFC tag.</li></ul><h3>How to Read an NFC Tag</h3><p>Reading data from an NFC tag is incredibly simple with our tool.</p><ol><li>Navigate to our <a href=\\\"/read-nfc\\\">NFC Reader Tool</a> on your compatible smartphone.</li><li>Click the <strong>'Scan NFC Tag'</strong> button. A system dialog will appear.</li><li>Hold your NFC tag against the back of your phone.</li><li>The tool will display the contents of the tag, whether it's a URL, plain text, or contact information.</li></ol><h3>How to Write to an NFC Tag</h3><p>Programming your own NFC tag is just as easy. You can write a URL, some text, or even a full digital contact card.</p><ol><li>Go to our <a href=\\\"/write-nfc\\\">NFC Writer Tool</a>.</li><li>Select the type of data you want to write: <strong>URL</strong>, <strong>Text</strong>, or <strong>Contact Card (vCard)</strong>.</li><li>Fill in the required information in the form that appears.</li><li>Click the <strong>'Write to NFC Tag'</strong> button and bring your NFC tag close to your phone when prompted.</li><li>You'll see a success message once the data has been written. You can then test it by tapping it on any compatible phone!</li></ol><h3>What's Next?</h3><p>You've just scratched the surface! You can use Web NFC to create interactive experiences, streamline information sharing, or build innovative web applications. Explore the rest of our <a href=\\\"/blog\\\">blog</a> to learn about creative uses, security, and the different types of NFC tags available.</p>"
+}
