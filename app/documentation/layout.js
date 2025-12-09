@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styles from './documentation.module.css';
-import CodeBlock from './CodeBlock';
 
 const navItems = [
     { slug: 'introduction', title: 'Introduction' },
@@ -36,9 +35,7 @@ export default function DocumentationLayout({ children }) {
                 </nav>
             </aside>
             <main className={styles.mainContent}>
-                <CodeBlock>
-                    {children}
-                </CodeBlock>
+                {children}
             </main>
         </div>
     );

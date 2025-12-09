@@ -48,8 +48,17 @@ To add a new blog post, follow these steps:
 To add a new documentation page:
 
 1.  Create a new JSON file in the `app/documentation/guides/` directory (e.g., `new-feature.json`).
-2.  The content of the JSON file should be an object containing the guide's content in HTML format.
-3.  Open `app/documentation/[slug]/page.js` and add a new entry to the `sections` object. The key should be the filename (without `.json`) and the value should be the title of the documentation page.
+2.  The JSON file should have the following structure:
+
+    ```json
+    {
+      "slug": "new-feature",
+      "title": "New Amazing Feature",
+      "content": "<h3>Title</h3><p>Your content here, written in HTML.</p>"
+    }
+    ```
+
+3.  Open `app/documentation/[slug]/page.js` and add a new entry to the `sections` object. The key should be the slug from your JSON file, and the value should be the title.
 
     ```javascript
     const sections = {
@@ -57,6 +66,16 @@ To add a new documentation page:
       // ... other sections
       'new-feature': 'New Amazing Feature',
     }
+    ```
+
+4.  Open `app/documentation/layout.js` and add a corresponding entry to the `navItems` array to make it appear in the sidebar navigation.
+
+    ```javascript
+    const navItems = [
+      { slug: 'introduction', title: 'Introduction' },
+      // ... other items
+      { slug: 'new-feature', title: 'New Amazing Feature' },
+    ]
     ```
 
 ### General Contribution Guidelines

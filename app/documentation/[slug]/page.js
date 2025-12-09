@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import hljs from 'highlight.js';
 import '../syntax.css';
-import styles from '../page.module.css';
+import styles from './page.module.css';
+import CodeBlock from '../CodeBlock';
 
 const sections = {
     'introduction': "Introduction",
@@ -71,7 +72,7 @@ export default async function DocumentationContent({ params }) {
         (match, code) => {
             const highlightedCode = hljs.highlight(code, { language: 'javascript' }).value;
             return `<pre><code class="language-js hljs">${highlightedCode}</code></pre>`;
-        }
+        },
     );
 
     return (
@@ -88,10 +89,17 @@ export default async function DocumentationContent({ params }) {
                 {slug !== 'introduction' && (
                     <h1 className={styles.guideTitle}>{sections[slug]}</h1>
                 )}
-                <div
-                    className={styles.guideContent}
-                    dangerouslySetInnerHTML={{ __html: highlightedContent }}
-                />
+                <CodeBlock>
+                    <div
+                        className={styles.guideContent}
+                        dangerouslySetInnerHTML={{ __html: highlightedContent }}
+                    />
+                </CodeBlock>
+                <a
+                    href={`https://github.com/vimal-verma/webnfc.org/edit/main/app/documentation/guides/${slug}.json`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.editLink}>✏️ Edit this page on GitHub</a>
             </article>
 
             <div className={styles.pagination}>

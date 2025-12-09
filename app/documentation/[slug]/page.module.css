@@ -25,6 +25,38 @@
 
 .guide {
   grid-column: 1 / 2;
+  max-width: 80ch; /* Optimal reading width */
+}
+
+.guideTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 1rem;
+}
+
+.guideContent h3 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 0.5rem;
+}
+
+.guideContent p,
+.guideContent ul,
+.guideContent ol {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.guideContent ul,
+.guideContent ol {
+  padding-left: 1.5rem;
 }
 
 .toc {
@@ -176,27 +208,59 @@
 /* Pagination for docs */
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
+  gap: 1rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--card-border);
 }
 
 .prevLink,
 .nextLink {
-  display: inline-block;
-  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 45%;
   padding: 0.75rem 1.5rem;
-  gap: 2rem;
   border: 1px solid var(--card-border);
   border-radius: 8px;
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--text-secondary);
   transition: background-color 0.2s, border-color 0.2s;
 }
 
 .prevLink:hover,
 .nextLink:hover {
-  background-color: var(--card-bg-color);
-  border-color: var(--primary-color);
+  background-color: var(--card-background-hover);
+  border-color: var(--primary-accent);
+}
+
+.nextLink {
+  text-align: right;
+}
+
+.editLink {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  color: #495057;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.editLink:hover {
+  background-color: var(--card-background-hover);
+  color: var(--text-primary);
+  border-color: var(--primary-accent);
+}
+
+.navTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-top: 0.25rem;
 }
