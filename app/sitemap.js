@@ -1,23 +1,8 @@
 import { templates } from './templates';
 import { getAllPosts } from './lib/posts';
+import { navItems } from './documentation/nav-items';
 
-const documentationSlugs = [
-    'introduction',
-    'browser-support',
-    'read-nfc',
-    'write-text-record',
-    'write-url-record',
-    'write-vcard-record',
-    'write-upi-record',
-    'lock-nfc',
-    'clone-and-format',
-    'nfc-security-best-practices',
-    'nfc-tag-types',
-    "nfc-vs-rfid",
-    'troubleshooting',
-    'history-of-nfc',
-    'nfc-use-cases'
-];
+const documentationSlugs = navItems.map(item => item.slug);
 
 export default function sitemap() {
     const posts = getAllPosts();

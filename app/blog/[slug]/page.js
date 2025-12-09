@@ -96,6 +96,13 @@ export default async function BlogPostPage({ params }) {
             </div>
           </div>
         )}
+        <a
+          href={`https://github.com/vimal-verma/webnfc.org/edit/main/app/blog/posts/${slug}.json`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.editLink}
+        >
+          ✏️ Edit this page on GitHub</a>
         <footer className={styles.postNavigation}>
           {prevPost && (
             <Link href={`/blog/${prevPost.slug}`} className={styles.prevLink}>

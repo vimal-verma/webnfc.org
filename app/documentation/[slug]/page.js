@@ -17,7 +17,7 @@ async function getSectionContent(slug) {
 }
 
 export async function generateStaticParams() {
-    return Object.keys(sections).map(slug => ({ slug }));
+    return navItems.map(item => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({ params }) {
@@ -96,60 +96,33 @@ export default async function DocumentationContent({ params }) {
 
     return (
         <div className={styles.documentationContainer}>
-            {slug === 'introduction' && (
-                <>
-                    <header className={styles.hero}>
-                        <h1 className={styles.title}>Documentation & Guides</h1>
-                        <p className={styles.subtitle}>
-                            Your official resource for learning how to use the Web NFC API and our powerful online tools.
-                        </p>
-                    </header>
-                    <article className={styles.guide}>
-                        <CodeBlock>
-                            <div
-                                className={styles.guideContent}
-                                dangerouslySetInnerHTML={{ __html: highlightedContent }}
-                            />
-                        </CodeBlock>
-                    </article>
-                    <div className={styles.guidesGrid}>
-                        {Object.entries(sections).filter(([key]) => key !== 'introduction').map(([key, title]) => (
-                            <Link href={`/documentation/${key}`} key={key} className={styles.guideCard}>
-                                <h3>{title}</h3>
-                            </Link>
-                        ))}
-                    </div>
-                </>
-            )}
-            {slug !== 'introduction' && (
-                <article className={styles.guide}>
-                    <h1 className={styles.guideTitle}>{sections[slug]}</h1>
-                    <CodeBlock>
-                        <div
-                            className={styles.guideContent}
-                            dangerouslySetInnerHTML={{ __html: highlightedContent }}
-                        />
-                    </CodeBlock>
-                    <a
-                        href={`https://github.com/vimal-verma/webnfc.org/edit/main/app/documentation/guides/${slug}.json`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.editLink}>✏️ Edit this page on GitHub</a>
-                    <JsonLd data={jsonLd} />
-                    <div className={styles.pagination}>
-                        {prevSection && (
-                            <Link href={`/documentation/${prevSection.slug}`} className={styles.prevLink}>
-                                &larr; {prevSection.title}
-                            </Link>
-                        )}
-                        {nextSection && (
-                            <Link href={`/documentation/${nextSection.slug}`} className={styles.nextLink}>
-                                {nextSection.title} &rarr;
-                            </Link>
-                        )}
-                    </div>
-                </article>
-            )}
+            <article className={styles.guide}>
+                <h1 className={styles.guideTitle}>{sections[slug]}</h1>
+                <CodeBlock>
+                    <div
+                        className={styles.guideContent}
+                        dangerouslySetInnerHTML={{ __html: highlightedContent }}
+                    />
+                </CodeBlock>
+                <a
+                    href={`https://github.com/vimal-verma/webnfc.org/edit/main/app/documentation/guides/${slug}.json`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.editLink}>✏️ Edit this page on GitHub</a>
+                <JsonLd data={jsonLd} />
+                <div className={styles.pagination}>
+                    {prevSection && (
+                        <Link href={`/documentation/${prevSection.slug}`} className={styles.prevLink}>
+                            &larr; {prevSection.title}
+                        </Link>
+                    )}
+                    {nextSection && (
+                        <Link href={`/documentation/${nextSection.slug}`} className={styles.nextLink}>
+                            {nextSection.title} &rarr;
+                        </Link>
+                    )}
+                </div>
+            </article>
         </div>
     );
 }

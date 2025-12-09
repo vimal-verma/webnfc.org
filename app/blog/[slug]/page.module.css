@@ -180,3 +180,16 @@
   font-weight: 600;
   color: var(--text-primary);
 }
+
+.editLink {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--primary-accent);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.editLink:hover {
+  border: 1px solid var(--primary-accent-hover);
+}
