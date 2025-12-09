@@ -6,28 +6,14 @@ import styles from './page.module.css';
 
 export default function AboutPage() {
     const teamMembers = [
-        {
-            name: 'Vimal Kumar',
-            title: 'Founder & CEO',
-            image: '/logo.png',
-        },
-        {
-            name: 'Abhishek Kumar',
-            title: 'Head of Technology',
-            image: '/logo.png',
-        },
-        {
-            name: 'Chintu Yadav',
-            title: 'Sales & Marketing Lead',
-            image: '/logo.png',
-        },
+        { name: 'Vimal Kumar', title: 'Developer', image: '/logo.png' },
     ];
     return (
         <div className={styles.container}>
             <section className={styles.hero}>
-                <h1 className={styles.title}>About NFCBuzz</h1>
+                <h1 className={styles.title}>About WebNFC.org</h1>
                 <p className={styles.subtitle}>
-                    We&apos;re on a mission to make networking smarter, faster, and more memorable.
+                    On a mission to make Web NFC technology accessible and easy to use for developers and enthusiasts worldwide.
                 </p>
             </section>
 
@@ -35,10 +21,10 @@ export default function AboutPage() {
                 <div className={styles.storyContent}>
                     <h2>Our Story</h2>
                     <p>
-                        NFCBuzz was born from a simple idea: in an increasingly digital world, our physical interactions should be just as seamless. We grew tired of outdated paper business cards that get lost or thrown away. We envisioned a future where sharing your identity is as easy as a simple tap.
+                        WebNFC.org was born from a fascination with the power of Near Field Communication and a desire to bring its capabilities to the open web. The project started as a personal endeavor to explore the Web NFC API and build practical, open-source tools that anyone could use.
                     </p>
                     <p>
-                        Today, we provide high-quality, customizable NFC-powered cards that help professionals, creatives, and businesses make an instant and lasting impression. Our powerful online designer and commitment to quality ensure that your card is not just a tool, but a statement.
+                        Today, WebNFC.org serves as a resource for learning about Web NFC, offering free tools like an NFC reader/writer, a vCard generator, and guides for developers. Our goal is to foster a community around this technology and encourage innovation by making it more approachable.
                     </p>
                 </div>
                 <div className={styles.storyImage}>
@@ -49,6 +35,28 @@ export default function AboutPage() {
                         height={400}
                         className={styles.image}
                     />
+                </div>
+            </section>
+
+            <section className={styles.missionSection}>
+                <h2 className={styles.sectionTitle}>What is Web NFC?</h2>
+                <p className={styles.sectionSubtitle}>Bridging the gap between the web and the physical world.</p>
+                <div className={styles.featuresGrid}>
+                    <div className={styles.featureCard}>
+                        <div className={styles.featureIcon}>🌐</div>
+                        <h3>Browser-Native API</h3>
+                        <p>Web NFC is a modern browser API that allows web applications to read from and write to NFC tags directly, without needing a native mobile app.</p>
+                    </div>
+                    <div className={styles.featureCard}>
+                        <div className={styles.featureIcon}>👆</div>
+                        <h3>Simple & Secure</h3>
+                        <p>Interactions are initiated by a simple, intentional tap, making it a secure and user-friendly way to exchange information with physical objects.</p>
+                    </div>
+                    <div className={styles.featureCard}>
+                        <div className={styles.featureIcon}>💡</div>
+                        <h3>Endless Possibilities</h3>
+                        <p>From digital business cards and interactive posters to inventory management, Web NFC opens up a world of creative applications for the open web.</p>
+                    </div>
                 </div>
             </section>
 
@@ -74,29 +82,14 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <section className={styles.locationSection}>
-                <h2 className={styles.sectionTitle}>Our Office</h2>
-                <div className={styles.locationGrid}>
-                    <div className={styles.addressInfo}>
-                        <h3>Visit Us</h3>
-                        <p>Come say hello at our headquarters.</p>
-                        <address>
-                            ward no-6, laraua, Makhdumpur<br />
-                            Jehanabad, Bihar, 804422<br />
-                            India
-                        </address>
-                    </div>
-                </div>
-                <div className={styles.locationMap}>
-                    <div></div>
-                </div>
-            </section>
-
             <section className={styles.ctaSection}>
-                <h2>Ready to Make an Impression?</h2>
-                <p>Design your custom NFC card today and step into the future of networking.</p>
-                <Link href="/design" className={styles.ctaButton}>
-                    Start Designing
+                <h2>Ready to Explore Web NFC?</h2>
+                <p>Check out our free tools or dive into the documentation to start your journey.</p>
+                <Link href="/nfc-tool" className={styles.ctaButton}>
+                    Explore Tools
+                </Link>
+                <Link href="https://github.com/vimal-verma/webnfc.org" target="_blank" rel="noopener noreferrer" className={styles.ctaButtonSecondary}>
+                    Contribute on GitHub
                 </Link>
             </section>
         </div>

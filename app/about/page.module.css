@@ -107,6 +107,58 @@
   font-weight: 500;
 }
 
+.missionSection {
+  padding: 4rem 0;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.featureCard {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--card-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+.featureCard:hover .featureIcon {
+  transform: scale(1.2) rotate(-15deg);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.featureCard h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.featureCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.teamGrid {
+  justify-content: center; /* Center items if there's only one */
+  max-width: 400px; /* Limit width for single member */
+  margin: 0 auto; /* Center the grid itself */
+}
+
 .locationSection {
   padding: 4rem 0;
 }
@@ -161,6 +213,24 @@
   padding: 1rem 2rem;
   border-radius: 9999px;
   font-weight: 600;
+}
+
+.ctaButtonSecondary {
+  display: inline-block;
+  border-color: var(--button-secondary-border);
+  border: 1px solid var(--button-secondary-border);
+  background-color: transparent;
+  color: var(--text-primary);
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  margin-top: 1rem; /* Space between primary and secondary CTA */
+}
+
+.ctaButtonSecondary:hover {
+  background-color: var(--button-secondary-hover);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

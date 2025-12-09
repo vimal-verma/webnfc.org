@@ -27,7 +27,7 @@ export default function ContactPage() {
         const body = `\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
 
         // Create the mailto link and trigger it
-        const mailtoLink = `mailto:NFCBuzz.com@gmail.com?cc=support@nfcbuzz.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const mailtoLink = `mailto:NFCBuzz.com@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.location.href = mailtoLink;
 
         // Reset form after a short delay to allow the email client to open
