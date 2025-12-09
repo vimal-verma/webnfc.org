@@ -7,11 +7,19 @@ import styles from '../page.module.css';
 const sections = {
     'introduction': "Introduction",
     'browser-support': "Supported Browsers & Devices",
-    'nfc-use-cases': "NFC Use Cases",
     'read-nfc': "How to Read an NFC Tag",
-    'write-nfc': "How to Write to an NFC Tag",
+    'write-text-record': "How to Write a Text Record",
+    'write-url-record': "How to Write a URL Record",
+    'write-vcard-record': "How to Write a vCard (Contact Card)",
+    'write-upi-record': "How to Write a UPI Link",
     'lock-nfc': "How to Lock an NFC Tag (Make Read-Only)",
     'clone-and-format': "What About Cloning, and Formatting?",
+    'nfc-security-best-practices': "NFC Security Best Practices",
+    'nfc-tag-types': "NFC Tag Types Explained",
+    'nfc-vs-rfid': "NFC vs. RFID: What's the Difference?",
+    'troubleshooting': "Troubleshooting Common Web NFC Issues",
+    'history-of-nfc': "A Brief History of NFC",
+    'nfc-use-cases': "NFC Use Cases",
 };
 
 async function getSectionContent(slug) {
