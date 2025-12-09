@@ -1,4 +1,3 @@
-import { templates } from './templates';
 import { getAllPosts } from './lib/posts';
 import { navItems } from './documentation/nav-items';
 
