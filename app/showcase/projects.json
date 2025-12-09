@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "WebNFC Tool",
+        "description": "A versatile tool to read from and write data to NFC tags directly from your browser. Supports various record types including text, URL, and vCard.",
+        "url": "/nfc-tool",
+        "imageUrl": "/showcase/webnfc.png"
+    },
+    {
+        "id": 2,
+        "name": "NFCBuzz.com",
+        "description": "We sell NFC Business Cards with a focus on design and quality. Our cards are compatible with all NFC-enabled smartphones and can be easily programmed to share your contact information, website, social media profiles, and more.",
+        "url": "https://nfcbuzz.com",
+        "imageUrl": "/showcase/nfcbuzz.png"
+    },
+    {
+        "id": 3,
+        "name": "Add your project",
+        "description": "Add your own Web NFC project to this showcase by submitting a pull request to our GitHub repository.",
+        "url": "https://github.com/vimal-verma/webnfc.org/blob/main/app/showcase/projects.json",
+        "imageUrl": "/showcase/webnfc.png"
+    }
+]
