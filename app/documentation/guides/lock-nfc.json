@@ -1,5 +1,6 @@
 {
     "slug": "lock-nfc",
     "title": "How to Lock an NFC Tag (Make Read-Only)",
+    "description": "Learn how to lock an NFC tag to make it read-only using the Web NFC API. This guide includes a code example and important warnings about the irreversible nature of locking tags.",
     "content": "<h3>How to Lock an NFC Tag (Make Read-Only)</h3><p>Locking a tag prevents it from being rewritten, which is useful for permanent installations. This is an option within the <code>write()</code> method. <strong>Warning: This action is irreversible.</strong></p><pre><code class=\"language-js\">async function writeAndLockNfcTag() {\n  try {\n    const writer = new NDEFReader();\n    await writer.write(\n      { records: [{ recordType: 'text', data: 'This is a permanent message.' }] },\n      { overwrite: false } // Prevent writing to a tag that already has data\n    );\n    // After writing, you can make the tag permanently read-only.\n    await writer.makeReadOnly();\n    console.log('Tag written and locked successfully!');\n  } catch (error) {\n    console.error('Error locking tag:', error);\n  }\n}</code></pre>"
 }

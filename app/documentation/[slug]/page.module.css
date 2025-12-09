@@ -1,5 +1,9 @@
 .container {
   display: grid;
+  grid-template-columns: 1fr;
+}
+
+.documentationContainer {
   grid-template-columns: 1fr 240px;
   margin: 0 auto;
   padding: 2rem;
@@ -10,6 +14,29 @@
   padding: 4rem 0;
   border-bottom: 1px solid var(--card-border);
   margin-bottom: 4rem;
+}
+
+.guidesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.guideCard {
+  display: block;
+  padding: 1.5rem;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.guideCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-accent);
 }
 
 .title {
@@ -25,7 +52,8 @@
 
 .guide {
   grid-column: 1 / 2;
-  max-width: 80ch; /* Optimal reading width */
+  max-width: 80ch;
+  /* Optimal reading width */
 }
 
 .guideTitle {
@@ -62,7 +90,8 @@
 .toc {
   grid-column: 2 / 3;
   position: sticky;
-  top: 6rem; /* Adjust based on your header height */
+  top: 6rem;
+  /* Adjust based on your header height */
   align-self: start;
   padding-left: 2rem;
   border-left: 1px solid var(--card-border);
@@ -160,8 +189,10 @@
   .container {
     grid-template-columns: 1fr;
   }
+
   .toc {
-    display: none; /* Hide TOC on smaller screens for now */
+    display: none;
+    /* Hide TOC on smaller screens for now */
   }
 
   .hero {
@@ -183,25 +214,25 @@
 }
 
 .codeBlockWrapper {
-    position: relative;
+  position: relative;
 }
 
 .copyButton {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: var(--card-border);
-    color: var(--text-secondary);
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--card-border);
+  color: var(--text-secondary);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .copyButton:hover {
-    background-color: var(--color-primary-light);
+  background-color: var(--color-primary-light);
 }
 
 
