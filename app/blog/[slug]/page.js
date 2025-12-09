@@ -2,35 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
-import fs from 'fs';
-import path from 'path';
-
-const postsDirectory = path.join(process.cwd(), 'app', 'blog', 'posts');
-
-function getAllPosts() {
-  const filenames = fs.readdirSync(postsDirectory);
-  const posts = filenames.map(filename => {
-    if (path.extname(filename) === '.json') {
-      const filePath = path.join(postsDirectory, filename);
-      const fileContents = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(fileContents);
-    }
-  }).filter(Boolean); // Filter out any undefined entries if non-json files exist
-  return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-}
-
-function getPost(slug) {
-  const filePath = path.join(postsDirectory, `${slug}.json`);
-  try {
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(fileContents);
-  } catch (error) {
-    // If the file doesn't exist by slug name, search all posts.
-    // This is a fallback for robustness.
-    const allPosts = getAllPosts();
-    return allPosts.find((p) => p.slug === slug) || null;
-  }
-}
+import { getAllPosts, getPostBySlug } from '../../lib/posts';
+import JsonLd from '../../components/JsonLd';
 
 export function generateStaticParams() {
   const blogPosts = getAllPosts();
@@ -41,7 +14,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = getPostBySlug(slug);
 
   if (!post) {
     return {
@@ -54,7 +27,7 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = getPostBySlug(slug);
 
   // For prev/next navigation, we still need the full sorted list.
   // This is a trade-off for having that feature.
@@ -112,10 +85,7 @@ export default async function BlogPostPage({ params }) {
           />
         </div>
         <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
         {post.tags && post.tags.length > 0 && (
           <div className={styles.tagsSection}>
             <strong>Tags:</strong>

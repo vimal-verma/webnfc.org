@@ -1,27 +1,23 @@
 import { templates } from './templates';
-import fs from 'fs';
-import path from 'path';
+import { getAllPosts } from './lib/posts';
 
 const documentationSlugs = [
     'introduction',
     'browser-support',
-    'nfc-use-cases',
     'read-nfc',
-    'write-nfc',
+    'write-text-record',
+    'write-url-record',
+    'write-vcard-record',
+    'write-upi-record',
     'lock-nfc',
     'clone-and-format',
+    'nfc-security-best-practices',
+    'nfc-tag-types',
+    "nfc-vs-rfid",
+    'troubleshooting',
+    'history-of-nfc',
+    'nfc-use-cases'
 ];
-
-function getAllPosts() {
-    const postsDirectory = path.join(process.cwd(), 'app/blog/posts');
-    const filenames = fs.readdirSync(postsDirectory);
-
-    return filenames.map(filename => {
-        const filePath = path.join(postsDirectory, filename);
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        return JSON.parse(fileContents);
-    });
-}
 
 export default function sitemap() {
     const posts = getAllPosts();

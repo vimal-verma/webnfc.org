@@ -1,34 +1,34 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import styles from './documentation.module.css';
 
 export default function CodeBlock({ children }) {
     const contentRef = useRef(null);
+    const initialized = useRef(false);
 
-    useEffect(() => {
+    const setupCopyButtons = useCallback(() => {
         if (!contentRef.current) return;
 
         const codeBlocks = contentRef.current.querySelectorAll('pre > code.language-js');
 
         codeBlocks.forEach(codeBlock => {
             const preElement = codeBlock.parentElement;
-            // Check if the wrapper already exists
+            // Prevent re-adding the button if the component re-renders
             if (preElement.parentElement.classList.contains(styles.codeBlockWrapper)) {
-                return; // Button already exists
+                return;
             }
 
             const wrapper = document.createElement('div');
             wrapper.className = styles.codeBlockWrapper;
 
-            // Move the <pre> element inside the new wrapper
             preElement.parentNode.insertBefore(wrapper, preElement);
             wrapper.appendChild(preElement);
 
             const button = document.createElement('button');
             button.className = styles.copyButton;
             button.textContent = 'Copy';
-            wrapper.insertBefore(button, preElement); // Add button inside wrapper, before <pre>
+            wrapper.insertBefore(button, preElement);
 
             button.addEventListener('click', () => {
                 navigator.clipboard.writeText(codeBlock.innerText).then(() => {
@@ -39,7 +39,15 @@ export default function CodeBlock({ children }) {
                 });
             });
         });
-    }, [children]);
+    }, []);
+
+    useEffect(() => {
+        // Run only once on component mount
+        if (!initialized.current) {
+            setupCopyButtons();
+            initialized.current = true;
+        }
+    }, [setupCopyButtons]);
 
     return <div ref={contentRef}>{children}</div>;
 }

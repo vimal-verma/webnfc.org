@@ -4,24 +4,8 @@ import hljs from 'highlight.js';
 import '../syntax.css';
 import styles from './page.module.css';
 import CodeBlock from '../CodeBlock';
-
-const sections = {
-    'introduction': "Introduction",
-    'browser-support': "Supported Browsers & Devices",
-    'read-nfc': "How to Read an NFC Tag",
-    'write-text-record': "How to Write a Text Record",
-    'write-url-record': "How to Write a URL Record",
-    'write-vcard-record': "How to Write a vCard (Contact Card)",
-    'write-upi-record': "How to Write a UPI Link",
-    'lock-nfc': "How to Lock an NFC Tag (Make Read-Only)",
-    'clone-and-format': "What About Cloning, and Formatting?",
-    'nfc-security-best-practices': "NFC Security Best Practices",
-    'nfc-tag-types': "NFC Tag Types Explained",
-    'nfc-vs-rfid': "NFC vs. RFID: What's the Difference?",
-    'troubleshooting': "Troubleshooting Common Web NFC Issues",
-    'history-of-nfc': "A Brief History of NFC",
-    'nfc-use-cases': "NFC Use Cases",
-};
+import { sections, navItems } from '../nav-items';
+import JsonLd from '../../components/JsonLd';
 
 async function getSectionContent(slug) {
     try {
@@ -61,17 +45,16 @@ export default async function DocumentationContent({ params }) {
     const { slug } = await params;
     const section = await getSectionContent(slug);
 
-    const sectionSlugs = Object.keys(sections);
-    const currentIndex = sectionSlugs.indexOf(slug);
+    const currentIndex = navItems.findIndex(item => item.slug === slug);
 
     const prevSection = currentIndex > 0 ? {
-        slug: sectionSlugs[currentIndex - 1],
-        title: sections[sectionSlugs[currentIndex - 1]]
+        slug: navItems[currentIndex - 1].slug,
+        title: navItems[currentIndex - 1].title
     } : null;
 
-    const nextSection = currentIndex < sectionSlugs.length - 1 ? {
-        slug: sectionSlugs[currentIndex + 1],
-        title: sections[sectionSlugs[currentIndex + 1]]
+    const nextSection = currentIndex < navItems.length - 1 ? {
+        slug: navItems[currentIndex + 1].slug,
+        title: navItems[currentIndex + 1].title
     } : null;
 
     if (!section) {
@@ -152,10 +135,7 @@ export default async function DocumentationContent({ params }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.editLink}>✏️ Edit this page on GitHub</a>
-                    <script
-                        type="application/ld+json"
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-                    />
+                    <JsonLd data={jsonLd} />
                     <div className={styles.pagination}>
                         {prevSection && (
                             <Link href={`/documentation/${prevSection.slug}`} className={styles.prevLink}>

@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
-import fs from 'fs';
-import path from 'path';
+import { getAllPosts } from '../lib/posts';
+import JsonLd from '../components/JsonLd';
 
 export const metadata = {
   title: 'Blog | WebNfc',
@@ -20,19 +20,6 @@ export const metadata = {
     icon: '/logo.png',
   },
 };
-
-function getAllPosts() {
-  const postsDirectory = path.join(process.cwd(), 'app/blog/posts');
-  const filenames = fs.readdirSync(postsDirectory);
-
-  const posts = filenames.map(filename => {
-    const filePath = path.join(postsDirectory, filename);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(fileContents);
-  });
-
-  return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-}
 
 export default function BlogPage() {
   const blogPosts = getAllPosts();
@@ -104,10 +91,7 @@ export default function BlogPage() {
           </Link>
         ))}
       </div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
-      />
+      <JsonLd data={blogSchema} />
     </div>
   );
 }

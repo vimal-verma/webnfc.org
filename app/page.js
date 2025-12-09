@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
-import fs from 'fs';
-import path from 'path';
+import { getLatestPosts } from "./lib/posts";
+import JsonLd from "./components/JsonLd";
 
 export const metadata = {
   title: "WebNfc | Learn, Build, and Use Web NFC Technology",
@@ -37,21 +37,8 @@ const faqs = [
   },
 ];
 
-function getLatestPosts() {
-  const postsDirectory = path.join(process.cwd(), 'app/blog/posts');
-  const filenames = fs.readdirSync(postsDirectory);
-
-  const posts = filenames.map(filename => {
-    const filePath = path.join(postsDirectory, filename);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(fileContents);
-  });
-
-  return posts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
-}
-
 export default function Home() {
-  const latestPosts = getLatestPosts();
+  const latestPosts = getLatestPosts(3);
 
   const organizationSchema = {
     '@context': 'https://schema.org',
@@ -169,7 +156,7 @@ export default function Home() {
                 />
               </div>
               <div className={styles.postContent}>
-                <h3 className={styles.postTitle}>{post.title}</h3>
+                <h2 className={styles.postTitle}>{post.title}</h2>
                 <p className={styles.postExcerpt}>{post.excerpt}</p>
                 <div className={styles.postMeta}>
                   <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -195,14 +182,8 @@ export default function Home() {
         </div>
       </section>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={faqSchema} />
     </div>
   );
 }

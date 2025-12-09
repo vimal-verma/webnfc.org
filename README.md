@@ -54,21 +54,12 @@ To add a new documentation page:
     {
       "slug": "new-feature",
       "title": "New Amazing Feature",
+      "description": "A brief description of the new feature for SEO.",
       "content": "<h3>Title</h3><p>Your content here, written in HTML.</p>"
     }
     ```
 
-3.  Open `app/documentation/[slug]/page.js` and add a new entry to the `sections` object. The key should be the slug from your JSON file, and the value should be the title.
-
-    ```javascript
-    const sections = {
-      introduction: 'Introduction',
-      // ... other sections
-      'new-feature': 'New Amazing Feature',
-    }
-    ```
-
-4.  Open `app/documentation/layout.js` and add a corresponding entry to the `navItems` array to make it appear in the sidebar navigation.
+3.  Open `app/documentation/nav-items.js` and add a new entry to the `navItems` array. The `slug` should match the filename you just created (without the `.json` extension). This will automatically add the page to the sidebar navigation.
 
     ```javascript
     const navItems = [
