@@ -25,7 +25,17 @@ export const metadata = {
         'vCard NFC',
         'NFC Contact Card',
         'vcard download',
-        'NFC business card'
+        'read nfc card',
+        'read nfc tag online',
+        'nfc tag data reader',
+        'nfc tag info reader',
+        'nfc tag content reader',
+        'nfc tag text reader',
+        'nfc tag url reader',
+        'nfc tag vcard reader',
+        'nfc tag utl opener',
+        'nfc tag vcard opener',
+        'nfc tag contact reader',
     ],
 };
 

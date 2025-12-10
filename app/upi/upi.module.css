@@ -205,6 +205,15 @@
     width: 100%;
     max-width: 288px; /* Match QR container */
 }
+.privacyNote {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: var(--button-secondary-hover);
+    border-radius: 8px;
+}
 
 .qrContainer {
     padding: 1rem;

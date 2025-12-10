@@ -429,6 +429,9 @@ export default function UpiToolClient() {
 
             {/* Log Output */}
             <div className={styles.logContainer}>
+                <p className={styles.privacyNote}>
+                    🔒 All information is stored locally in your browser. Nothing is shared with our servers, Also verify links and QR before sharing.
+                </p>
                 <div className={styles.logHeader}>
                     <h3>Log</h3>
                     <button onClick={() => setLog([])} className={styles.clearLogButton} disabled={log.length === 0}>

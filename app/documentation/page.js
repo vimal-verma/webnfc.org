@@ -5,7 +5,7 @@ import { navItems } from './nav-items';
 export const metadata = {
     title: 'Documentation & Guides | WebNfc.org',
     description: 'Your official resource for learning how to use the Web NFC API and our powerful online tools.',
-    keywords: ['Web NFC documentation', 'WebNFC guides', 'NFC tutorials', 'Web NFC API', 'NFC examples', 'NFC how-to', 'WebNFC learning', 'NFC tag writing guide', 'NFC tag reading guide', 'WebNfc.org'],
+    keywords: ['Web NFC documentation', 'WebNFC guides', 'NFC tutorials', 'Web NFC API', 'NFC examples', 'NFC how-to', 'WebNFC learning', 'NFC tag writing guide', 'NFC tag reading guide', 'WebNfc.org', 'webnfc code examples', 'nfc api documentation', 'nfc programming guide', 'nfc development tutorials', 'nfc application examples', 'nfc web tool guides', 'web nfc tutorials', 'nfc tag management', 'nfc tag writing tutorials', 'nfc tag reading tutorials', 'web nfc api guide', 'nfc for developers', 'nfc coding examples', 'web nfc projects', 'nfc technology guides', 'nfc online tool documentation', 'web nfc how-to guides'],
 };
 
 export default function DocumentationPage() {

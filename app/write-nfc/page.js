@@ -18,7 +18,16 @@ export const metadata = {
         'Online NFC Tool',
         'Write vCard to NFC',
         'Write URL to NFC',
-        'WebNFC'
+        'WebNFC',
+        'NFC Tag Encoder',
+        'NFC Tag Programmer',
+        'NFC Tag Copier',
+        'NFC Tag Editor',
+        'NFC Tag Tool',
+        'NFC Tag Utility',
+        'NFC Tag Manager',
+        'NFC Tag Application',
+        'NFC Tag Service',
     ],
 };
 

@@ -7,7 +7,7 @@ import JsonLd from "./components/JsonLd";
 export const metadata = {
   title: "WebNfc | Learn, Build, and Use Web NFC Technology",
   description: "Your ultimate resource for Web NFC. Explore our free online tools to read and write NFC tags, generate vCards, and learn everything about Near Field Communication.",
-  keywords: ['Web NFC', 'NFC Tool', 'Learn NFC', 'NFC Reader', 'NFC Writer', 'NFC Guide', 'Near Field Communication', 'NFC business card', 'vCard Generator', 'UPI QR Generator', 'NFC Tag Writer', 'NFC Tag Reader', 'WebNFC Documentation', 'WebNfc', 'NFC Tutorials', 'NFC Examples'],
+  keywords: ['Web NFC', 'NFC Tool', 'Learn NFC', 'NFC Reader', 'NFC Writer', 'NFC Guide', 'Near Field Communication', 'NFC business card', 'vCard Generator', 'UPI QR Generator', 'NFC Tag Writer', 'NFC Tag Reader', 'WebNFC Documentation', 'WebNfc', 'NFC Tutorials', 'NFC Examples', 'NFC Projects', 'NFC API', 'NFC Development', 'NFC Applications', 'NFC Solutions', 'Contactless Technology', 'NFC Tags', 'NFC Stickers', 'NFC Keychains', 'NFC Rings', 'NFC Bracelets', 'NFC for Marketing', 'NFC for Events', 'NFC for Payments', 'NFC for Access Control', 'NFC for Smart Homes', 'NFC for IoT', 'NFC Programming', 'NFC Tag Management', 'NFC Tag Cloner', 'NFC Tag Eraser', 'NFC Tag Formatter', 'NFC Tag Locker'],
   openGraph: {
     title: 'WebNfc | Learn, Build, and Use Web NFC Technology',
     description: 'The ultimate resource for learning and using Web NFC technology directly in your browser.',

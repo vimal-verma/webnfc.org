@@ -7,7 +7,7 @@ import JsonLd from '../components/JsonLd';
 export const metadata = {
   title: 'Blog | WebNfc',
   description: 'Read the latest insights, tips, and stories on modern networking, NFC technology, and business card design from the WebNfc team.',
-  keywords: ['NFC blog', 'WebNFC articles', 'NFC technology news', 'Business card design tips', 'Digital networking strategies', 'NFC use cases', 'WebNfc updates', 'NFC trends', 'vCard tips', 'QR code insights'],
+  keywords: ['NFC blog', 'WebNFC articles', 'NFC technology news', 'Business card design tips', 'Digital networking strategies', 'NFC use cases', 'WebNfc updates', 'NFC trends', 'vCard tips', 'QR code insights', 'Contactless technology blog', 'NFC marketing strategies', 'NFC event ideas', 'NFC payment solutions', 'NFC access control', 'Smart home NFC applications', 'IoT and NFC', 'NFC programming tutorials', 'NFC development stories', 'NFC application examples', 'NFC solutions blog', 'WebNfc team stories', 'NFC industry news', 'NFC project highlights', 'NFC best practices', 'NFC case studies', 'NFC innovation', 'Future of NFC', 'NFC for businesses', 'NFC for consumers', 'NFC technology advancements'],
   openGraph: {
     title: 'Blog | WebNfc',
     description: 'Read the latest insights, tips, and stories on modern networking, NFC technology, and business card design from the WebNfc team.',
