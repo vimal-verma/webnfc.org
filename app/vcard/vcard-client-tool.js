@@ -28,22 +28,48 @@ export default function VCardClientTool() {
         instagram: '',
         notes: '',
     });
+    const [vCardSize, setVCardSize] = useState(0);
+    const [tagSuggestionMessage, setTagSuggestionMessage] = useState('');
 
     useEffect(() => {
+        // 1. Try loading from URL parameters first
         const dataFromUrl = {};
-        let hasData = false;
+        let hasDataInUrl = false;
         for (const [key, value] of searchParams.entries()) {
             if (key in vCardData) {
                 dataFromUrl[key] = value;
-                hasData = true;
+                hasDataInUrl = true;
             }
         }
-        if (hasData) {
+
+        if (hasDataInUrl) {
             setVCardData(prev => ({ ...prev, ...dataFromUrl }));
             addToLog('✅ Contact data loaded from URL.');
+        } else {
+            // 2. If no data in URL, try loading from localStorage
+            try {
+                const savedData = localStorage.getItem('vCardToolData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    setVCardData(data);
+                    addToLog('✅ Contact data loaded from previous session.');
+                }
+            } catch (error) {
+                console.error("Failed to load vCard data from localStorage", error);
+                addToLog('Could not load data from previous session.', 'error');
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Run only on initial load
+
+    // Save state to localStorage on change
+    useEffect(() => {
+        try {
+            localStorage.setItem('vCardToolData', JSON.stringify(vCardData));
+        } catch (error) {
+            console.error("Failed to save vCard data to localStorage", error);
+        }
+    }, [vCardData]);
 
     const vCardString = [
         'BEGIN:VCARD',
@@ -64,6 +90,13 @@ export default function VCardClientTool() {
         'END:VCARD'
     ].filter(Boolean).join('\n');
 
+    // Calculate vCard size and tag suggestion whenever vCardString changes
+    useEffect(() => {
+        const encoder = new TextEncoder();
+        const size = encoder.encode(vCardString).byteLength;
+        setVCardSize(size);
+        setTagSuggestionMessage(getTagSuggestion(size));
+    }, [vCardString]);
     const addToLog = useCallback((message, type = 'info') => {
         setLog(prev => [`<span class="${styles[type]}">[${new Date().toLocaleTimeString()}] ${message}</span>`, ...prev]);
     }, []);
@@ -98,9 +131,8 @@ export default function VCardClientTool() {
             const encoder = new TextEncoder();
             const record = { recordType: 'mime', mediaType: 'text/vcard', data: encoder.encode(vCardString) };
 
-            const dataSize = record.data.byteLength;
-            const tagSuggestion = getTagSuggestion(dataSize);
-            addToLog(`Data size: ${dataSize} bytes. ${tagSuggestion}`);
+            // Use the already calculated vCardSize and tagSuggestionMessage
+            addToLog(`Data size: ${vCardSize} bytes. ${tagSuggestionMessage}`);
             addToLog('Ready to write. Bring your NFC tag close to your device.');
 
             await ndef.write({
@@ -178,7 +210,7 @@ export default function VCardClientTool() {
                         {/* Personal Info */}
                         <div className={styles.formGroup}>
                             <label htmlFor="vcard-name">Full Name *</label>
-                            <input id="vcard-name" type="text" value={vCardData.name} onChange={(e) => setVCardData({ ...vCardData, name: e.target.value })} placeholder="e.g., John Doe" required />
+                            <input id="vcard-name" type="text" value={vCardData.name} onChange={(e) => setVCardData({ ...vCardData, name: e.target.value })} placeholder="e.g., John Doe" required aria-required="true" />
                         </div>
                         <div className={styles.formGroup}>
                             <label htmlFor="vcard-phone">Phone Number</label>
@@ -249,6 +281,12 @@ export default function VCardClientTool() {
                         <div className={styles.qrCodeWrapper} ref={qrCodeRef}>
                             <QRCodeCanvas value={vCardString} size={256} bgColor={"#ffffff"} fgColor={"#000000"} level={"L"} includeMargin={true} />
                         </div>
+                        {vCardData.name && ( // Only show size if there's actual data
+                            <div className={styles.vcardSizeInfo}>
+                                <p>vCard Size: <strong>{vCardSize} bytes</strong></p>
+                                <p>Tag Suggestion: <em>{tagSuggestionMessage}</em></p>
+                            </div>
+                        )}
                         <div className={styles.downloadButtonsContainer}>
                             <button onClick={handleDownloadQR} className={styles.downloadButton} disabled={!vCardData.name}>
                                 Download QR
@@ -290,7 +328,7 @@ export default function VCardClientTool() {
                         Clear
                     </button>
                 </div>
-                <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} />
+                <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} aria-live="polite" />
             </div>
         </div>
     );

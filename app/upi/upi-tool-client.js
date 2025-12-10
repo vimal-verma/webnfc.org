@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import styles from './upi.module.css';
 
@@ -25,6 +25,43 @@ export default function UpiToolClient() {
     const [stylishText, setStylishText] = useState('Scan to Pay');
     const [stylishTextColor, setStylishTextColor] = useState('#000000');
     const qrCodeRef = useRef(null);
+
+    // Load state from localStorage on component mount
+    useEffect(() => {
+        try {
+            const savedData = localStorage.getItem('upiToolData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                setUpiId(data.upiId || '');
+                setPayeeName(data.payeeName || '');
+                setAmount(data.amount || '');
+                setNote(data.note || '');
+                setQrFgColor(data.qrFgColor || '#000000');
+                setQrBgColor(data.qrBgColor || '#ffffff');
+                setQrLogo(data.qrLogo || null);
+                setQrLogoSize(data.qrLogoSize || 40);
+                setStylishText(data.stylishText || 'Scan to Pay');
+                setStylishTextColor(data.stylishTextColor || '#000000');
+                // Not loading stylishBg from localStorage to avoid storing large data URLs unnecessarily on every change.
+            }
+        } catch (error) {
+            console.error("Failed to load data from localStorage", error);
+        }
+    }, []);
+
+    // Save state to localStorage on change
+    useEffect(() => {
+        try {
+            const dataToSave = {
+                upiId, payeeName, amount, note,
+                qrFgColor, qrBgColor, qrLogo, qrLogoSize,
+                stylishText, stylishTextColor
+            };
+            localStorage.setItem('upiToolData', JSON.stringify(dataToSave));
+        } catch (error) {
+            console.error("Failed to save data to localStorage", error);
+        }
+    }, [upiId, payeeName, amount, note, qrFgColor, qrBgColor, qrLogo, qrLogoSize, stylishText, stylishTextColor]);
 
     const addToLog = useCallback((message, type = 'info') => {
         const formattedMessage = message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -211,6 +248,7 @@ export default function UpiToolClient() {
                             type="text"
                             value={upiId}
                             onChange={(e) => setUpiId(e.target.value)}
+                            aria-required="true"
                             placeholder="yourname@bank"
                             required
                         />
@@ -222,6 +260,7 @@ export default function UpiToolClient() {
                             type="text"
                             value={payeeName}
                             onChange={(e) => setPayeeName(e.target.value)}
+                            aria-required="true"
                             placeholder="John Doe"
                             required
                         />
@@ -247,12 +286,17 @@ export default function UpiToolClient() {
                         />
                     </div>
 
-                    <button onClick={() => setIsQrEditorExpanded(!isQrEditorExpanded)} className={styles.expanderButton}>
+                    <button
+                        onClick={() => setIsQrEditorExpanded(!isQrEditorExpanded)}
+                        className={styles.expanderButton}
+                        aria-expanded={isQrEditorExpanded}
+                        aria-controls="qr-editor-section"
+                    >
                         Advanced QR Editor {isQrEditorExpanded ? '▲' : '▼'}
                     </button>
 
                     {isQrEditorExpanded && (
-                        <div className={styles.qrEditor}>
+                        <div id="qr-editor-section" className={styles.qrEditor} aria-describedby="qr-editor-note">
                             <div className={styles.editorRow}>
                                 <div className={styles.inputGroup}>
                                     <label htmlFor="qrFgColor">QR Color</label>
@@ -284,7 +328,7 @@ export default function UpiToolClient() {
                                     />
                                 </div>
                             )}
-                            <p className={styles.editorNote}>
+                            <p id="qr-editor-note" className={styles.editorNote}>
                                 Note: Adding a logo or using complex colors may reduce QR code scannability. Always test before printing.
                             </p>
 
@@ -294,13 +338,14 @@ export default function UpiToolClient() {
                             <div className={styles.inputGroup}>
                                 <label>Or Select from Gallery</label>
                                 <div className={styles.backgroundSelector}>
-                                    {availableBackgrounds.map(bg => (
-                                        <div
+                                    {availableBackgrounds.map((bg) => (
+                                        <button
                                             key={bg}
                                             className={`${styles.backgroundPreview} ${stylishBg === bg ? styles.backgroundSelected : ''}`}
                                             onClick={() => handleStylishBgSelect(bg)}
                                             style={{ backgroundImage: `url(${bg})` }}
-                                        />
+                                            aria-label={`Select background ${bg.split('/').pop().split('.')[0]}`}
+                                        ></button>
                                     ))}
                                 </div>
                             </div>
@@ -390,7 +435,7 @@ export default function UpiToolClient() {
                         Clear
                     </button>
                 </div>
-                <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} />
+                <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} aria-live="polite" />
             </div>
         </div>
     );

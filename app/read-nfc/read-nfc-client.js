@@ -9,7 +9,9 @@ export default function ReadNfcClient() {
     const [isScanning, setIsScanning] = useState(false);
     const [lastScannedContent, setLastScannedContent] = useState(null);
     const [isVCard, setIsVCard] = useState(false);
+    const [scannedUrl, setScannedUrl] = useState(null);
     const [scannedVCardData, setScannedVCardData] = useState(null);
+    const [serialNumber, setSerialNumber] = useState(null);
 
     const addToLog = useCallback((message, type = 'info') => {
         const formattedMessage = message.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -54,6 +56,8 @@ export default function ReadNfcClient() {
         setLastScannedContent(null); // Reset content on new scan
         setIsVCard(false); // Reset vCard flag on new scan
         setScannedVCardData(null); // Reset vCard data on new scan
+        setScannedUrl(null); // Reset URL on new scan
+        setSerialNumber(null); // Reset serial number on new scan
         if (!('NDEFReader' in window)) {
             addToLog('Web NFC is not supported on this browser. Please use Chrome on Android.', 'error');
             return;
@@ -67,6 +71,7 @@ export default function ReadNfcClient() {
             await ndef.scan();
 
             ndef.addEventListener("reading", async ({ message, serialNumber }) => {
+                setSerialNumber(serialNumber);
                 addToLog(`✅ Tag detected! Serial Number: ${serialNumber}`, 'success');
                 let firstRecordContent = null;
                 let totalSize = 0;
@@ -103,6 +108,7 @@ export default function ReadNfcClient() {
                         case "url": {
                             const textDecoder = new TextDecoder();
                             currentRecordContent = textDecoder.decode(record.data);
+                            setScannedUrl(currentRecordContent);
                             addToLog(`> URL: <a href="${currentRecordContent}" target="_blank" rel="noopener noreferrer">${currentRecordContent}</a>`, 'info');
                             break;
                         }
@@ -189,7 +195,17 @@ export default function ReadNfcClient() {
                         Save vCard (.vcf)
                     </button>
                 )}
+                {scannedUrl && (
+                    <a href={scannedUrl} target="_blank" rel="noopener noreferrer" className={`${styles.copyButton} ${styles.openUrlButton}`}>
+                        Open URL
+                    </a>
+                )}
             </div>
+            {serialNumber && (
+                <div className={styles.tagInfoContainer}>
+                    <p><strong>Serial Number:</strong> {serialNumber}</p>
+                </div>
+            )}
             {scannedVCardData && (
                 <div className={styles.phonePreviewContainer}>
                     <PhonePreview vCardData={scannedVCardData} />

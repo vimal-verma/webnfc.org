@@ -164,6 +164,22 @@
     display: inline-block;
 }
 
+.vcardSizeInfo {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: left; /* Align text to left within its container */
+    padding: 0 1rem; /* Add some padding */
+}
+
+.vcardSizeInfo p {
+    margin-bottom: 0.25rem;
+}
+
+.vcardSizeInfo strong {
+    color: var(--text-primary);
+}
+
 .downloadButton {
     width: 100%;
     background: var(--button-secondary-bg);
