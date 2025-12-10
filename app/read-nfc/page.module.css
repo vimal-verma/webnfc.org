@@ -94,16 +94,23 @@
 }
 
 .tagInfoContainer {
-    margin-top: 1.5rem;
-    padding: 1rem;
     background: var(--card-background);
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.5rem 1.5rem;
     width: 100%;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
     font-size: 1rem;
+    display: grid;
+    box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 600px) {
+    .tagInfoContainer {
+        grid-template-columns: 1fr;
+    }
 }
 
 .tagInfoContainer p {

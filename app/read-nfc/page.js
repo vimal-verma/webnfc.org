@@ -7,6 +7,10 @@ export const metadata = {
     description: 'Use our free online tool to read data from any NFC tag directly in your browser. Supports text, URLs, contact cards (vCards), and more. No app installation required.',
     keywords: [
         'Read NFC',
+        'NFC tag reader online',
+        'NFC tag reader',
+        'Free NFC tag reader online',
+        'Free NFC tag reader',
         'NFC Reader',
         'Web NFC Reader',
         'Scan NFC Tag',

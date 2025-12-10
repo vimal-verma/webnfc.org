@@ -7,6 +7,9 @@ export const metadata = {
     description: 'Instantly generate a UPI QR code for payments. Our free tool also lets you write the UPI payment link directly to an NFC tag using your phone. No sign-up required.',
     keywords: [
         'UPI QR code generator',
+        'UPI QR generator',
+        'UPI QR code',
+        'Free UPI QR code generator',
         'free UPI QR code',
         'UPI payment link',
         'NFC UPI writer',
@@ -15,6 +18,11 @@ export const metadata = {
         'NFC payment tag',
         'UPI QR code for shops',
         'online UPI tool',
+        'UPI NFC tag writer',
+        'UPI vCard',
+        'UPI contact sharing',
+        'WebNfc',
+        'UPI NFC'
     ],
 };
 

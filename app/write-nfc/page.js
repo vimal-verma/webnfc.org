@@ -7,6 +7,10 @@ export const metadata = {
     description: 'Use our free online tool to write data to any NFC tag directly in your browser. Write text, URLs, or contact cards (vCards) with a single tap. No app installation required.',
     keywords: [
         'Write NFC',
+        'NFC tag writer online',
+        'NFC tag writer',
+        'Free NFC tag writer online',
+        'Free NFC tag writer',
         'NFC Writer',
         'Web NFC Writer',
         'Program NFC Tag',

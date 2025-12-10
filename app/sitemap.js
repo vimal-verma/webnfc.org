@@ -13,7 +13,7 @@ export default function sitemap() {
         { url: `${baseUrl}/upi`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/vcard`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/read-nfc`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
-        { url: `${baseUrl}/write-tag`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
+        { url: `${baseUrl}/write-nfc`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/nfc-tool`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/blog`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
         { url: `${baseUrl}/documentation`, lastModified, changeFrequency: 'weekly', priority: 0.8 },

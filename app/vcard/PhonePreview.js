@@ -20,35 +20,63 @@ export default function PhonePreview({ vCardData }) {
                 </div>
 
                 <div className={styles.actionButtons}>
-                    <div className={styles.actionButton}><div className={styles.actionIcon}>💬</div><span>message</span></div>
-                    <div className={styles.actionButton}><div className={styles.actionIcon}>📞</div><span>call</span></div>
-                    <div className={styles.actionButton}><div className={styles.actionIcon}>✉️</div><span>email</span></div>
-                    <div className={styles.actionButton}><div className={styles.actionIcon}>🌐</div><span>website</span></div>
+                    {phone && (
+                        <a href={`sms:${phone}`} className={styles.actionButton}>
+                            <div className={styles.actionIcon}>💬</div>
+                            <span>message</span>
+                        </a>
+                    )}
+                    {phone && (
+                        <a href={`tel:${phone}`} className={styles.actionButton}>
+                            <div className={styles.actionIcon}>📞</div>
+                            <span>call</span>
+                        </a>
+                    )}
+                    {email && (
+                        <a href={`mailto:${email}`} className={styles.actionButton}>
+                            <div className={styles.actionIcon}>✉️</div>
+                            <span>email</span>
+                        </a>
+                    )}
+                    {website && (
+                        <a href={website} target="_blank" rel="noopener noreferrer" className={styles.actionButton}>
+                            <div className={styles.actionIcon}>🌐</div>
+                            <span>website</span>
+                        </a>
+                    )}
                 </div>
 
                 <div className={styles.contactDetails}>
                     {phone && (
                         <div className={styles.detailItem}>
+                            <a href={`tel:${phone}`} className={styles.detailValue}>
+                                {phone}
+                            </a>
                             <span className={styles.detailLabel}>mobile</span>
-                            <span className={styles.detailValue}>{phone}</span>
                         </div>
                     )}
                     {email && (
                         <div className={styles.detailItem}>
+                            <a href={`mailto:${email}`} className={styles.detailValue}>
+                                {email}
+                            </a>
                             <span className={styles.detailLabel}>email</span>
-                            <span className={styles.detailValue}>{email}</span>
                         </div>
                     )}
                     {website && (
                         <div className={styles.detailItem}>
+                            <a href={website} target="_blank" rel="noopener noreferrer" className={styles.detailValue}>
+                                {website}
+                            </a>
                             <span className={styles.detailLabel}>website</span>
-                            <span className={styles.detailValue}>{website}</span>
                         </div>
                     )}
                     {fullAddress && (
                         <div className={styles.detailItem}>
-                            <span className={styles.detailLabel}>work address</span>
-                            <span className={styles.detailValue}>{fullAddress}</span>
+                            <p className={styles.detailValue}>
+                                {fullAddress}
+                            </p>
+                            <span className={styles.detailLabel}>address</span>
                         </div>
                     )}
                 </div>

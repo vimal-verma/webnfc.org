@@ -106,25 +106,33 @@
 }
 
 .contactDetails {
-    padding: 15px 20px;
+    padding: 25px 20px;
     overflow-y: auto;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .detailItem {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .detailLabel {
-    display: block;
     font-size: 0.75rem;
     color: var(--text-secondary);
     text-transform: lowercase;
 }
 
 .detailValue {
-    display: block;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--primary-accent);
     word-break: break-all;
+    text-decoration: none;
+    margin-bottom: 0.25rem;
+}
+
+.detailValue:hover {
+    text-decoration: underline;
 }

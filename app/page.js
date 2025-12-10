@@ -7,7 +7,7 @@ import JsonLd from "./components/JsonLd";
 export const metadata = {
   title: "WebNfc | Learn, Build, and Use Web NFC Technology",
   description: "Your ultimate resource for Web NFC. Explore our free online tools to read and write NFC tags, generate vCards, and learn everything about Near Field Communication.",
-  keywords: ['Web NFC', 'NFC Tool', 'Learn NFC', 'NFC Reader', 'NFC Writer', 'NFC Guide', 'Near Field Communication', 'NFC business card', 'vCard Generator', 'UPI QR Generator'],
+  keywords: ['Web NFC', 'NFC Tool', 'Learn NFC', 'NFC Reader', 'NFC Writer', 'NFC Guide', 'Near Field Communication', 'NFC business card', 'vCard Generator', 'UPI QR Generator', 'NFC Tag Writer', 'NFC Tag Reader', 'WebNFC Documentation', 'WebNfc', 'NFC Tutorials', 'NFC Examples'],
   openGraph: {
     title: 'WebNfc | Learn, Build, and Use Web NFC Technology',
     description: 'The ultimate resource for learning and using Web NFC technology directly in your browser.',
