@@ -2,7 +2,7 @@
     "slug": "web-nfc-api-guide",
     "title": "Developer's Guide to the Web NFC API: Read, Write, and Lock Tags",
     "author": "WebNfc Team",
-    "date": "2026-03-10",
+    "date": "2025-03-10",
     "excerpt": "A comprehensive guide for developers on using the Web NFC API. Learn how to integrate NFC functionality into your web app with practical code snippets for reading, writing, and locking tags.",
     "description": "A deep-dive technical guide into the Web NFC API. Includes information on supported browsers and devices, security considerations, and JavaScript code examples for NDEFReader scan(), write(), and making tags read-only.",
     "tags": [
