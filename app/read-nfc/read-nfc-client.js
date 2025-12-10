@@ -11,7 +11,7 @@ export default function ReadNfcClient() {
     const [isVCard, setIsVCard] = useState(false);
     const [scannedUrl, setScannedUrl] = useState(null);
     const [scannedVCardData, setScannedVCardData] = useState(null);
-    const [serialNumber, setSerialNumber] = useState(null);
+    const [tagDetails, setTagDetails] = useState(null);
 
     const addToLog = useCallback((message, type = 'info') => {
         const formattedMessage = message.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -57,7 +57,7 @@ export default function ReadNfcClient() {
         setIsVCard(false); // Reset vCard flag on new scan
         setScannedVCardData(null); // Reset vCard data on new scan
         setScannedUrl(null); // Reset URL on new scan
-        setSerialNumber(null); // Reset serial number on new scan
+        setTagDetails(null); // Reset tag details on new scan
         if (!('NDEFReader' in window)) {
             addToLog('Web NFC is not supported on this browser. Please use Chrome on Android.', 'error');
             return;
@@ -71,25 +71,30 @@ export default function ReadNfcClient() {
             await ndef.scan();
 
             ndef.addEventListener("reading", async ({ message, serialNumber }) => {
-                setSerialNumber(serialNumber);
                 addToLog(`✅ Tag detected! Serial Number: ${serialNumber}`, 'success');
                 let firstRecordContent = null;
                 let totalSize = 0;
+                let isWritable = null;
+                const recordTypes = [];
 
                 // Check writability
                 try {
                     const controller = new AbortController();
                     setTimeout(() => controller.abort(), 500); // Timeout to prevent getting stuck
                     await ndef.write({ records: [{ recordType: "empty" }] }, { signal: controller.signal, overwrite: false });
+                    isWritable = true;
+                    addToLog('Tag is writable.', 'info');
                     // This is a trick: if write succeeds with overwrite:false, it means it's writable but we didn't actually write anything.
                     // However, the simplest check is to just try writing and see if it fails with a read-only error.
                 } catch (error) {
                     if (error.name === 'NotAllowedError') {
+                        isWritable = false;
                         addToLog('Tag is read-only.', 'info');
                     }
                 }
 
                 for (const record of message.records) {
+                    recordTypes.push(record.recordType);
                     addToLog(`> Record Type: ${record.recordType}`, 'info');
                     addToLog(`> Media Type: ${record.mediaType || 'N/A'}`, 'info');
                     let currentRecordContent = null;
@@ -133,8 +138,17 @@ export default function ReadNfcClient() {
                     }
                 }
                 addToLog(`Total data size: ${totalSize} bytes`, 'info');
-                addToLog(`Likely Tag Type: ${getTagTypeFromSize(totalSize)}`, 'info');
+                const tagType = getTagTypeFromSize(totalSize);
+                addToLog(`Likely Tag Type: ${tagType}`, 'info');
 
+                setTagDetails({
+                    serialNumber,
+                    size: totalSize,
+                    type: tagType,
+                    isWritable: isWritable === null ? 'Unknown' : (isWritable ? 'Yes' : 'No'),
+                    recordCount: message.records.length,
+                    recordTypes: recordTypes.join(', ') || 'N/A',
+                });
                 setLastScannedContent(firstRecordContent);
                 setIsScanning(false); // Stop scanning after first read
             });
@@ -201,9 +215,14 @@ export default function ReadNfcClient() {
                     </a>
                 )}
             </div>
-            {serialNumber && (
+            {tagDetails && (
                 <div className={styles.tagInfoContainer}>
-                    <p><strong>Serial Number:</strong> {serialNumber}</p>
+                    <p><strong>Serial Number:</strong> <span>{tagDetails.serialNumber}</span></p>
+                    <p><strong>Data Size:</strong> <span>{tagDetails.size} bytes</span></p>
+                    <p><strong>Est. Tag Type:</strong> <span>{tagDetails.type}</span></p>
+                    <p><strong>Writable:</strong> <span>{tagDetails.isWritable}</span></p>
+                    <p><strong>Record Count:</strong> <span>{tagDetails.recordCount}</span></p>
+                    <p><strong>Record Types:</strong> <span>{tagDetails.recordTypes}</span></p>
                 </div>
             )}
             {scannedVCardData && (

@@ -6,32 +6,34 @@ import PhonePreview from './PhonePreview';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 
+const initialVCardState = {
+    name: '', phone: '', email: '', website: '', organization: '',
+    title: '', street: '', city: '', state: '', zip: '', country: '',
+    linkedin: '', twitter: '', instagram: '', notes: '',
+};
+
 export default function VCardClientTool() {
     const [log, setLog] = useState([]);
     const searchParams = useSearchParams();
     const qrCodeRef = useRef(null);
 
-    const [vCardData, setVCardData] = useState({
-        name: '',
-        phone: '',
-        email: '',
-        website: '',
-        organization: '',
-        title: '',
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
-        country: '',
-        linkedin: '',
-        twitter: '',
-        instagram: '',
-        notes: '',
-    });
+    const [vCardData, setVCardData] = useState(initialVCardState);
     const [vCardSize, setVCardSize] = useState(0);
     const [tagSuggestionMessage, setTagSuggestionMessage] = useState('');
+    const [templates, setTemplates] = useState([]);
+    const [selectedTemplate, setSelectedTemplate] = useState('');
 
     useEffect(() => {
+        // Load templates from localStorage on mount
+        try {
+            const savedTemplates = localStorage.getItem('vCardTemplates');
+            if (savedTemplates) {
+                setTemplates(JSON.parse(savedTemplates));
+            }
+        } catch (error) {
+            console.error("Failed to load templates from localStorage", error);
+        }
+
         // 1. Try loading from URL parameters first
         const dataFromUrl = {};
         let hasDataInUrl = false;
@@ -50,7 +52,7 @@ export default function VCardClientTool() {
             try {
                 const savedData = localStorage.getItem('vCardToolData');
                 if (savedData) {
-                    const data = JSON.parse(savedData);
+                    const data = { ...initialVCardState, ...JSON.parse(savedData) };
                     setVCardData(data);
                     addToLog('✅ Contact data loaded from previous session.');
                 }
@@ -70,6 +72,15 @@ export default function VCardClientTool() {
             console.error("Failed to save vCard data to localStorage", error);
         }
     }, [vCardData]);
+
+    // Save templates to localStorage on change
+    useEffect(() => {
+        try {
+            localStorage.setItem('vCardTemplates', JSON.stringify(templates));
+        } catch (error) {
+            console.error("Failed to save templates to localStorage", error);
+        }
+    }, [templates]);
 
     const vCardString = [
         'BEGIN:VCARD',
@@ -202,6 +213,53 @@ export default function VCardClientTool() {
         });
     };
 
+    const handleClearForm = useCallback(() => {
+        if (window.confirm('Are you sure you want to clear the form? This will also remove your auto-saved data.')) {
+            setVCardData(initialVCardState);
+            localStorage.removeItem('vCardToolData');
+            addToLog('Form has been cleared.');
+        }
+    }, [addToLog]);
+
+    const handleSaveTemplate = () => {
+        const name = prompt("Enter a name for this template:", vCardData.name || "New Template");
+        if (!name) return;
+
+        const existingIndex = templates.findIndex(t => t.name === name);
+        if (existingIndex > -1) {
+            if (!confirm(`A template named "${name}" already exists. Do you want to overwrite it?`)) {
+                return;
+            }
+            const updatedTemplates = [...templates];
+            updatedTemplates[existingIndex] = { name, data: vCardData };
+            setTemplates(updatedTemplates);
+            addToLog(`✅ Template "${name}" updated.`, 'success');
+        } else {
+            setTemplates([...templates, { name, data: vCardData }]);
+            addToLog(`✅ Template "${name}" saved.`, 'success');
+        }
+        setSelectedTemplate(name);
+    };
+
+    const handleLoadTemplate = () => {
+        if (!selectedTemplate) return;
+        const template = templates.find(t => t.name === selectedTemplate);
+        if (template) {
+            setVCardData(template.data);
+            addToLog(`✅ Template "${selectedTemplate}" loaded.`, 'success');
+        }
+    };
+
+    const handleDeleteTemplate = () => {
+        if (!selectedTemplate) return;
+        if (confirm(`Are you sure you want to delete the template "${selectedTemplate}"?`)) {
+            const updatedTemplates = templates.filter(t => t.name !== selectedTemplate);
+            setTemplates(updatedTemplates);
+            setSelectedTemplate('');
+            addToLog(`🗑️ Template "${selectedTemplate}" deleted.`, 'info');
+        }
+    };
+
     return (
         <div className={styles.toolContainer}>
             <div className={styles.mainContent}>
@@ -272,6 +330,31 @@ export default function VCardClientTool() {
                             <label htmlFor="vcard-notes">Notes</label>
                             <textarea id="vcard-notes" value={vCardData.notes} onChange={(e) => setVCardData({ ...vCardData, notes: e.target.value })} placeholder="e.g., Met at the 2025 Tech Conference" rows="3" />
                         </div>
+                    </div>
+                    <div className={styles.formActions}>
+                        <button onClick={handleSaveTemplate} disabled={!vCardData.name} className={styles.saveTemplateButton}>Save as Template</button>
+                        <button onClick={handleClearForm} className={styles.clearFormButton}>Clear Form</button>
+                    </div>
+                    <div className={styles.templateContainer}>
+                        <h4>Templates</h4>
+                        <div className={styles.templateControls}>
+                            <select
+                                value={selectedTemplate}
+                                onChange={(e) => setSelectedTemplate(e.target.value)}
+                                className={styles.templateSelect}
+                                aria-label="Select a template"
+                            >
+                                <option value="">-- Select a Template --</option>
+                                {templates.map(t => <option key={t.name} value={t.name}>{t.name}</option>)}
+                            </select>
+                            <div className={styles.templateButtons}>
+                                <button onClick={handleLoadTemplate} disabled={!selectedTemplate}>Load</button>
+                                <button onClick={handleDeleteTemplate} disabled={!selectedTemplate} className={styles.deleteButton}>Delete</button>
+                            </div>
+                        </div>
+                        <p className={styles.privacyNote}>
+                            🔒 All information is stored locally in your browser. Nothing is shared with our servers.
+                        </p>
                     </div>
                 </div>
                 <div className={styles.sidebar}>

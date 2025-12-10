@@ -99,17 +99,26 @@
     background: var(--card-background);
     border: 1px solid var(--card-border);
     border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
     width: 100%;
-    text-align: center;
     font-size: 1rem;
 }
 
 .tagInfoContainer p {
     margin: 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .tagInfoContainer strong {
     color: var(--text-primary);
+    margin-right: 1rem;
+}
+
+.tagInfoContainer span {
+    color: var(--text-secondary);
 }
 .phonePreviewContainer {
     margin-top: 2rem;

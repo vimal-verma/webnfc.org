@@ -74,6 +74,35 @@
     grid-column: 1 / -1;
 }
 
+.formActions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.clearFormButton {
+    background: var(--button-secondary-hover);
+    color: var(--text-secondary);
+    border: 1px solid var(--button-secondary-border);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.saveTemplateButton {
+    background: #e3f2fd; /* Light blue */
+    color: #0d47a1;
+    border: 1px solid #90caf9;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
 .formGroup {
     display: flex;
     flex-direction: column;
@@ -260,6 +289,72 @@
     border-color: var(--card-border);
 }
 
+.templateContainer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--card-border);
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.templateContainer h4 {
+    margin: 0;
+    text-align: center;
+}
+
+.templateControls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.templateSelect {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background-color: var(--background-start-rgb);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.templateButtons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.templateButtons button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--button-secondary-border);
+    background: var(--button-secondary-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.templateButtons button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.templateButtons .deleteButton {
+    background-color: #ffebee;
+    border-color: #ef9a9a;
+    color: #c62828;
+}
+
+.privacyNote {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: var(--button-secondary-hover);
+    border-radius: 8px;
+}
 .logContainer {
     background: var(--card-background);
     border: 1px solid var(--card-border);
