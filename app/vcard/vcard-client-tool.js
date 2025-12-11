@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import PhonePreview from './PhonePreview';
 import { useSearchParams } from 'next/navigation';
@@ -82,7 +82,7 @@ export default function VCardClientTool() {
         }
     }, [templates]);
 
-    const vCardString = [
+    const vCardString = useMemo(() => [
         'BEGIN:VCARD',
         'VERSION:3.0',
         `FN:${vCardData.name}`,
@@ -99,7 +99,9 @@ export default function VCardClientTool() {
         vCardData.instagram ? `URL;type=instagram:https://instagram.com/${vCardData.instagram}` : null,
         vCardData.notes ? `NOTE:${vCardData.notes}` : null,
         'END:VCARD'
-    ].filter(Boolean).join('\n');
+    ].filter(Boolean).join('\n'),
+        [vCardData]
+    );
 
     // Calculate vCard size and tag suggestion whenever vCardString changes
     useEffect(() => {
@@ -194,18 +196,17 @@ export default function VCardClientTool() {
         addToLog('✅ vCard file (.vcf) downloaded.', 'success');
     };
 
-    const generateShareUrl = () => {
+    const shareUrl = useMemo(() => {
         const params = new URLSearchParams();
         Object.entries(vCardData).forEach(([key, value]) => {
             if (value) {
                 params.set(key, value);
             }
         });
-        return `${process.env.NEXT_PUBLIC_FRONTEND_URL}/vcard?${params.toString()}`;
-    };
+        return `${process.env.NEXT_PUBLIC_FRONTEND_URL || ''}/vcard?${params.toString()}`;
+    }, [vCardData]);
 
     const handleCopyToClipboard = () => {
-        const shareUrl = generateShareUrl();
         navigator.clipboard.writeText(shareUrl).then(() => {
             addToLog('✅ Share link copied to clipboard!', 'success');
         }, () => {
@@ -381,13 +382,13 @@ export default function VCardClientTool() {
                         <div className={styles.shareSection}>
                             <p>Or share it directly:</p>
                             <div className={styles.socialShareButtons}>
-                                <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(generateShareUrl())}&text=${encodeURIComponent('Check out my digital business card!')}`} target="_blank" rel="noopener noreferrer" className={`${styles.socialButton} ${styles.twitterButton}`} aria-label="Share on Twitter">
+                                <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent('Check out my digital business card!')}`} target="_blank" rel="noopener noreferrer" className={`${styles.socialButton} ${styles.twitterButton}`} aria-label="Share on Twitter">
                                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
                                 </a>
-                                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(generateShareUrl())}`} target="_blank" rel="noopener noreferrer" className={`${styles.socialButton} ${styles.facebookButton}`} aria-label="Share on Facebook">
+                                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className={`${styles.socialButton} ${styles.facebookButton}`} aria-label="Share on Facebook">
                                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06c0 5.52 4.5 10.02 10 10.02s10-4.5 10-10.02C22 6.53 17.5 2.04 12 2.04zM13.6 19.14v-7.1h2.37l.35-2.75h-2.72V7.52c0-.8.22-1.34 1.36-1.34h1.45V3.78c-.25-.03-.83-.08-1.57-.08-1.55 0-2.62.95-2.62 2.7v2.03h-2.63v2.75h2.63v7.1h3.2z"></path></svg>
                                 </a>
-                                <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent('Check out my digital business card: ' + generateShareUrl())}`} target="_blank" rel="noopener noreferrer" className={`${styles.socialButton} ${styles.whatsappButton}`} aria-label="Share on WhatsApp">
+                                <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent('Check out my digital business card: ' + shareUrl)}`} target="_blank" rel="noopener noreferrer" className={`${styles.socialButton} ${styles.whatsappButton}`} aria-label="Share on WhatsApp">
                                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.42 1.29 4.89L2 22l5.25-1.38c1.41.78 2.99 1.21 4.66 1.21h.12c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zM17.5 14.3c-.28-.14-1.65-.81-1.9-.91-.26-.1-.45-.14-.64.14-.19.28-.72.91-.88 1.1-.16.19-.32.21-.59.07-.28-.14-1.17-.43-2.23-1.38-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.13-.13.28-.32.42-.48.14-.16.19-.28.28-.47.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.24-.56-.48-.48-.64-.49-.16-.01-.35-.01-.54-.01s-.45.07-.68.35c-.24.28-.92 1.01-1.12 2.46-.21 1.45.5 2.86.57 3.07.07.21 1.87 2.99 4.53 4.22 2.66 1.23 2.66.82 3.14.77.48-.05 1.65-.68 1.88-1.33.24-.65.24-1.21.16-1.33-.07-.12-.26-.2-.54-.34z"></path></svg>
                                 </a>
                                 <button onClick={handleCopyToClipboard} className={`${styles.socialButton} ${styles.copyButton}`} aria-label="Copy share link">

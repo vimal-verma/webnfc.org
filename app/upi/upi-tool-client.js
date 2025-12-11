@@ -430,7 +430,7 @@ export default function UpiToolClient() {
             {/* Log Output */}
             <div className={styles.logContainer}>
                 <p className={styles.privacyNote}>
-                    🔒 All information is stored locally in your browser. Nothing is shared with our servers, Also verify links and QR before sharing.
+                    🔒 All information is stored locally in your browser. Nothing is shared with our servers. Always verify generated QR codes and links before sharing.
                 </p>
                 <div className={styles.logHeader}>
                     <h3>Log</h3>

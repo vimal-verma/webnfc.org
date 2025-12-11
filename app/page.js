@@ -13,7 +13,7 @@ export const metadata = {
     description: 'The ultimate resource for learning and using Web NFC technology directly in your browser.',
     url: 'https://webnfc.org',
     siteName: 'WebNfc',
-    images: '/og-image.png', // A dedicated Open Graph image (1200x630px) is recommended
+    images: '/logo.jpg',
     type: 'website',
   },
 };
