@@ -2,27 +2,28 @@ import "./globals.css";
 import Header from "../app/components/Header";
 import Footer from "../app/components/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
+import ServiceWorkerRegistrar from "./components/ServiceWorkerRegistrar";
 
 
 export const metadata = {
   metadataBase: new URL('https://webnfc.org'),
   title: {
-    default: 'WebNfc | The Future of Networking',
+    default: 'WebNfc | NFC Tools & Guide',
     template: '%s | WebNfc',
   },
-  description: "Create and customize your own NFC-powered business cards. Make a lasting impression with a single tap. Order online for fast delivery.",
+  description: "Leading Web NFC tools and resources to read, write, and manage NFC tags directly from your browser.",
   manifest: '/manifest.json',
-  keywords: ['NFC business cards', 'digital business cards', 'custom NFC cards', 'smart business cards', 'NFC technology', 'networking', 'contactless cards', 'NFC card design', 'digital networking', 'NFC card printing', 'Customizable NFC cards', 'Eco-friendly business cards', 'NFC card solutions', 'Professional networking tools', 'Design Your NFC Card', 'NFC Card Features', 'NFC Card Pricing', 'Order NFC Cards Online', 'low cost NFC cards', 'NFC card reviews', 'NFC card blog', 'NFC card contact', 'NFC card FAQ', 'NFC Tool for web', 'NFC card templates', 'NFC card ideas'],
+  keywords: ['NFC tools', 'Web NFC guide', 'NFC tag reader', 'NFC tag writer', 'vCard generator', 'NFC business cards', 'Contactless technology', 'NFC tutorials', 'WebNFC API', 'NFC applications', 'Digital business cards', 'Custom NFC cards', 'Smart business cards', 'NFC technology', 'Networking', 'Contactless cards', 'NFC card design', 'Digital networking', 'NFC card printing', 'Customizable NFC cards', 'Eco-friendly business cards', 'NFC card solutions', 'Professional networking tools', 'Design your NFC card', 'NFC card features', 'NFC card pricing', 'Order NFC cards online', 'Low cost NFC cards', 'NFC card reviews', 'NFC card blog', 'NFC card contact', 'NFC card FAQ'],
   openGraph: {
-    title: 'WebNfc | The Future of Networking',
-    description: 'Create and customize your own NFC-powered business cards.',
+    title: 'WebNfc | NFC Tools & Guide',
+    description: 'Leading Web NFC tools and resources to read, write, and manage NFC tags directly from your browser.',
     url: 'https://webnfc.org',
     siteName: 'WebNfc',
-    images: '/og-image.png', // Add a default Open Graph image to your /public folder
+    images: '/logo.jpg',
     type: 'website',
   },
   icons: {
-    icon: '/logo.png',
+    icon: '/globe-white.jpg',
   },
 };
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
           <Header />
           <main className="main-content">{children}</main>
           <Footer />
+          <ServiceWorkerRegistrar />
         </ThemeProvider>
       </body>
     </html>
