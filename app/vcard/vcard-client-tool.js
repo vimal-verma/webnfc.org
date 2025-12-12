@@ -5,12 +5,18 @@ import { QRCodeCanvas } from 'qrcode.react';
 import PhonePreview from './PhonePreview';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
+import { downloadQRCode } from '../utils/qr-downloader';
 
 const initialVCardState = {
     name: '', phone: '', email: '', website: '', organization: '',
     title: '', street: '', city: '', state: '', zip: '', country: '',
     linkedin: '', twitter: '', instagram: '', notes: '',
 };
+
+const availableBackgrounds = Array.from(
+    { length: 1 },
+    (_, i) => `/backgrounds/qr-code/vcard${i + 1}.png`
+);
 
 export default function VCardClientTool() {
     const [log, setLog] = useState([]);
@@ -22,6 +28,15 @@ export default function VCardClientTool() {
     const [tagSuggestionMessage, setTagSuggestionMessage] = useState('');
     const [templates, setTemplates] = useState([]);
     const [selectedTemplate, setSelectedTemplate] = useState('');
+
+    const [isQrEditorExpanded, setIsQrEditorExpanded] = useState(false);
+    const [qrFgColor, setQrFgColor] = useState('#000000');
+    const [qrBgColor, setQrBgColor] = useState('#ffffff');
+    const [qrLogo, setQrLogo] = useState(null);
+    const [qrLogoSize, setQrLogoSize] = useState(40);
+    const [stylishBg, setStylishBg] = useState(null);
+    const [stylishText, setStylishText] = useState('Scan to Save Contact');
+    const [stylishTextColor, setStylishTextColor] = useState('#000000');
 
     useEffect(() => {
         // Load templates from localStorage on mount
@@ -61,6 +76,21 @@ export default function VCardClientTool() {
                 addToLog('Could not load data from previous session.', 'error');
             }
         }
+
+        try {
+            const savedQrData = localStorage.getItem('vCardQrEditorData');
+            if (savedQrData) {
+                const data = JSON.parse(savedQrData);
+                setQrFgColor(data.qrFgColor || '#000000');
+                setQrBgColor(data.qrBgColor || '#ffffff');
+                setQrLogo(data.qrLogo || null);
+                setQrLogoSize(data.qrLogoSize || 40);
+                setStylishText(data.stylishText || 'Scan to Save Contact');
+                setStylishTextColor(data.stylishTextColor || '#000000');
+            }
+        } catch (error) {
+            console.error("Failed to load QR editor data from localStorage", error);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Run only on initial load
 
@@ -81,6 +111,18 @@ export default function VCardClientTool() {
             console.error("Failed to save templates to localStorage", error);
         }
     }, [templates]);
+
+    useEffect(() => {
+        try {
+            const dataToSave = {
+                qrFgColor, qrBgColor, qrLogo, qrLogoSize,
+                stylishText, stylishTextColor
+            };
+            localStorage.setItem('vCardQrEditorData', JSON.stringify(dataToSave));
+        } catch (error) {
+            console.error("Failed to save QR editor data to localStorage", error);
+        }
+    }, [qrFgColor, qrBgColor, qrLogo, qrLogoSize, stylishText, stylishTextColor]);
 
     const vCardString = useMemo(() => [
         'BEGIN:VCARD',
@@ -160,19 +202,19 @@ export default function VCardClientTool() {
         }
     };
 
-    const handleDownloadQR = () => {
-        if (!qrCodeRef.current) return;
-        const canvas = qrCodeRef.current.querySelector('canvas');
-        const pngUrl = canvas
-            .toDataURL("image/png")
-            .replace("image/png", "image/octet-stream");
-        let downloadLink = document.createElement("a");
-        downloadLink.href = pngUrl;
-        downloadLink.download = `${vCardData.name.replace(/\s+/g, '_') || 'vcard'}_webnfc.org_qr.png`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        addToLog('✅ QR Code downloaded.', 'success');
+    const handleDownloadQR = (isStylish = false) => {
+        const base = vCardData.name.replace(/\s+/g, '_') || 'vcard';
+        const filename = isStylish ? `${base}_stylish_webnfc.org_qr.png` : `${base}_webnfc.org_qr.png`;
+        downloadQRCode({
+            qrCodeRef,
+            filename,
+            isStylish,
+            qrBgColor,
+            stylishText,
+            stylishTextColor,
+            stylishBg,
+            addToLog
+        });
     };
 
     const handleSaveVCard = () => {
@@ -260,6 +302,36 @@ export default function VCardClientTool() {
             addToLog(`🗑️ Template "${selectedTemplate}" deleted.`, 'info');
         }
     };
+
+    const handleLogoUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setQrLogo(reader.result);
+                addToLog('✅ Logo added to QR code.', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const removeLogo = () => {
+        setQrLogo(null);
+        const fileInput = document.getElementById('qr-logo-input');
+        if (fileInput) fileInput.value = '';
+        addToLog('Logo removed from QR code.', 'info');
+    };
+
+    const handleStylishBgUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => setStylishBg(reader.result);
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleStylishBgSelect = (bgUrl) => setStylishBg(bgUrl);
 
     return (
         <div className={styles.toolContainer}>
@@ -356,6 +428,87 @@ export default function VCardClientTool() {
                         <p className={styles.privacyNote}>
                             🔒 All information is stored locally in your browser. Nothing is shared with our servers.
                         </p>
+
+                        <button
+                            onClick={() => setIsQrEditorExpanded(!isQrEditorExpanded)}
+                            className={styles.expanderButton}
+                            aria-expanded={isQrEditorExpanded}
+                            aria-controls="qr-editor-section"
+                        >
+                            Advanced QR Editor {isQrEditorExpanded ? '▲' : '▼'}
+                        </button>
+
+                        {isQrEditorExpanded && (
+                            <div id="qr-editor-section" className={styles.qrEditor} aria-describedby="qr-editor-note">
+                                <div className={styles.editorRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="qrFgColor">QR Color</label>
+                                        <input id="qrFgColor" type="color" value={qrFgColor} onChange={(e) => setQrFgColor(e.target.value)} className={styles.colorInput} />
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="qrBgColor">Background Color</label>
+                                        <input id="qrBgColor" type="color" value={qrBgColor} onChange={(e) => setQrBgColor(e.target.value)} className={styles.colorInput} />
+                                    </div>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="qr-logo-input">Add Logo</label>
+                                    <input id="qr-logo-input" type="file" accept="image/png, image/jpeg, image/svg+xml" onChange={handleLogoUpload} className={styles.fileInput} />
+                                    {qrLogo && (
+                                        <button onClick={removeLogo} className={styles.removeLogoButton}>Remove Logo</button>
+                                    )}
+                                </div>
+                                {qrLogo && (
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="qrLogoSize">Logo Size: {qrLogoSize}px</label>
+                                        <input
+                                            id="qrLogoSize"
+                                            type="range"
+                                            min="20"
+                                            max="80"
+                                            value={qrLogoSize}
+                                            onChange={(e) => setQrLogoSize(Number(e.target.value))}
+                                            className={styles.sliderInput}
+                                        />
+                                    </div>
+                                )}
+                                <p id="qr-editor-note" className={styles.editorNote}>
+                                    Note: Adding a logo or using complex colors may reduce QR code scannability. Always test before printing.
+                                </p>
+
+                                <hr className={styles.divider} />
+
+                                <h4 className={styles.editorSubheading}>Stylish Download Options</h4>
+                                <div className={styles.formGroup}>
+                                    <label>Or Select from Gallery</label>
+                                    <div className={styles.backgroundSelector}>
+                                        {availableBackgrounds.map((bg) => (
+                                            <button
+                                                key={bg}
+                                                className={`${styles.backgroundPreview} ${stylishBg === bg ? styles.backgroundSelected : ''}`}
+                                                onClick={() => handleStylishBgSelect(bg)}
+                                                style={{ backgroundImage: `url(${bg})` }}
+                                                aria-label={`Select background ${bg.split('/').pop().split('.')[0]}`}
+                                            ></button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="stylish-bg-input">Or Upload Background</label>
+                                    <input id="stylish-bg-input" type="file" accept="image/png, image/jpeg" onChange={handleStylishBgUpload} className={styles.fileInput} />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="stylishText">Display Text</label>
+                                    <input id="stylishText" type="text" value={stylishText} onChange={(e) => setStylishText(e.target.value)} placeholder="e.g., Scan to Save Contact" />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="stylishTextColor">Text Color</label>
+                                    <input id="stylishTextColor" type="color" value={stylishTextColor} onChange={(e) => setStylishTextColor(e.target.value)} className={styles.colorInput} />
+                                </div>
+                                <button onClick={() => handleDownloadQR(true)} disabled={!vCardData.name} className={styles.stylishDownloadButton}>
+                                    Download Stylish QR
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className={styles.sidebar}>
@@ -363,7 +516,20 @@ export default function VCardClientTool() {
                         <h4>Your QR Code</h4>
                         <p>Scan this to instantly save the contact.</p>
                         <div className={styles.qrCodeWrapper} ref={qrCodeRef}>
-                            <QRCodeCanvas value={vCardString} size={256} bgColor={"#ffffff"} fgColor={"#000000"} level={"L"} includeMargin={true} />
+                            <QRCodeCanvas
+                                value={vCardString}
+                                size={256}
+                                bgColor={qrBgColor}
+                                fgColor={qrFgColor}
+                                level={"H"}
+                                includeMargin={true}
+                                imageSettings={qrLogo ? {
+                                    src: qrLogo,
+                                    height: qrLogoSize,
+                                    width: qrLogoSize,
+                                    excavate: true,
+                                } : undefined}
+                            />
                         </div>
                         {vCardData.name && ( // Only show size if there's actual data
                             <div className={styles.vcardSizeInfo}>
@@ -372,7 +538,7 @@ export default function VCardClientTool() {
                             </div>
                         )}
                         <div className={styles.downloadButtonsContainer}>
-                            <button onClick={handleDownloadQR} className={styles.downloadButton} disabled={!vCardData.name}>
+                            <button onClick={() => handleDownloadQR(false)} className={styles.downloadButton} disabled={!vCardData.name}>
                                 Download QR
                             </button>
                             <button onClick={handleSaveVCard} className={`${styles.downloadButton} ${styles.vcfButton}`} disabled={!vCardData.name}>
