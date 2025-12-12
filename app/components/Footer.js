@@ -57,6 +57,7 @@ export default function Footer() {
                         <Link href="/email">Email Tool</Link>
                         <Link href="/sms">SMS Tool</Link>
                         <Link href="/url">URL Tool</Link>
+                        <Link href="/location">Location Tool</Link>
                         <Link href="/wifi">WiFi Tool</Link>
                         <Link href="/event">Event Tool</Link>
                     </div>

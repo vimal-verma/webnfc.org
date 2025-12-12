@@ -1,6 +1,7 @@
 import { Suspense, Fragment } from 'react';
 import VCardClientTool from './vcard-client-tool';
 import styles from './page.module.css';
+import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free vCard Generator with QR Code & Shareable Link | WebNfc',
@@ -90,6 +91,7 @@ export default function VCardPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
+            <SecondaryNav />
             <div className={styles.container}>
                 <header className={styles.hero}>
                     <h1 className={styles.title}>Free Digital Business Card & vCard Generator</h1>

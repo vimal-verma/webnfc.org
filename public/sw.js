@@ -52,20 +52,28 @@ self.addEventListener('fetch', (event) => {
     }
 
     event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                // If the request is in the cache, return it.
-                if (response) {
-                    return response;
-                }
-                // If the request is not in the cache, fetch it from the network.
-                return fetch(event.request).catch(() => {
+        caches.match(event.request).then((cachedResponse) => {
+            const fetchPromise = fetch(event.request)
+                .then((networkResponse) => {
+                    // Update the cache with the new response
+                    if (networkResponse && networkResponse.status === 200) {
+                        const responseToCache = networkResponse.clone();
+                        caches.open(CACHE_NAME).then((cache) => {
+                            cache.put(event.request, responseToCache);
+                        });
+                    }
+                    return networkResponse;
+                })
+                .catch(() => {
                     // If the network request fails (e.g., user is offline),
                     // return the offline fallback page for navigation requests.
                     if (event.request.mode === 'navigate') {
                         return caches.match('/offline.html');
                     }
                 });
-            })
+
+            // Return the cached response if we have it, otherwise return the network response.
+            return cachedResponse || fetchPromise;
+        })
     );
 });

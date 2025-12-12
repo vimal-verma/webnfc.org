@@ -14,6 +14,11 @@
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
   --hero-background: transparent;
+  --secondary-nav-bg: #f9f9f9;
+  --secondary-nav-hover-bg: #f0f0f0;
+  --text-color-secondary: #555;
+  --primary-color: #0070f3;
+  --border-color: #eaeaea;
 }
 
 .dark {
@@ -33,6 +38,10 @@
     --shadow-md: 0 8px 24px rgba(255, 255, 255, 0.08);
     --hero-background: radial-gradient(ellipse at top, #1a202c, transparent),
     radial-gradient(ellipse at bottom, #1a202c, transparent);
+    --secondary-nav-bg: #1c1c1c;
+    --secondary-nav-hover-bg: #2c2c2c;
+    --text-color-secondary: #aaa;
+    --border-color: #333;
 }
 
 html,

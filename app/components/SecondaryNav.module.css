@@ -1,0 +1,39 @@
+.secondaryNav {
+    background-color: var(--secondary-nav-bg);
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+
+.secondaryNav::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.scrollContainer {
+    display: flex;
+    padding: 0.5rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navLink {
+    padding: 0.5rem 1rem;
+    color: var(--text-color-secondary);
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.navLink:hover {
+    background-color: var(--secondary-nav-hover-bg);
+    color: var(--text-color);
+}
+
+.navLink.active {
+    background-color: var(--primary-color);
+    color: white;
+}

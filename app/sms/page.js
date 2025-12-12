@@ -1,6 +1,7 @@
 import SmsToolClient from './sms-tool-client';
 import styles from './sms.module.css';
 import { Fragment } from 'react';
+import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free SMS QR Code Generator & NFC Writer | WebNfc',
@@ -64,6 +65,7 @@ export default function SmsPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
+            <SecondaryNav />
             <SmsToolClient />
         </Fragment>
     );

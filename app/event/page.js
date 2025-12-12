@@ -1,5 +1,6 @@
 import EventToolClient from './event-tool-client';
 import { Fragment } from 'react';
+import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free Event QR Code Generator & NFC Writer | WebNfc',
@@ -63,6 +64,7 @@ export default function EventPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
+            <SecondaryNav />
             <EventToolClient />
         </Fragment>
     );
