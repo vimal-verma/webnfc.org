@@ -2,18 +2,19 @@
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
-import styles from './location.module.css';
+import styles from './event.module.css';
 
 const availableBackgrounds = Array.from(
     { length: 4 },
-    (_, i) => `/backgrounds/qr-code/location${i + 1}.png`
+    (_, i) => `/backgrounds/qr-code/event${i + 1}.png`
 );
 
-export default function LocationToolClient() {
-    const [mode, setMode] = useState('coords'); // 'coords' or 'digipin'
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
-    const [digipin, setDigipin] = useState('');
+export default function EventToolClient() {
+    const [title, setTitle] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [location, setLocation] = useState('');
+    const [description, setDescription] = useState('');
     const [log, setLog] = useState([]);
     const [isWriting, setIsWriting] = useState(false);
     const [isQrEditorExpanded, setIsQrEditorExpanded] = useState(false);
@@ -22,25 +23,26 @@ export default function LocationToolClient() {
     const [qrLogo, setQrLogo] = useState(null);
     const [qrLogoSize, setQrLogoSize] = useState(40);
     const [stylishBg, setStylishBg] = useState(null);
-    const [stylishText, setStylishText] = useState('Scan for Location');
+    const [stylishText, setStylishText] = useState('Scan to Save Event');
     const [stylishTextColor, setStylishTextColor] = useState('#000000');
     const qrCodeRef = useRef(null);
 
     // Load state from localStorage on component mount
     useEffect(() => {
         try {
-            const savedData = localStorage.getItem('locationToolData');
+            const savedData = localStorage.getItem('eventToolData');
             if (savedData) {
                 const data = JSON.parse(savedData);
-                setMode(data.mode || 'coords');
-                setLatitude(data.latitude || '');
-                setLongitude(data.longitude || '');
-                setDigipin(data.digipin || '');
+                setTitle(data.title || '');
+                setStartDate(data.startDate || '');
+                setEndDate(data.endDate || '');
+                setLocation(data.location || '');
+                setDescription(data.description || '');
                 setQrFgColor(data.qrFgColor || '#000000');
                 setQrBgColor(data.qrBgColor || '#ffffff');
                 setQrLogo(data.qrLogo || null);
                 setQrLogoSize(data.qrLogoSize || 40);
-                setStylishText(data.stylishText || 'Scan for Location');
+                setStylishText(data.stylishText || 'Scan to Save Event');
                 setStylishTextColor(data.stylishTextColor || '#000000');
             }
         } catch (error) {
@@ -52,56 +54,48 @@ export default function LocationToolClient() {
     useEffect(() => {
         try {
             const dataToSave = {
-                mode, latitude, longitude, digipin,
+                title, startDate, endDate, location, description,
                 qrFgColor, qrBgColor, qrLogo, qrLogoSize,
                 stylishText, stylishTextColor
             };
-            localStorage.setItem('locationToolData', JSON.stringify(dataToSave));
+            localStorage.setItem('eventToolData', JSON.stringify(dataToSave));
         } catch (error) {
             console.error("Failed to save data to localStorage", error);
         }
-    }, [mode, latitude, longitude, digipin, qrFgColor, qrBgColor, qrLogo, qrLogoSize, stylishText, stylishTextColor]);
+    }, [title, startDate, endDate, location, description, qrFgColor, qrBgColor, qrLogo, qrLogoSize, stylishText, stylishTextColor]);
 
     const addToLog = useCallback((message, type = 'info') => {
         const formattedMessage = message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         setLog(prev => [`<span class="${styles[type]}">[${new Date().toLocaleTimeString()}] ${formattedMessage}</span>`, ...prev]);
     }, []);
 
-    const qrData = useMemo(() => {
-        if (mode === 'coords') {
-            if (!latitude || !longitude) return '';
-            return `geo:${latitude},${longitude}`;
-        }
-        if (mode === 'digipin') {
-            if (!digipin) return '';
-            // Using a community-driven resolver as official portal lacks direct linking
-            return `https://digi-pin.in/?pin=${digipin}`;
-        }
-        return '';
-    }, [mode, latitude, longitude, digipin]);
-
-    const handleGetCurrentLocation = () => {
-        if (!navigator.geolocation) {
-            addToLog('Geolocation is not supported by your browser.', 'error');
-            return;
-        }
-
-        addToLog('Fetching current location...', 'info');
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                setLatitude(position.coords.latitude.toFixed(6));
-                setLongitude(position.coords.longitude.toFixed(6));
-                addToLog(`✅ Location found: ${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`, 'success');
-            },
-            (error) => {
-                addToLog(`Error fetching location: ${error.message}`, 'error');
-            }
-        );
+    const formatToICalDate = (dateStr) => {
+        if (!dateStr) return '';
+        // Remove dashes and colons, append 00 for seconds if needed
+        return dateStr.replace(/[-:]/g, '') + '00';
     };
 
+    const eventData = useMemo(() => {
+        if (!title || !startDate || !endDate) return '';
+        const start = formatToICalDate(startDate);
+        const end = formatToICalDate(endDate);
+
+        // Basic vCalendar 2.0 format
+        return `BEGIN:VCALENDAR\r
+VERSION:2.0\r
+BEGIN:VEVENT\r
+SUMMARY:${title}\r
+DTSTART:${start}\r
+DTEND:${end}\r
+LOCATION:${location || ''}\r
+DESCRIPTION:${description || ''}\r
+END:VEVENT\r
+END:VCALENDAR`;
+    }, [title, startDate, endDate, location, description]);
+
     const handleWriteNfc = async () => {
-        if (!qrData) {
-            addToLog('Please fill in the required fields first.', 'error');
+        if (!eventData) {
+            addToLog('Please fill in the Event Title, Start Date, and End Date.', 'error');
             return;
         }
 
@@ -115,12 +109,13 @@ export default function LocationToolClient() {
             setIsWriting(true);
             addToLog('Scan started. Bring a tag close to your device to write.', 'info');
 
+            // Writing as text/vcalendar or plain text usually works for Android to recognize it
             await ndef.write({
-                records: [{ recordType: "url", data: qrData }]
+                records: [{ recordType: "mime", mediaType: "text/x-vcalendar", data: eventData }]
             });
 
-            addToLog(`✅ Successfully wrote link to NFC tag!`, 'success');
-            addToLog(`Data Written: ${qrData}`, 'info');
+            addToLog(`✅ Successfully wrote Event to NFC tag!`, 'success');
+            addToLog(`Event Written: ${title}`, 'info');
 
         } catch (error) {
             if (error.name === 'NotAllowedError') {
@@ -149,9 +144,7 @@ export default function LocationToolClient() {
             return;
         }
 
-        const filename = mode === 'coords'
-            ? `location_${latitude}_${longitude}_webnfc.org_qr.png`
-            : `digipin_${digipin}_webnfc.org_qr.png`;
+        const filename = `event_${title.replace(/\s+/g, '_')}_webnfc.org_qr.png`;
 
         if (!isStylish) {
             // Simple QR code download
@@ -211,11 +204,11 @@ export default function LocationToolClient() {
     };
 
     const handleCopyLink = () => {
-        if (!qrData) return;
-        navigator.clipboard.writeText(qrData).then(() => {
-            addToLog(`✅ ${mode === 'coords' ? 'Geo link' : 'DigiPin link'} copied to clipboard!`, 'success');
+        if (!eventData) return;
+        navigator.clipboard.writeText(eventData).then(() => {
+            addToLog('✅ Event data copied to clipboard!', 'success');
         }, () => {
-            addToLog(`Failed to copy ${mode === 'coords' ? 'Geo link' : 'DigiPin link'}.`, 'error');
+            addToLog('Failed to copy Event data.', 'error');
         });
     };
 
@@ -257,81 +250,65 @@ export default function LocationToolClient() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1>Location QR & NFC Writer</h1>
-                <p>Generate a Location QR code and write it to an NFC tag.</p>
+                <h1>Event QR & NFC Writer</h1>
+                <p>Generate an Event QR code and write it to an NFC tag.</p>
             </div>
 
             <div className={styles.toolLayout}>
                 {/* Input Form */}
                 <div className={styles.form}>
-                    <div className={styles.modeSwitcher}>
-                        <button
-                            className={`${styles.modeButton} ${mode === 'coords' ? styles.modeButtonActive : ''}`}
-                            onClick={() => setMode('coords')}
-                        >
-                            Coordinates
-                        </button>
-                        <button
-                            className={`${styles.modeButton} ${mode === 'digipin' ? styles.modeButtonActive : ''}`}
-                            onClick={() => setMode('digipin')}
-                        >
-                            DigiPin (India)
-                        </button>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="title">Event Title *</label>
+                        <input
+                            id="title"
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            aria-required="true"
+                            placeholder="Birthday Party"
+                            required
+                        />
                     </div>
-
-                    {mode === 'coords' && (
-                        <>
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="latitude">Latitude *</label>
-                                <input
-                                    id="latitude"
-                                    type="number"
-                                    step="any"
-                                    value={latitude}
-                                    onChange={(e) => setLatitude(e.target.value)}
-                                    aria-required="true"
-                                    placeholder="e.g. 37.7749"
-                                    required
-                                />
-                            </div>
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="longitude">Longitude *</label>
-                                <input
-                                    id="longitude"
-                                    type="number"
-                                    step="any"
-                                    value={longitude}
-                                    onChange={(e) => setLongitude(e.target.value)}
-                                    aria-required="true"
-                                    placeholder="e.g. -122.4194"
-                                    required
-                                />
-                            </div>
-                            <button
-                                onClick={handleGetCurrentLocation}
-                                className={styles.copyButton}
-                                style={{ marginTop: '-1rem' }}
-                            >
-                                📍 Use Current Location
-                            </button>
-                        </>
-                    )}
-
-                    {mode === 'digipin' && (
-                        <div className={styles.inputGroup}>
-                            <label htmlFor="digipin">DigiPin *</label>
-                            <input
-                                id="digipin"
-                                type="text"
-                                value={digipin}
-                                onChange={(e) => setDigipin(e.target.value.toUpperCase())}
-                                aria-required="true"
-                                placeholder="e.g. ABC-12X-Y34Z"
-                                maxLength="12"
-                                required
-                            />
-                        </div>
-                    )}
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="startDate">Start Date & Time *</label>
+                        <input
+                            id="startDate"
+                            type="datetime-local"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="endDate">End Date & Time *</label>
+                        <input
+                            id="endDate"
+                            type="datetime-local"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="location">Location (Optional)</label>
+                        <input
+                            id="location"
+                            type="text"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            placeholder="123 Main St, City"
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="description">Description (Optional)</label>
+                        <textarea
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Details about the event..."
+                            rows={3}
+                        />
+                    </div>
 
                     <button
                         onClick={() => setIsQrEditorExpanded(!isQrEditorExpanded)}
@@ -402,13 +379,13 @@ export default function LocationToolClient() {
                             </div>
                             <div className={styles.inputGroup}>
                                 <label htmlFor="stylishText">Display Text</label>
-                                <input id="stylishText" type="text" value={stylishText} onChange={(e) => setStylishText(e.target.value)} placeholder="e.g., Scan for Location" />
+                                <input id="stylishText" type="text" value={stylishText} onChange={(e) => setStylishText(e.target.value)} placeholder="e.g., Scan to Save Event" />
                             </div>
                             <div className={styles.inputGroup}>
                                 <label htmlFor="stylishTextColor">Text Color</label>
                                 <input id="stylishTextColor" type="color" value={stylishTextColor} onChange={(e) => setStylishTextColor(e.target.value)} className={styles.colorInput} />
                             </div>
-                            <button onClick={() => handleDownloadQR(true)} disabled={!qrData} className={styles.stylishDownloadButton}>
+                            <button onClick={() => handleDownloadQR(true)} disabled={!eventData} className={styles.stylishDownloadButton}>
                                 Download Stylish QR
                             </button>
 
@@ -419,9 +396,9 @@ export default function LocationToolClient() {
                 {/* QR Code and Actions */}
                 <div className={styles.output}>
                     <div className={styles.qrContainer} ref={qrCodeRef}>
-                        {qrData ? (
+                        {eventData ? (
                             <QRCodeCanvas
-                                value={qrData}
+                                value={eventData}
                                 size={256}
                                 includeMargin={true}
                                 level="H" // High error correction for logo
@@ -444,31 +421,24 @@ export default function LocationToolClient() {
                     <div className={styles.buttonGroup}>
                         <button
                             onClick={handleWriteNfc}
-                            disabled={isWriting || !qrData}
+                            disabled={isWriting || !eventData}
                             className={styles.actionButton}
                         >
                             {isWriting ? 'Writing...' : 'Write to NFC Tag'}
                         </button>
                         <button
                             onClick={() => handleDownloadQR(false)}
-                            disabled={!qrData}
+                            disabled={!eventData}
                             className={styles.downloadButton}
                         >
                             Download QR
                         </button>
                         <button
                             onClick={handleCopyLink}
-                            disabled={!qrData}
+                            disabled={!eventData}
                             className={styles.copyButton}
                         >
-                            Copy {mode === 'coords' ? 'Geo Link' : 'DigiPin Link'}
-                        </button>
-                        <button
-                            onClick={() => window.open(qrData, '_self')}
-                            disabled={!qrData}
-                            className={styles.copyButton}
-                        >
-                            Open {mode === 'coords' ? 'Geo Link' : 'DigiPin Link'}
+                            Copy Event Data
                         </button>
                     </div>
                 </div>

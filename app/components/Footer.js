@@ -51,6 +51,15 @@ export default function Footer() {
                         <Link href="/write-nfc">Write NFC Tag</Link>
                         <Link href="/nfc-tool">Legacy NFC Tool</Link>
                     </div>
+                    <div className={styles.linkColumn}>
+                        <h4>Our Tools</h4>
+                        <Link href="/call">Call Tool</Link>
+                        <Link href="/email">Email Tool</Link>
+                        <Link href="/sms">SMS Tool</Link>
+                        <Link href="/url">URL Tool</Link>
+                        <Link href="/wifi">WiFi Tool</Link>
+                        <Link href="/event">Event Tool</Link>
+                    </div>
                 </div>
                 <div className={styles.newsletter}>
                     <h4>Subscribe to our Newsletter</h4>
