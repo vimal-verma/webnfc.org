@@ -111,9 +111,10 @@ END:VCALENDAR`;
             setIsWriting(true);
             addToLog('Scan started. Bring a tag close to your device to write.', 'info');
 
-            // Writing as text/vcalendar or plain text usually works for Android to recognize it
+            const encoder = new TextEncoder();
+            // Writing as text/calendar (iCalendar format)
             await ndef.write({
-                records: [{ recordType: "mime", mediaType: "text/x-vcalendar", data: eventData }]
+                records: [{ recordType: "mime", mediaType: "text/calendar", data: encoder.encode(eventData) }]
             });
 
             addToLog(`✅ Successfully wrote Event to NFC tag!`, 'success');

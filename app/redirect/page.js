@@ -18,9 +18,11 @@ export default async function RedirectPage({ searchParams }) {
         redirect(url);
     }
 
+
     // This content will be shown if no URL is provided.
     return (
         <Fragment>
+            <meta httpEquiv="refresh" content="5;url=/" />
             <div className={styles.container}>
                 <header className={styles.header}>
                     <h1 className={styles.title}>URL Redirector</h1>
@@ -34,6 +36,7 @@ export default async function RedirectPage({ searchParams }) {
                     <p><strong>Example:</strong> <code>/redirect?url=https://webnfc.org</code></p>
                 </div>
                 <p className={styles.error}>No URL provided. Please specify a <code>url</code> query parameter to redirect.</p>
+                <p>Redirecting to home page in 3 seconds...</p>
             </div>
         </Fragment>
     );
