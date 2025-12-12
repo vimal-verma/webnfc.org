@@ -1,0 +1,430 @@
+'use client';
+
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { QRCodeCanvas } from 'qrcode.react';
+import styles from './wifi.module.css';
+
+const availableBackgrounds = Array.from(
+    { length: 1 },
+    (_, i) => `/backgrounds/qr-code/wifi${i + 1}.png`
+);
+
+export default function WIFIToolClient() {
+    const [ssid, setSsid] = useState('');
+    const [password, setPassword] = useState('');
+    const [encryption, setEncryption] = useState('WPA');
+    const [hidden, setHidden] = useState(false);
+    const [log, setLog] = useState([]);
+    const [isWriting, setIsWriting] = useState(false);
+    const [isQrEditorExpanded, setIsQrEditorExpanded] = useState(false);
+    const [qrFgColor, setQrFgColor] = useState('#000000');
+    const [qrBgColor, setQrBgColor] = useState('#ffffff');
+    const [qrLogo, setQrLogo] = useState(null);
+    const [qrLogoSize, setQrLogoSize] = useState(40);
+    const [stylishBg, setStylishBg] = useState(null);
+    const [stylishText, setStylishText] = useState('Scan to Connect');
+    const [stylishTextColor, setStylishTextColor] = useState('#000000');
+    const qrCodeRef = useRef(null);
+
+    // Load state from localStorage on component mount
+    useEffect(() => {
+        try {
+            const savedData = localStorage.getItem('wifiToolData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                setSsid(data.ssid || '');
+                setPassword(data.password || '');
+                setEncryption(data.encryption || 'WPA');
+                setHidden(data.hidden || false);
+                setQrFgColor(data.qrFgColor || '#000000');
+                setQrBgColor(data.qrBgColor || '#ffffff');
+                setQrLogo(data.qrLogo || null);
+                setQrLogoSize(data.qrLogoSize || 40);
+                setStylishText(data.stylishText || 'Scan to Connect');
+                setStylishTextColor(data.stylishTextColor || '#000000');
+                // Not loading stylishBg from localStorage to avoid storing large data URLs unnecessarily on every change.
+            }
+        } catch (error) {
+            console.error("Failed to load data from localStorage", error);
+        }
+    }, []);
+
+    // Save state to localStorage on change
+    useEffect(() => {
+        try {
+            const dataToSave = {
+                ssid, password, encryption, hidden,
+                qrFgColor, qrBgColor, qrLogo, qrLogoSize,
+                stylishText, stylishTextColor
+            };
+            localStorage.setItem('wifiToolData', JSON.stringify(dataToSave));
+        } catch (error) {
+            console.error("Failed to save data to localStorage", error);
+        }
+    }, [ssid, password, encryption, hidden, qrFgColor, qrBgColor, qrLogo, qrLogoSize, stylishText, stylishTextColor]);
+
+    const addToLog = useCallback((message, type = 'info') => {
+        const formattedMessage = message.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        setLog(prev => [`<span class="${styles[type]}">[${new Date().toLocaleTimeString()}] ${formattedMessage}</span>`, ...prev]);
+    }, []);
+
+    const wifiString = useMemo(() => {
+        if (!ssid) return '';
+        const escape = (str) => str.replace(/([\\;,"])/g, '\\$1');
+        return `WIFI:S:${escape(ssid)};T:${encryption};P:${escape(password)};H:${hidden};;`;
+    }, [ssid, password, encryption, hidden]);
+
+    const handleWriteNfc = async () => {
+        if (!wifiString) {
+            addToLog('Please fill in the SSID (Network Name) first.', 'error');
+            return;
+        }
+
+        if (!('NDEFReader' in window)) {
+            addToLog('Web NFC is not supported on this browser. Please use Chrome on Android.', 'error');
+            return;
+        }
+
+        try {
+            const ndef = new window.NDEFReader();
+            setIsWriting(true);
+            addToLog('Scan started. Bring a tag close to your device to write.', 'info');
+
+            await ndef.write({
+                records: [{ recordType: "text", data: wifiString }]
+            });
+
+            addToLog(`✅ Successfully wrote WiFi details to NFC tag!`, 'success');
+            addToLog(`Data Written: ${wifiString}`, 'info');
+
+        } catch (error) {
+            if (error.name === 'NotAllowedError') {
+                addToLog('Write operation cancelled by user.', 'error');
+            } else {
+                addToLog(`Error: ${error.message}`, 'error');
+            }
+        } finally {
+            setIsWriting(false);
+        }
+    };
+
+
+    const triggerDownload = (url, filename) => {
+        let downloadLink = document.createElement("a");
+        downloadLink.href = url;
+        downloadLink.download = filename;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
+
+    const handleDownloadQR = (isStylish = false) => {
+        const qrCanvas = qrCodeRef.current?.querySelector('canvas');
+        if (!qrCanvas) {
+            addToLog('QR Code not generated yet. Please fill in the required fields.', 'error');
+            return;
+        }
+
+        if (!isStylish) {
+            // Simple QR code download
+            const pngUrl = qrCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            triggerDownload(pngUrl, `wifi_${ssid.replace(/\s+/g, '_') || 'network'}_webnfc.org_qr.png`);
+            addToLog('✅ QR Code downloaded.', 'success');
+            return;
+        }
+
+        // Stylish QR code download
+        const downloadCanvas = document.createElement('canvas');
+        const ctx = downloadCanvas.getContext('2d');
+        const width = 1080; // Standard portrait width
+        const height = 1920; // 9:16 aspect ratio
+        downloadCanvas.width = width;
+        downloadCanvas.height = height;
+
+        const drawContentAndDownload = (bgImage = null) => {
+            if (bgImage) {
+                ctx.drawImage(bgImage, 0, 0, width, height);
+            } else {
+                ctx.fillStyle = qrBgColor;
+                ctx.fillRect(0, 0, width, height);
+            }
+
+            // Position the QR code and text
+            const qrSize = width * 0.9; // QR code takes 90% of width
+            const qrX = (width - qrSize) / 2;
+            const qrY = height * 0.2; // Position it 20% from the top
+            ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+
+            if (stylishText) {
+                ctx.fillStyle = stylishTextColor;
+                ctx.font = `bold ${width * 0.06}px Arial`;
+                ctx.textAlign = 'center';
+                const textY = qrY - 80; // Place text above the QR code
+                ctx.fillText(stylishText, width / 2, textY);
+            }
+
+            const pngUrl = downloadCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            triggerDownload(pngUrl, `wifi_${ssid.replace(/\s+/g, '_') || 'network'}_stylish_webnfc.org_qr.png`);
+            addToLog('✅ Stylish QR Code downloaded.', 'success');
+        };
+
+        if (stylishBg) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => drawContentAndDownload(img);
+            img.onerror = () => {
+                addToLog('Failed to load background image. Downloading without it.', 'error');
+                drawContentAndDownload(null);
+            };
+            img.src = stylishBg;
+        } else {
+            drawContentAndDownload(null);
+        }
+    };
+
+    const handleCopyLink = () => {
+        if (!wifiString) return;
+        navigator.clipboard.writeText(wifiString).then(() => {
+            addToLog('✅ WiFi string copied to clipboard!', 'success');
+        }, () => {
+            addToLog('Failed to copy WiFi string.', 'error');
+        });
+    };
+
+    const handleLogoUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setQrLogo(reader.result);
+                addToLog('✅ Logo added to QR code.', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const removeLogo = () => {
+        setQrLogo(null);
+        const fileInput = document.getElementById('qr-logo-input');
+        if (fileInput) fileInput.value = '';
+        addToLog('Logo removed from QR code.', 'info');
+    };
+
+    const handleStylishBgUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setStylishBg(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleStylishBgSelect = (bgUrl) => {
+        setStylishBg(bgUrl);
+        addToLog('✅ Background image selected from gallery.', 'success');
+    };
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1>WiFi QR & NFC Writer</h1>
+                <p>Generate a WiFi QR code to easily share your network.</p>
+            </div>
+
+            <div className={styles.toolLayout}>
+                {/* Input Form */}
+                <div className={styles.form}>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="ssid">Network Name (SSID) *</label>
+                        <input
+                            id="ssid"
+                            type="text"
+                            value={ssid}
+                            onChange={(e) => setSsid(e.target.value)}
+                            aria-required="true"
+                            placeholder="MyWiFiNetwork"
+                            required
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Your WiFi Password"
+                            disabled={encryption === 'nopass'}
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="encryption">Encryption</label>
+                        <select id="encryption" value={encryption} onChange={(e) => setEncryption(e.target.value)}>
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">No Encryption</option>
+                        </select>
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <label className={styles.checkboxLabel}>
+                            <input
+                                type="checkbox"
+                                checked={hidden}
+                                onChange={(e) => setHidden(e.target.checked)}
+                            />
+                            Hidden Network
+                        </label>
+                    </div>
+
+                    <button
+                        onClick={() => setIsQrEditorExpanded(!isQrEditorExpanded)}
+                        className={styles.expanderButton}
+                        aria-expanded={isQrEditorExpanded}
+                        aria-controls="qr-editor-section"
+                    >
+                        Advanced QR Editor {isQrEditorExpanded ? '▲' : '▼'}
+                    </button>
+
+                    {isQrEditorExpanded && (
+                        <div id="qr-editor-section" className={styles.qrEditor} aria-describedby="qr-editor-note">
+                            <div className={styles.editorRow}>
+                                <div className={styles.inputGroup}>
+                                    <label htmlFor="qrFgColor">QR Color</label>
+                                    <input id="qrFgColor" type="color" value={qrFgColor} onChange={(e) => setQrFgColor(e.target.value)} className={styles.colorInput} />
+                                </div>
+                                <div className={styles.inputGroup}>
+                                    <label htmlFor="qrBgColor">Background Color</label>
+                                    <input id="qrBgColor" type="color" value={qrBgColor} onChange={(e) => setQrBgColor(e.target.value)} className={styles.colorInput} />
+                                </div>
+                            </div>
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="qr-logo-input">Add Logo</label>
+                                <input id="qr-logo-input" type="file" accept="image/png, image/jpeg, image/svg+xml" onChange={handleLogoUpload} className={styles.fileInput} />
+                                {qrLogo && (
+                                    <button onClick={removeLogo} className={styles.removeLogoButton}>Remove Logo</button>
+                                )}
+                            </div>
+                            {qrLogo && (
+                                <div className={styles.inputGroup}>
+                                    <label htmlFor="qrLogoSize">Logo Size: {qrLogoSize}px</label>
+                                    <input
+                                        id="qrLogoSize"
+                                        type="range"
+                                        min="20"
+                                        max="80"
+                                        value={qrLogoSize}
+                                        onChange={(e) => setQrLogoSize(Number(e.target.value))}
+                                        className={styles.sliderInput}
+                                    />
+                                </div>
+                            )}
+                            <p id="qr-editor-note" className={styles.editorNote}>
+                                Note: Adding a logo or using complex colors may reduce QR code scannability. Always test before printing.
+                            </p>
+
+                            <hr className={styles.divider} />
+
+                            <h4 className={styles.editorSubheading}>Stylish Download Options</h4>
+                            <div className={styles.inputGroup}>
+                                <label>Or Select from Gallery</label>
+                                <div className={styles.backgroundSelector}>
+                                    {availableBackgrounds.map((bg) => (
+                                        <button
+                                            key={bg}
+                                            className={`${styles.backgroundPreview} ${stylishBg === bg ? styles.backgroundSelected : ''}`}
+                                            onClick={() => handleStylishBgSelect(bg)}
+                                            style={{ backgroundImage: `url(${bg})` }}
+                                            aria-label={`Select background ${bg.split('/').pop().split('.')[0]}`}
+                                        ></button>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="stylish-bg-input">Or Upload Background</label>
+                                <input id="stylish-bg-input" type="file" accept="image/png, image/jpeg" onChange={handleStylishBgUpload} className={styles.fileInput} />
+                            </div>
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="stylishText">Display Text</label>
+                                <input id="stylishText" type="text" value={stylishText} onChange={(e) => setStylishText(e.target.value)} placeholder="e.g., Scan to Connect" />
+                            </div>
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="stylishTextColor">Text Color</label>
+                                <input id="stylishTextColor" type="color" value={stylishTextColor} onChange={(e) => setStylishTextColor(e.target.value)} className={styles.colorInput} />
+                            </div>
+                            <button onClick={() => handleDownloadQR(true)} disabled={!wifiString} className={styles.stylishDownloadButton}>
+                                Download Stylish QR
+                            </button>
+
+                        </div>
+                    )}
+                </div>
+
+                {/* QR Code and Actions */}
+                <div className={styles.output}>
+                    <div className={styles.qrContainer} ref={qrCodeRef}>
+                        {wifiString ? (
+                            <QRCodeCanvas
+                                value={wifiString}
+                                size={256}
+                                includeMargin={true}
+                                level="H" // High error correction for logo
+                                bgColor={qrBgColor}
+                                fgColor={qrFgColor}
+                                imageSettings={qrLogo ? {
+                                    src: qrLogo,
+                                    height: qrLogoSize,
+                                    width: qrLogoSize,
+                                    excavate: true,
+                                } : undefined}
+                            />
+                        ) : (
+                            <div className={styles.qrPlaceholder}>
+                                <p>Fill in required fields to generate QR Code</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className={styles.buttonGroup}>
+                        <button
+                            onClick={handleWriteNfc}
+                            disabled={isWriting || !wifiString}
+                            className={styles.actionButton}
+                        >
+                            {isWriting ? 'Writing...' : 'Write to NFC Tag'}
+                        </button>
+                        <button
+                            onClick={() => handleDownloadQR(false)}
+                            disabled={!wifiString}
+                            className={styles.downloadButton}
+                        >
+                            Download QR
+                        </button>
+                        <button
+                            onClick={handleCopyLink}
+                            disabled={!wifiString}
+                            className={styles.copyButton}
+                        >
+                            Copy WiFi String
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Log Output */}
+            <div className={styles.logContainer}>
+                <p className={styles.privacyNote}>
+                    🔒 All information is stored locally in your browser. Nothing is shared with our servers. Always verify generated QR codes and links before sharing.
+                </p>
+                <div className={styles.logHeader}>
+                    <h3>Log</h3>
+                    <button onClick={() => setLog([])} className={styles.clearLogButton} disabled={log.length === 0}>
+                        Clear
+                    </button>
+                </div>
+                <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} aria-live="polite" />
+            </div>
+        </div>
+    );
+}

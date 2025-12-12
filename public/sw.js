@@ -1,4 +1,4 @@
-const CACHE_NAME = 'webnfc-cache-v1';
+const CACHE_NAME = 'webnfc-cache-v2';
 const urlsToCache = [
     '/',
     '/offline.html',
@@ -6,10 +6,12 @@ const urlsToCache = [
     '/upi',
     '/read-nfc',
     '/write-nfc',
-    '/blog',
+    '/nfc-tool',
+    '/documentation',
     '/logo.png',
     '/android-chrome-192x192.png',
     '/android-chrome-512x512.png',
+    '/offline-status.js',
     // NOTE: You should add other important static assets like CSS files,
     // other images, or JS chunks here for a more complete offline experience.
 ];
