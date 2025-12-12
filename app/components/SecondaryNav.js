@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import styles from './SecondaryNav.module.css';
 
 const tools = [
+    { name: 'Read NFC', href: '/read-nfc' },
+    { name: 'NFC Tools', href: '/nfc-tool' },
     { name: 'vCard', href: '/vcard' },
     { name: 'UPI', href: '/upi' },
     { name: 'URL', href: '/url' },

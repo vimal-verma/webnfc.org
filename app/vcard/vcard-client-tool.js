@@ -199,7 +199,7 @@ export default function VCardClientTool() {
 
         } catch (error) {
             console.error('NFC Write Error:', error);
-            addToLog(`Write failed: ${error.message}`, 'error');
+            addToLog(`Write failed: ${error.message}` + 'Refresh the page and try again.', 'error');
         }
     };
 

@@ -117,12 +117,16 @@ export default function LocationToolClient() {
             setIsWriting(true);
             addToLog('Scan started. Bring a tag close to your device to write.', 'info');
 
+            const dataToWrite = mode === 'coords'
+                ? process.env.NEXT_PUBLIC_FRONTEND_URL + '/redirect?url=' + qrData
+                : qrData;
+
             await ndef.write({
-                records: [{ recordType: "url", data: qrData }]
+                records: [{ recordType: "url", data: dataToWrite }]
             });
 
             addToLog(`✅ Successfully wrote link to NFC tag!`, 'success');
-            addToLog(`Data Written: ${qrData}`, 'info');
+            addToLog(`Data Written: ${dataToWrite}`, 'info');
 
         } catch (error) {
             if (error.name === 'NotAllowedError') {

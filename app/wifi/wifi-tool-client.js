@@ -103,7 +103,7 @@ export default function WIFIToolClient() {
             if (error.name === 'NotAllowedError') {
                 addToLog('Write operation cancelled by user.', 'error');
             } else {
-                addToLog(`Error: ${error.message}`, 'error');
+                addToLog(`Error: ${error.message}` + 'Refresh the page and try again.', 'error');
             }
         } finally {
             setIsWriting(false);

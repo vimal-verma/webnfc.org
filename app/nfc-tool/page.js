@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import styles from './page.module.css';
 import NfcClientTool from './nfc-client-tool';
+import { Fragment } from 'react';
+import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
   title: 'Advanced NFC Web Tool | WebNfc',
@@ -22,24 +24,19 @@ export const metadata = {
 // This is the new main page component (Server Component)
 export default function NfcToolPage() {
   return (
-    <div className={styles.container}>
-      <header className={styles.hero}>
-        <h1 className={styles.title}>NFC Tool</h1>
-        <p className={styles.subtitle}>Read from and Write to NFC tags directly in your browser.</p>
-        <p className={styles.warning}>
-          <strong>Note:</strong> This tool requires a browser that supports the Web NFC API (like Chrome on Android).
-        </p>
-      </header>
+    <Fragment>
+      <SecondaryNav />
+      <div className={styles.container}>
+        <header className={styles.hero}>
+          <h1 className={styles.title}>NFC Tool</h1>
+          <p className={styles.subtitle}>Read from and Write to NFC tags directly in your browser.</p>
+          <p className={styles.warning}>
+            <strong>Note:</strong> This tool requires a browser that supports the Web NFC API (like Chrome on Android).
+          </p>
+        </header>
 
-      <NfcClientTool />
-
-      <section className={styles.ctaSection}>
-        <h2>Create Your Own NFC Business Card</h2>
-        <p>Ready to make a lasting impression? Design a custom NFC business card and share your details with a single tap.</p>
-        <Link href="/design" className={styles.ctaButton}>
-          Start Designing Now
-        </Link>
-      </section>
-    </div>
+        <NfcClientTool />
+      </div>
+    </Fragment>
   );
 }

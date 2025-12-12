@@ -1,6 +1,7 @@
-import { Suspense } from 'react';
+import { Suspense, Fragment } from 'react';
 import ReadNfcClient from './read-nfc-client';
 import styles from './page.module.css';
+import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Read NFC Tag Online | Free Web NFC Reader | WebNfc',
@@ -41,16 +42,19 @@ export const metadata = {
 
 export default function ReadNfcPage() {
     return (
-        <div className={styles.container}>
-            <header className={styles.hero}>
-                <h1 className={styles.title}>Online NFC Tag Reader</h1>
-                <p className={styles.subtitle}>
-                    Instantly read the contents of any NFC tag using your phone&apos;s browser.
-                </p>
-            </header>
-            <Suspense fallback={<div>Loading...</div>}>
-                <ReadNfcClient />
-            </Suspense>
-        </div>
+        <Fragment>
+            <SecondaryNav />
+            <div className={styles.container}>
+                <header className={styles.hero}>
+                    <h1 className={styles.title}>Online NFC Tag Reader</h1>
+                    <p className={styles.subtitle}>
+                        Instantly read the contents of any NFC tag using your phone&apos;s browser.
+                    </p>
+                </header>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <ReadNfcClient />
+                </Suspense>
+            </div>
+        </Fragment>
     );
 }
