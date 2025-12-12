@@ -6,6 +6,7 @@ import PhonePreview from './PhonePreview';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 import { downloadQRCode } from '../utils/qr-downloader';
+import AdvancedQrEditor from '../components/AdvancedQrEditor';
 
 const initialVCardState = {
     name: '', phone: '', email: '', website: '', organization: '',
@@ -303,36 +304,6 @@ export default function VCardClientTool() {
         }
     };
 
-    const handleLogoUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setQrLogo(reader.result);
-                addToLog('✅ Logo added to QR code.', 'success');
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const removeLogo = () => {
-        setQrLogo(null);
-        const fileInput = document.getElementById('qr-logo-input');
-        if (fileInput) fileInput.value = '';
-        addToLog('Logo removed from QR code.', 'info');
-    };
-
-    const handleStylishBgUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setStylishBg(reader.result);
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handleStylishBgSelect = (bgUrl) => setStylishBg(bgUrl);
-
     return (
         <div className={styles.toolContainer}>
             <div className={styles.mainContent}>
@@ -429,86 +400,22 @@ export default function VCardClientTool() {
                             🔒 All information is stored locally in your browser. Nothing is shared with our servers.
                         </p>
 
-                        <button
-                            onClick={() => setIsQrEditorExpanded(!isQrEditorExpanded)}
-                            className={styles.expanderButton}
-                            aria-expanded={isQrEditorExpanded}
-                            aria-controls="qr-editor-section"
-                        >
-                            Advanced QR Editor {isQrEditorExpanded ? '▲' : '▼'}
-                        </button>
-
-                        {isQrEditorExpanded && (
-                            <div id="qr-editor-section" className={styles.qrEditor} aria-describedby="qr-editor-note">
-                                <div className={styles.editorRow}>
-                                    <div className={styles.formGroup}>
-                                        <label htmlFor="qrFgColor">QR Color</label>
-                                        <input id="qrFgColor" type="color" value={qrFgColor} onChange={(e) => setQrFgColor(e.target.value)} className={styles.colorInput} />
-                                    </div>
-                                    <div className={styles.formGroup}>
-                                        <label htmlFor="qrBgColor">Background Color</label>
-                                        <input id="qrBgColor" type="color" value={qrBgColor} onChange={(e) => setQrBgColor(e.target.value)} className={styles.colorInput} />
-                                    </div>
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="qr-logo-input">Add Logo</label>
-                                    <input id="qr-logo-input" type="file" accept="image/png, image/jpeg, image/svg+xml" onChange={handleLogoUpload} className={styles.fileInput} />
-                                    {qrLogo && (
-                                        <button onClick={removeLogo} className={styles.removeLogoButton}>Remove Logo</button>
-                                    )}
-                                </div>
-                                {qrLogo && (
-                                    <div className={styles.formGroup}>
-                                        <label htmlFor="qrLogoSize">Logo Size: {qrLogoSize}px</label>
-                                        <input
-                                            id="qrLogoSize"
-                                            type="range"
-                                            min="20"
-                                            max="80"
-                                            value={qrLogoSize}
-                                            onChange={(e) => setQrLogoSize(Number(e.target.value))}
-                                            className={styles.sliderInput}
-                                        />
-                                    </div>
-                                )}
-                                <p id="qr-editor-note" className={styles.editorNote}>
-                                    Note: Adding a logo or using complex colors may reduce QR code scannability. Always test before printing.
-                                </p>
-
-                                <hr className={styles.divider} />
-
-                                <h4 className={styles.editorSubheading}>Stylish Download Options</h4>
-                                <div className={styles.formGroup}>
-                                    <label>Or Select from Gallery</label>
-                                    <div className={styles.backgroundSelector}>
-                                        {availableBackgrounds.map((bg) => (
-                                            <button
-                                                key={bg}
-                                                className={`${styles.backgroundPreview} ${stylishBg === bg ? styles.backgroundSelected : ''}`}
-                                                onClick={() => handleStylishBgSelect(bg)}
-                                                style={{ backgroundImage: `url(${bg})` }}
-                                                aria-label={`Select background ${bg.split('/').pop().split('.')[0]}`}
-                                            ></button>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="stylish-bg-input">Or Upload Background</label>
-                                    <input id="stylish-bg-input" type="file" accept="image/png, image/jpeg" onChange={handleStylishBgUpload} className={styles.fileInput} />
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="stylishText">Display Text</label>
-                                    <input id="stylishText" type="text" value={stylishText} onChange={(e) => setStylishText(e.target.value)} placeholder="e.g., Scan to Save Contact" />
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="stylishTextColor">Text Color</label>
-                                    <input id="stylishTextColor" type="color" value={stylishTextColor} onChange={(e) => setStylishTextColor(e.target.value)} className={styles.colorInput} />
-                                </div>
-                                <button onClick={() => handleDownloadQR(true)} disabled={!vCardData.name} className={styles.stylishDownloadButton}>
-                                    Download Stylish QR
-                                </button>
-                            </div>
-                        )}
+                        <AdvancedQrEditor
+                            isExpanded={isQrEditorExpanded}
+                            setIsExpanded={setIsQrEditorExpanded}
+                            qrFgColor={qrFgColor} setQrFgColor={setQrFgColor}
+                            qrBgColor={qrBgColor} setQrBgColor={setQrBgColor}
+                            qrLogo={qrLogo} setQrLogo={setQrLogo}
+                            qrLogoSize={qrLogoSize} setQrLogoSize={setQrLogoSize}
+                            stylishBg={stylishBg} setStylishBg={setStylishBg}
+                            stylishText={stylishText} setStylishText={setStylishText}
+                            stylishTextColor={stylishTextColor} setStylishTextColor={setStylishTextColor}
+                            availableBackgrounds={availableBackgrounds}
+                            defaultStylishText="Scan to Save Contact"
+                            onDownloadStylish={() => handleDownloadQR(true)}
+                            downloadDisabled={!vCardData.name}
+                            addToLog={addToLog}
+                        />
                     </div>
                 </div>
                 <div className={styles.sidebar}>
