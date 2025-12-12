@@ -1,0 +1,45 @@
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background-color: var(--card-background);
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.usage {
+    background-color: var(--button-secondary-hover);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.usage code {
+    background-color: var(--card-border);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.error {
+    color: #ef4444; /* A common error color */
+    font-weight: 500;
+    font-size: 1.1rem;
+}
