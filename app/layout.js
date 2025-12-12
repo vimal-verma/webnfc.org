@@ -37,7 +37,6 @@ export default function RootLayout({ children }) {
           <Footer />
           <ServiceWorkerRegistrar />
         </ThemeProvider>
-        <script src="/offline-status.js" defer />
       </body>
     </html>
   );

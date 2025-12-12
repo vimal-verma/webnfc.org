@@ -11,7 +11,6 @@ const urlsToCache = [
     '/logo.png',
     '/android-chrome-192x192.png',
     '/android-chrome-512x512.png',
-    '/offline-status.js',
     // NOTE: You should add other important static assets like CSS files,
     // other images, or JS chunks here for a more complete offline experience.
 ];
