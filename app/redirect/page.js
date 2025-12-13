@@ -1,43 +1,58 @@
-import { redirect } from 'next/navigation';
-import { Fragment } from 'react';
+'use client';
+
+import { useSearchParams, redirect } from 'next/navigation';
+import { Suspense } from 'react';
 import styles from './redirect.module.css';
 
-export const metadata = {
-    title: 'Redirect Tool | WebNfc',
-    description: 'A simple tool to redirect to a URL specified as a query parameter.',
-    robots: {
-        index: false, // No need for search engines to index this utility page
-    },
-};
 
-export default async function RedirectPage({ searchParams }) {
-    const { url } = await searchParams;
+function RedirectLinks() {
 
-    if (url) {
-        // This will throw a REDIRECT error, which Next.js will handle.
-        redirect(url);
+
+
+    const searchParams = useSearchParams();
+    const encodedUrls = searchParams.get('urls');
+    let urls = [];
+
+    if (encodedUrls) {
+        try {
+            urls = JSON.parse(atob(encodedUrls));
+        } catch (e) {
+            console.error("Failed to parse URLs", e);
+            return <p className={styles.error}>Invalid URL data provided.</p>;
+        }
     }
 
+    if (urls.length === 0) {
+        return <p>No URLs to display.</p>;
+    }
 
-    // This content will be shown if no URL is provided.
     return (
-        <Fragment>
-            <meta httpEquiv="refresh" content="5;url=/" />
-            <div className={styles.container}>
-                <header className={styles.header}>
-                    <h1 className={styles.title}>URL Redirector</h1>
-                    <p className={styles.subtitle}>
-                        This tool redirects you to the URL specified in the query parameter.
-                    </p>
-                </header>
-                <div className={styles.usage}>
-                    <h2>Usage</h2>
-                    <p>Append <code>?url=</code> followed by the destination URL to the address bar.</p>
-                    <p><strong>Example:</strong> <code>/redirect?url=https://webnfc.org</code></p>
-                </div>
-                <p className={styles.error}>No URL provided. Please specify a <code>url</code> query parameter to redirect.</p>
-                <p>Redirecting to home page in 3 seconds...</p>
-            </div>
-        </Fragment>
+        <div className={styles.linksContainer}>
+            <h1 className={styles.title}>Choose a link to open</h1>
+            <ul className={styles.linkList}>
+                {urls.map((url, index) => (
+                    <li key={index} className={styles.linkItem}>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                            {url}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
+}
+
+export default function RedirectPage() {
+    const searchParams = useSearchParams();
+    const encodedUrl = searchParams.get('url');
+    if (encodedUrl) {
+        // This will throw a REDIRECT error, which Next.js will handle.
+        redirect(encodedUrl);
+    }
+
+    return <div className={styles.container}>
+        <Suspense fallback={<div>Loading links...</div>}>
+            <RedirectLinks />
+        </Suspense>
+    </div>;
 }

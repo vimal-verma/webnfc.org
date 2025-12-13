@@ -2,8 +2,8 @@ import UrlToolClient from './url-tool-client';
 import { Fragment } from 'react';
 
 export const metadata = {
-    title: 'Free URL QR Code Generator & NFC Writer | WebNfc',
-    description: 'Instantly generate a URL QR code to open a website. Our free tool also lets you write the URL link directly to an NFC tag using your phone. No sign-up required.',
+    title: 'Free Multi-URL QR Code Generator & NFC Writer | WebNfc',
+    description: 'Create a single QR code that links to multiple websites. Our free tool generates a landing page for all your URLs and lets you write it to an NFC tag.',
     keywords: [
         'URL QR code generator',
         'URL QR generator',
