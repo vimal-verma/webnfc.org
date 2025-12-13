@@ -1,7 +1,6 @@
 import WIFIToolClient from './wifi-tool-client';
 import styles from './wifi.module.css';
 import { Fragment } from 'react';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free WiFi QR Code Generator & NFC Writer | WebNfc',
@@ -67,7 +66,6 @@ export default function WIFIPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
-            <SecondaryNav />
             <WIFIToolClient />
         </Fragment>
     );

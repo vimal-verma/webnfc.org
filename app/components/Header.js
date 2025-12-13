@@ -1,20 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTheme } from '../context/ThemeContext';
 import styles from './Header.module.css';
 import SecondaryNav from './SecondaryNav';
+import { tools } from '../lib/tool-list';
 
 export default function Header() {
     const { theme, toggleTheme } = useTheme();
     const [isNavOpen, setIsNavOpen] = useState(false);
-    const [isToolsNavVisible, setIsToolsNavVisible] = useState(false);
+    const pathname = usePathname();
+    const toolPaths = useMemo(() => tools.map(t => t.href), []);
+
+    const [isToolsNavVisible, setIsToolsNavVisible] = useState(toolPaths.includes(pathname));
 
     useEffect(() => {
         document.body.style.overflow = isNavOpen ? 'hidden' : 'unset';
         return () => { document.body.style.overflow = 'unset'; };
     }, [isNavOpen]);
+
+    useEffect(() => {
+        setIsToolsNavVisible(toolPaths.includes(pathname));
+    }, [pathname, toolPaths]);
 
     return (
         <>
@@ -32,7 +41,7 @@ export default function Header() {
 
                     <nav className={`${styles.nav} ${isNavOpen ? styles.navOpen : ''}`}>
                         <Link href="/" onClick={() => setIsNavOpen(false)}>Home</Link>
-                        <button onClick={() => { setIsToolsNavVisible(!isToolsNavVisible); setIsNavOpen(false); }} className={styles.navButton}>
+                        <button onClick={() => { setIsToolsNavVisible(prev => !prev); setIsNavOpen(false); }} className={styles.navButton}>
                             Our Tools
                         </button>
                         <Link href="/blog" onClick={() => setIsNavOpen(false)}>Blog</Link>

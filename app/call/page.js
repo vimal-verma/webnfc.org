@@ -1,6 +1,5 @@
 import CallToolClient from './call-tool-client';
 import { Fragment } from 'react';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free Call QR Code Generator & NFC Writer | WebNfc',
@@ -68,7 +67,6 @@ export default function CallPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
-            <SecondaryNav />
             <CallToolClient />
         </Fragment>
     );

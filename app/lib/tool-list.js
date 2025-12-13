@@ -1,0 +1,15 @@
+export const tools = [
+    { name: 'QR Tools', href: '/qr' },
+    { name: 'NFC Tools', href: '/nfc-tool' },
+    { name: 'Read NFC', href: '/read-nfc' },
+    { name: 'Write NFC', href: '/write-nfc' },
+    { name: 'vCard', href: '/vcard' },
+    { name: 'UPI', href: '/upi' },
+    { name: 'URL', href: '/url' },
+    { name: 'WiFi', href: '/wifi' },
+    { name: 'SMS', href: '/sms' },
+    { name: 'Email', href: '/email' },
+    { name: 'Call', href: '/call' },
+    { name: 'Event', href: '/event' },
+    { name: 'Location', href: '/location' },
+];

@@ -1,6 +1,5 @@
 import UrlToolClient from './url-tool-client';
 import { Fragment } from 'react';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free URL QR Code Generator & NFC Writer | WebNfc',
@@ -67,7 +66,6 @@ export default function UrlPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
-            <SecondaryNav />
             <UrlToolClient />
         </Fragment>
     );

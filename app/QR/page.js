@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styles from './page.module.css';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free QR Code Generators & NFC Writers | WebNfc',
@@ -76,7 +75,6 @@ const tools = [
 export default function QrToolsPage() {
     return (
         <>
-            <SecondaryNav />
             <div className={styles.container}>
                 <header className={styles.hero}>
                     <h1 className={styles.title}>QR Code Generators & NFC Writers</h1>

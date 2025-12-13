@@ -1,7 +1,6 @@
 import UpiToolClient from './upi-tool-client';
 import styles from './upi.module.css';
 import { Fragment } from 'react';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free UPI QR Code Generator & NFC Writer | WebNfc',
@@ -77,7 +76,6 @@ export default function UpiPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
-            <SecondaryNav />
             <UpiToolClient />
         </Fragment>
     );

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import styles from './page.module.css';
 import NfcClientTool from './nfc-client-tool';
 import { Fragment } from 'react';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
   title: 'Advanced NFC Web Tool | WebNfc',
@@ -48,7 +47,6 @@ export default function NfcToolPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
       />
-      <SecondaryNav />
       <div className={styles.container}>
         <header className={styles.hero}>
           <h1 className={styles.title}>NFC Tool</h1>

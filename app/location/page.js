@@ -1,6 +1,5 @@
 import LocationToolClient from './location-tool-client';
 import { Fragment } from 'react';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free Location & DigiPin QR Code Generator | WebNfc',
@@ -71,7 +70,6 @@ export default function LocationPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
-            <SecondaryNav />
             <LocationToolClient />
         </Fragment>
     );

@@ -1,7 +1,6 @@
 import EmailToolClient from './email-tool-client';
 import styles from './email.module.css';
 import { Fragment } from 'react';
-import SecondaryNav from '../components/SecondaryNav';
 
 export const metadata = {
     title: 'Free Email QR Code Generator & NFC Writer | WebNfc',
@@ -68,7 +67,6 @@ export default function EmailPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
             />
-            <SecondaryNav />
             <EmailToolClient />
         </Fragment>
     );
