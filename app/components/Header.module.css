@@ -53,6 +53,22 @@
   background-color: var(--button-secondary-hover);
 }
 
+.navButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  margin: 0 0.5rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: inherit;
+  font-size: inherit;
+}
+.navButton:hover {
+  background-color: var(--button-secondary-hover);
+}
 .nav a.active {
   color: var(--primary-accent);
 }

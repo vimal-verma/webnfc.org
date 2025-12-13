@@ -1,3 +1,14 @@
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .secondaryNav {
     background-color: var(--secondary-nav-bg);
     border-bottom: 1px solid var(--border-color);
@@ -5,6 +16,7 @@
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
+    animation: slideDown 0.3s ease-out;
 }
 
 .secondaryNav::-webkit-scrollbar {
@@ -16,6 +28,14 @@
     padding: 0.5rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .scrollContainer {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 .navLink {
