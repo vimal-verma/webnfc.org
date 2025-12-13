@@ -30,7 +30,12 @@ export const metadata = {
         'QR code for coordinates',
         'share location with QR code',
         'WebNfc',
-        'Location NFC'
+        'Location NFC',
+        'DigiPin NFC',
+        'DigiPin NFC tag writer',
+        'NFC DigiPin writer',
+        'DigiPin to NFC tag',
+        'Location to NFC tag'
     ],
 };
 

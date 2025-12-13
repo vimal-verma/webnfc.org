@@ -21,6 +21,8 @@ export const metadata = {
         'Free SMS QR code generator',
         'free SMS QR code',
         'SMS link',
+        'SMS link generator',
+        'NFC SMS link generator',
         'NFC SMS writer',
         'WebNFC SMS',
         'create SMS QR',
@@ -29,7 +31,10 @@ export const metadata = {
         'QR code for text message',
         'send SMS with QR code',
         'WebNfc',
-        'SMS NFC'
+        'SMS NFC',
+        'SMS NFC tag writer',
+        'NFC SMS writer',
+        'SMS to NFC tag'
     ],
 };
 

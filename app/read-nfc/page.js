@@ -8,6 +8,20 @@ export const metadata = {
     description: 'Use our free online tool to read data from any NFC tag directly in your browser. Supports text, URLs, contact cards (vCards), and more. No app installation required.',
     keywords: [
         'Read NFC',
+        'Nfc tag reader online',
+        'Nfc tag reader',
+        'Free Nfc tag reader online',
+        'Free Nfc tag reader',
+        'Nfc Reader',
+        'Web Nfc Reader',
+        'Scan Nfc Tag',
+        'Nfc Data Reader',
+        'Online Nfc Tool',
+        'Read vCard from Nfc',
+        'Check Nfc Tag',
+        'Nfc Tag Preview',
+        'Nfc Tag Scanner',
+        'Nfc Card Reader',
         'NFC tag reader online',
         'NFC tag reader',
         'Free NFC tag reader online',
@@ -37,12 +51,44 @@ export const metadata = {
         'nfc tag utl opener',
         'nfc tag vcard opener',
         'nfc tag contact reader',
+        'nfc tag business card reader'
     ],
+    openGraph: {
+        title: 'Read NFC Tag Online | Free Web NFC Reader | WebNfc',
+        description: 'Use our free online tool to read data from any NFC tag directly in your browser. Supports text, URLs, contact cards (vCards), and more.',
+        url: 'https://webnfc.org/read-nfc',
+        siteName: 'WebNfc',
+        images: '/og-logo.png',
+        type: 'website',
+    },
 };
 
 export default function ReadNfcPage() {
+    const softwareApplicationSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Online NFC Tag Reader',
+        applicationCategory: 'Utilities',
+        operatingSystem: 'Web',
+        browserRequirements: 'Requires a browser with WebNFC support (e.g., Chrome on Android).',
+        description: 'A free online tool to read data from any NFC tag directly in your browser.',
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD'
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'WebNfc'
+        }
+    };
+
     return (
         <Fragment>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
+            />
             <SecondaryNav />
             <div className={styles.container}>
                 <header className={styles.hero}>

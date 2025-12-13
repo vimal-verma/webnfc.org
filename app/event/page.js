@@ -28,7 +28,10 @@ export const metadata = {
         'QR code for calendar event',
         'share event with QR code',
         'WebNfc',
-        'Event NFC'
+        'Event NFC',
+        'Event NFC tag writer',
+        'NFC Event writer Free',
+        'Event to NFC tag'
     ],
 };
 

@@ -9,6 +9,8 @@ export default function ReadNfcClient() {
     const [isScanning, setIsScanning] = useState(false);
     const [lastScannedContent, setLastScannedContent] = useState(null);
     const [isVCard, setIsVCard] = useState(false);
+    const [isWifi, setIsWifi] = useState(false);
+    const [scannedWifiData, setScannedWifiData] = useState(null);
     const [scannedUrl, setScannedUrl] = useState(null);
     const [scannedVCardData, setScannedVCardData] = useState(null);
     const [tagDetails, setTagDetails] = useState(null);
@@ -52,10 +54,35 @@ export default function ReadNfcClient() {
         return data;
     };
 
+    const parseWifiString = (wifiString) => {
+        if (!wifiString.startsWith('WIFI:')) return null;
+
+        const data = {};
+        const unescape = (str) => str.replace(/\\([\\;,"])/g, '$1');
+
+        // Extract content between WIFI: and the final ;;
+        const coreString = wifiString.substring(5, wifiString.lastIndexOf(';;'));
+
+        const parts = coreString.split(';');
+
+        for (const part of parts) {
+            if (part.startsWith('S:')) {
+                data.ssid = unescape(part.substring(2));
+            } else if (part.startsWith('P:')) {
+                data.password = unescape(part.substring(2));
+            } else if (part.startsWith('T:')) {
+                data.encryption = part.substring(2);
+            }
+        }
+        return Object.keys(data).length > 0 ? data : null;
+    };
+
     const handleRead = async () => {
         setLastScannedContent(null); // Reset content on new scan
         setIsVCard(false); // Reset vCard flag on new scan
+        setIsWifi(false);
         setScannedVCardData(null); // Reset vCard data on new scan
+        setScannedWifiData(null);
         setScannedUrl(null); // Reset URL on new scan
         setTagDetails(null); // Reset tag details on new scan
         if (!('NDEFReader' in window)) {
@@ -108,6 +135,14 @@ export default function ReadNfcClient() {
                             const textDecoder = new TextDecoder(record.encoding);
                             currentRecordContent = textDecoder.decode(record.data);
                             addToLog(`> Content: ${currentRecordContent}`, 'info');
+                            if (currentRecordContent.startsWith('WIFI:')) {
+                                const parsedData = parseWifiString(currentRecordContent);
+                                if (parsedData) {
+                                    setScannedWifiData(parsedData);
+                                    addToLog(`Parsed WiFi credentials for SSID: ${parsedData.ssid || 'Unknown'}`, 'success');
+                                    setIsWifi(true);
+                                }
+                            }
                             break;
                         }
                         case "url": {
@@ -228,6 +263,25 @@ export default function ReadNfcClient() {
             {scannedVCardData && (
                 <div className={styles.phonePreviewContainer}>
                     <PhonePreview vCardData={scannedVCardData} />
+                </div>
+            )}
+            {isWifi && scannedWifiData && (
+                <div className={styles.tagInfoContainer}>
+                    <h3>WiFi Network Details</h3>
+                    <p><strong>SSID:</strong> <span>{scannedWifiData.ssid}</span></p>
+                    <p><strong>Password:</strong> <span>{scannedWifiData.password || 'No Password'}</span></p>
+                    <p><strong>Encryption:</strong> <span>{scannedWifiData.encryption || 'Unknown'}</span></p>
+                    {scannedWifiData.password && (
+                        <button onClick={() => {
+                            navigator.clipboard.writeText(scannedWifiData.password);
+                            addToLog('✅ Password copied to clipboard!', 'success');
+                        }} className={styles.copyButton}>
+                            Copy Password
+                        </button>
+                    )}
+                    <p className={styles.instructionText} style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
+                        For security reasons, browsers cannot automatically connect to WiFi. Please copy the password and connect manually in your device&apos;s settings.
+                    </p>
                 </div>
             )}
             <p className={styles.instructionText}>

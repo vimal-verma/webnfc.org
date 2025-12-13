@@ -38,7 +38,10 @@ export const metadata = {
         'UPI vCard',
         'UPI contact sharing',
         'WebNfc',
-        'UPI NFC'
+        'UPI NFC',
+        'UPI NFC tag writer',
+        'NFC UPI writer',
+        'UPI to NFC tag'
     ],
 };
 

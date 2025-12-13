@@ -47,6 +47,7 @@ export default function Footer() {
                         <h4>Our Tools</h4>
                         <Link href="/vcard">vCard Generator</Link>
                         <Link href="/upi">Upi QR Generator</Link>
+                        <Link href="/qr">QR Tools</Link>
                         <Link href="/read-nfc">Read NFC Tag</Link>
                         <Link href="/write-nfc">Write NFC Tag</Link>
                         <Link href="/nfc-tool">Legacy NFC Tool</Link>

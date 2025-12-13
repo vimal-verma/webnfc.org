@@ -7,7 +7,7 @@ import SecondaryNav from '../components/SecondaryNav';
 export const metadata = {
   title: 'Advanced NFC Web Tool | WebNfc',
   description: 'An all-in-one Web NFC tool to read, write, clone, erase, format, and lock NFC tags directly from your browser. Supports text, URL, and vCard records. No installation needed.',
-  keywords: ['NFC', 'Web NFC', 'NFC Tool', 'NFC Reader', 'NFC Writer', 'Clone NFC', 'Erase NFC', 'vCard NFC', 'NFC Formatting', 'Lock NFC Tags', 'Contactless Technology', 'NFC Tags', 'Low Cost NFC Cards', 'NFC Stickers', 'NFC Keychains', 'NFC Rings', 'NFC Bracelets', 'NFC Business Cards', 'NFC for Marketing', 'NFC for Events', 'NFC for Payments', 'NFC for Access Control', 'NFC for Smart Homes', 'NFC for IoT', 'NFC Development', 'NFC Programming', 'NFC Applications', 'NFC Solutions', 'WebNfc', 'NFC Online Tool', 'NFC Tag Management', 'NFC Tag Writer', 'NFC Tag Reader', 'NFC Tag Cloner', 'NFC Tag Eraser', 'NFC Tag Formatter', 'NFC Tag Locker'],
+  keywords: ['NFC', 'Web NFC', 'NFC Tool', 'NFC Reader', 'NFC Writer', 'Clone NFC', 'Erase NFC', 'vCard NFC', 'NFC Formatting', 'Lock NFC Tags', 'Contactless Technology', 'NFC for IoT', 'NFC Development', 'NFC Programming', 'NFC Applications', 'NFC Solutions', 'WebNfc', 'NFC Online Tool', 'NFC Tag Management', 'NFC Tag Writer', 'NFC Tag Reader', 'NFC Tag Cloner', 'NFC Tag Eraser', 'NFC Tag Formatter', 'NFC Tag Locker'],
   openGraph: {
     title: 'Advanced NFC Web Tool | WebNfc',
     description: 'An all-in-one Web NFC tool to read, write, clone, erase, format, and lock NFC tags directly from your browser.',
@@ -23,8 +23,31 @@ export const metadata = {
 
 // This is the new main page component (Server Component)
 export default function NfcToolPage() {
+  const softwareApplicationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Advanced NFC Web Tool',
+    applicationCategory: 'Utilities',
+    operatingSystem: 'Web',
+    browserRequirements: 'Requires a browser with WebNFC support (e.g., Chrome on Android).',
+    description: 'An all-in-one Web NFC tool to read, write, clone, erase, format, and lock NFC tags directly from your browser.',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'WebNfc'
+    }
+  };
+
   return (
     <Fragment>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
+      />
       <SecondaryNav />
       <div className={styles.container}>
         <header className={styles.hero}>

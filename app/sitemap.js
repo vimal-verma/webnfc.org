@@ -12,6 +12,7 @@ export default function sitemap() {
         { url: `${baseUrl}/`, lastModified, changeFrequency: 'weekly', priority: 1.0 },
         { url: `${baseUrl}/upi`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/vcard`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
+        { url: `${baseUrl}/qr`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/read-nfc`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/write-nfc`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
         { url: `${baseUrl}/call`, lastModified, changeFrequency: 'monthly', priority: 0.7 },

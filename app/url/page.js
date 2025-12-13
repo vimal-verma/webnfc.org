@@ -28,7 +28,10 @@ export const metadata = {
         'QR code for website',
         'open website with QR code',
         'WebNfc',
-        'URL NFC'
+        'URL NFC',
+        'URL NFC tag writer',
+        'NFC URL writer',
+        'URL to NFC tag'
     ],
 };
 

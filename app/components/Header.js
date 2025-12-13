@@ -32,6 +32,7 @@ export default function Header() {
                     <Link href="/" onClick={() => setIsNavOpen(false)}>Home</Link>
                     <Link href="/vcard" onClick={() => setIsNavOpen(false)}>vCard</Link>
                     <Link href="/upi" onClick={() => setIsNavOpen(false)}>UPI Tool</Link>
+                    <Link href="/qr" onClick={() => setIsNavOpen(false)}>QR Tools</Link>
                     <Link href="/nfc-tool" onClick={() => setIsNavOpen(false)}>NFC Tool</Link>
                     <Link href="/blog" onClick={() => setIsNavOpen(false)}>Blog</Link>
                     <Link href="/documentation" onClick={() => setIsNavOpen(false)}>Documentation</Link>

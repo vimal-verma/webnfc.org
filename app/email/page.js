@@ -29,7 +29,10 @@ export const metadata = {
         'QR code for email',
         'send Email with QR code',
         'WebNfc',
-        'Email NFC'
+        'Email NFC',
+        'Email NFC tag writer',
+        'NFC Email writer',
+        'Email to NFC tag'
     ],
 };
 

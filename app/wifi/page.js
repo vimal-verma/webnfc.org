@@ -28,7 +28,10 @@ export const metadata = {
         'online WiFi tool',
         'WiFi NFC tag writer',
         'WebNfc',
-        'WiFi NFC'
+        'WiFi NFC',
+        'WiFi NFC tag writer',
+        'NFC WiFi writer',
+        'WiFi to NFC tag'
     ],
 };
 
