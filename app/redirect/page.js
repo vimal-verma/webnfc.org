@@ -5,11 +5,15 @@ import { Suspense } from 'react';
 import styles from './redirect.module.css';
 
 
-function RedirectLinks() {
-
-
-
+function RedirectLogic() {
     const searchParams = useSearchParams();
+    const encodedUrl = searchParams.get('url');
+
+    if (encodedUrl) {
+        // This will throw a REDIRECT error, which Next.js will handle.
+        redirect(encodedUrl);
+    }
+
     const encodedUrls = searchParams.get('urls');
     let urls = [];
 
@@ -43,16 +47,11 @@ function RedirectLinks() {
 }
 
 export default function RedirectPage() {
-    const searchParams = useSearchParams();
-    const encodedUrl = searchParams.get('url');
-    if (encodedUrl) {
-        // This will throw a REDIRECT error, which Next.js will handle.
-        redirect(encodedUrl);
-    }
-
-    return <div className={styles.container}>
-        <Suspense fallback={<div>Loading links...</div>}>
-            <RedirectLinks />
-        </Suspense>
-    </div>;
+    return (
+        <div className={styles.container}>
+            <Suspense fallback={<div>Loading links...</div>}>
+                <RedirectLogic />
+            </Suspense>
+        </div>
+    );
 }
