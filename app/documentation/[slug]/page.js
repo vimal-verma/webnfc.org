@@ -25,17 +25,45 @@ export async function generateMetadata({ params }) {
     const section = await getSectionContent(slug);
     const title = section?.title || sections[slug] || "Documentation";
     const description = section?.description || `Learn about ${title.toLowerCase()} with the Web NFC API on WebNfc.org.`;
+    const image = section?.image || '/og-logo.png';
+
+    let keywords = ["Web NFC", "NFC", "NFC tutorial", "WebNFC API", "NFC guide", title];
+    if (section?.keywords) {
+        const extraKeywords = Array.isArray(section.keywords)
+            ? section.keywords
+            : section.keywords.split(',').map(k => k.trim());
+        keywords = [...keywords, ...extraKeywords];
+    }
 
     return {
         title: `${title} | WebNfc.org`,
         description: description,
-        keywords: ["Web NFC", "NFC", "NFC tutorial", "WebNFC API", "NFC guide", title],
+        keywords: keywords,
+        alternates: {
+            canonical: `https://webnfc.org/documentation/${slug}`,
+        },
         openGraph: {
             title: `${title} | WebNfc.org`,
             description: description,
             url: `https://webnfc.org/documentation/${slug}`,
             siteName: 'WebNfc.org',
             type: 'article',
+            publishedTime: section?.date,
+            authors: section?.author ? [section.author] : ['WebNfc Team'],
+            images: [
+                {
+                    url: image,
+                    width: 1200,
+                    height: 630,
+                    alt: title,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${title} | WebNfc.org`,
+            description: description,
+            images: [image],
         },
     };
 }
@@ -63,10 +91,10 @@ export default async function DocumentationContent({ params }) {
 
     // Apply syntax highlighting to code blocks on the server
     const highlightedContent = section.content.replace(
-        /<pre><code class="language-js">([\s\S]*?)<\/code><\/pre>/g,
-        (match, code) => {
+        /<pre><code class="language-(js|jsx)">([\s\S]*?)<\/code><\/pre>/g,
+        (match, lang, code) => {
             const highlightedCode = hljs.highlight(code, { language: 'javascript' }).value;
-            return `<pre><code class="language-js hljs">${highlightedCode}</code></pre>`;
+            return `<pre><code class="language-${lang} hljs">${highlightedCode}</code></pre>`;
         },
     );
 

@@ -8,6 +8,8 @@ export const navItems = [
     { slug: 'write-upi-record', title: 'How to Write a UPI Link' },
     { slug: 'lock-nfc', title: 'How to Lock an NFC Tag' },
     { slug: 'clone-and-format', title: 'Cloning and Formatting' },
+    { slug: 'react-hook-web-nfc', title: 'Building a Web NFC React Hook' },
+    { slug: 'smart-posters', title: 'Smart Posters with Web NFC' },
     { slug: 'nfc-security-best-practices', title: 'NFC Security Best Practices' },
     { slug: 'nfc-tag-types', title: 'NFC Tag Types Explained' },
     { slug: 'nfc-vs-rfid', title: "NFC vs. RFID: What's the Difference?" },

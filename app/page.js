@@ -78,9 +78,6 @@ export default function Home() {
             <Link href="/nfc-tool" className={styles.primary}>
               Explore NFC Tools
             </Link>
-            <Link href="/qr" className={styles.secondary}>
-              QR Tools
-            </Link>
             <Link href="/documentation" className={styles.secondary}>
               Read Guides
             </Link>

@@ -6,6 +6,30 @@ export const metadata = {
     title: 'Documentation & Guides | WebNfc.org',
     description: 'Your official resource for learning how to use the Web NFC API and our powerful online tools.',
     keywords: ['Web NFC documentation', 'WebNFC guides', 'NFC tutorials', 'Web NFC API', 'NFC examples', 'NFC how-to', 'WebNFC learning', 'NFC tag writing guide', 'NFC tag reading guide', 'WebNfc.org', 'webnfc code examples', 'nfc api documentation', 'nfc programming guide', 'nfc development tutorials', 'nfc application examples', 'nfc web tool guides', 'web nfc tutorials', 'nfc tag management', 'nfc tag writing tutorials', 'nfc tag reading tutorials', 'web nfc api guide', 'nfc for developers', 'nfc coding examples', 'web nfc projects', 'nfc technology guides', 'nfc online tool documentation', 'web nfc how-to guides'],
+    alternates: {
+        canonical: 'https://webnfc.org/documentation',
+    },
+    openGraph: {
+        title: 'Documentation & Guides | WebNfc.org',
+        description: 'Your official resource for learning how to use the Web NFC API and our powerful online tools.',
+        url: 'https://webnfc.org/documentation',
+        siteName: 'WebNfc.org',
+        images: [
+            {
+                url: '/og-logo.png',
+                width: 1200,
+                height: 630,
+                alt: 'WebNfc Documentation',
+            },
+        ],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Documentation & Guides | WebNfc.org',
+        description: 'Your official resource for learning how to use the Web NFC API and our powerful online tools.',
+        images: ['/og-logo.png'],
+    },
 };
 
 export default function DocumentationPage() {

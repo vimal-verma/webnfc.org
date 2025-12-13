@@ -5,12 +5,11 @@ import styles from './documentation.module.css';
 
 export default function CodeBlock({ children }) {
     const contentRef = useRef(null);
-    const initialized = useRef(false);
 
     const setupCopyButtons = useCallback(() => {
         if (!contentRef.current) return;
 
-        const codeBlocks = contentRef.current.querySelectorAll('pre > code.language-js');
+        const codeBlocks = contentRef.current.querySelectorAll('pre > code');
 
         codeBlocks.forEach(codeBlock => {
             const preElement = codeBlock.parentElement;
@@ -42,12 +41,8 @@ export default function CodeBlock({ children }) {
     }, []);
 
     useEffect(() => {
-        // Run only once on component mount
-        if (!initialized.current) {
-            setupCopyButtons();
-            initialized.current = true;
-        }
-    }, [setupCopyButtons]);
+        setupCopyButtons();
+    }, [children, setupCopyButtons]);
 
     return <div ref={contentRef}>{children}</div>;
 }
