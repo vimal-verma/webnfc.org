@@ -11,6 +11,7 @@ import { tools } from '../lib/tool-list';
 export default function Header() {
     const { theme, toggleTheme } = useTheme();
     const [isNavOpen, setIsNavOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
     const toolPaths = useMemo(() => tools.map(t => t.href), []);
 
@@ -24,6 +25,10 @@ export default function Header() {
     useEffect(() => {
         setIsToolsNavVisible(toolPaths.includes(pathname));
     }, [pathname, toolPaths]);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     return (
         <>
@@ -50,10 +55,10 @@ export default function Header() {
 
                     <div className={styles.headerActions}>
                         <div className={styles.themeToggler}>
-                            <button onClick={() => toggleTheme('light')} className={theme === 'light' ? styles.activeTheme : ''} aria-label="Light theme">
+                            <button onClick={() => toggleTheme('light')} className={mounted && theme === 'light' ? styles.activeTheme : ''} aria-label="Light theme">
                                 ☀️
                             </button>
-                            <button onClick={() => toggleTheme('dark')} className={theme === 'dark' ? styles.activeTheme : ''} aria-label="Dark theme">
+                            <button onClick={() => toggleTheme('dark')} className={mounted && theme === 'dark' ? styles.activeTheme : ''} aria-label="Dark theme">
                                 🌙
                             </button>
                         </div>

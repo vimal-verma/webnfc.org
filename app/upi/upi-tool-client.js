@@ -98,7 +98,7 @@ export default function UpiToolClient() {
             addToLog('Scan started. Bring a tag close to your device to write.', 'info');
 
             await ndef.write({
-                records: [{ recordType: "url", data: process.env.NEXT_PUBLIC_FRONTEND_URL + '/redirect?url=' + upiUrl }]
+                records: [{ recordType: "url", data: upiUrl }]
             });
 
             addToLog(`✅ Successfully wrote UPI link to NFC tag!`, 'success');
