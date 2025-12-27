@@ -70,6 +70,24 @@ const tools = [
         icon: '📍',
         href: '/location',
     },
+    {
+        title: 'Biodata Maker',
+        description: 'Create professional biodata for marriage or jobs and share it easily.',
+        icon: '📝',
+        href: 'https://biodatamaker.org/en/biodata-maker',
+    },
+    {
+        title: 'Invitation Maker',
+        description: 'Create professional invitations for events and share them easily.',
+        icon: '📝',
+        href: 'https://biodatamaker.org/en/invitation-maker',
+    },
+    {
+        title: 'Digital Card Maker',
+        description: 'Create professional digital cards for various purposes and share them easily.',
+        icon: '📝',
+        href: 'https://biodatamaker.org/en/digital-card',
+    },
 ];
 
 export default function QrToolsPage() {
