@@ -2,7 +2,7 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-    color: #333;
+    color: var(--foreground, #333);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -14,7 +14,7 @@
 .header h1 {
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #0070f3, #00c6ff);
+    background: var(--gradient-primary, linear-gradient(135deg, #0070f3, #00c6ff));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
@@ -22,7 +22,7 @@
 
 .header p {
     font-size: 1.2rem;
-    color: #666;
+    color: var(--text-secondary, #666);
 }
 
 .toolLayout {
@@ -34,11 +34,11 @@
 }
 
 .form {
-    background: #ffffff;
+    background: var(--card-background, #ffffff);
     padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border: 1px solid #eaeaea;
+    border: 1px solid var(--card-border, #eaeaea);
 }
 
 .inputGroup {
@@ -51,32 +51,33 @@
 .inputGroup h2 {
     font-size: 1.8rem;
     margin: 0;
-    color: #111;
+    color: var(--foreground, #111);
 }
 
 .inputGroup p {
-    color: #666;
+    color: var(--text-secondary, #666);
     margin: 0;
 }
 
 /* Game States */
 .gameDisplay {
-    background: #f8f9fa;
+    background: var(--hero-background, #f8f9fa);
     border-radius: 16px;
     padding: 2rem;
     margin: 1rem 0;
-    border: 2px dashed #e0e0e0;
+    border: 2px dashed var(--card-border, #e0e0e0);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .timer {
     font-family: 'Monaco', monospace;
     font-size: 1.2rem;
-    color: #444;
-    background: #fff;
+    color: var(--text-primary, #444);
+    background: var(--card-background, #fff);
     padding: 0.5rem 1rem;
     border-radius: 50px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -87,19 +88,19 @@
 .targetNumber {
     font-size: 6rem;
     font-weight: 900;
-    color: #0070f3;
+    color: var(--primary, #0070f3);
     line-height: 1;
     margin: 0.5rem 0;
-    text-shadow: 0 4px 20px rgba(0, 112, 243, 0.15);
+    text-shadow: 0 4px 20px var(--primary-glow, rgba(0, 112, 243, 0.15));
 }
 
 .cardListContainer {
     margin-top: 1rem;
     text-align: left;
-    background: #f9fafb;
+    background: var(--hero-background, #f9fafb);
     padding: 1rem;
     border-radius: 12px;
-    border: 1px solid #eee;
+    border: 1px solid var(--card-border, #eee);
 }
 
 .cardList {
@@ -112,9 +113,9 @@
 
 .cardList li {
     padding: 0.5rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--card-border, #eee);
     font-size: 0.9rem;
-    color: #555;
+    color: var(--text-secondary, #555);
     display: flex;
     align-items: center;
 }
@@ -131,8 +132,8 @@
 /* Buttons */
 .actionButton {
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #0070f3 0%, #0056b3 100%);
-    color: white;
+    background: var(--gradient-primary, linear-gradient(135deg, #0070f3 0%, #0056b3 100%));
+    color: var(--button-text, white);
     border: none;
     border-radius: 50px;
     font-size: 1.1rem;
@@ -140,12 +141,12 @@
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%;
-    box-shadow: 0 4px 14px rgba(0, 112, 243, 0.3);
+    box-shadow: 0 4px 14px var(--primary-shadow, rgba(0, 112, 243, 0.3));
 }
 
 .actionButton:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 112, 243, 0.4);
+    box-shadow: 0 6px 20px var(--primary-shadow, rgba(0, 112, 243, 0.4));
 }
 
 .actionButton:active:not(:disabled) {
@@ -153,8 +154,8 @@
 }
 
 .actionButton:disabled {
-    background: #e0e0e0;
-    color: #888;
+    background: var(--disabled-bg, #e0e0e0);
+    color: var(--disabled-text, #888);
     box-shadow: none;
     cursor: not-allowed;
 }
@@ -162,8 +163,8 @@
 .downloadButton {
     padding: 0.8rem 1.5rem;
     background-color: transparent;
-    color: #666;
-    border: 2px solid #eaeaea;
+    color: var(--text-secondary, #666);
+    border: 2px solid var(--card-border, #eaeaea);
     border-radius: 50px;
     font-size: 1rem;
     font-weight: 600;
@@ -173,18 +174,18 @@
 }
 
 .downloadButton:hover {
-    border-color: #333;
-    color: #333;
-    background: #f5f5f5;
+    border-color: var(--foreground, #333);
+    color: var(--foreground, #333);
+    background: var(--hero-background, #f5f5f5);
 }
 
 /* Log */
 .logContainer {
     margin-top: 2rem;
-    border: 1px solid #eaeaea;
+    border: 1px solid var(--card-border, #eaeaea);
     border-radius: 16px;
     overflow: hidden;
-    background: #fff;
+    background: var(--card-background, #fff);
     box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
@@ -193,8 +194,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1.5rem;
-    background-color: #f9fafb;
-    border-bottom: 1px solid #eaeaea;
+    background-color: var(--hero-background, #f9fafb);
+    border-bottom: 1px solid var(--card-border, #eaeaea);
 }
 
 .logHeader h3 {
@@ -202,7 +203,7 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #888;
+    color: var(--text-secondary, #888);
 }
 
 .log {
@@ -211,14 +212,14 @@
     padding: 1rem 1.5rem;
     font-family: 'Menlo', monospace;
     font-size: 0.85rem;
-    color: #333;
+    color: var(--text-primary, #333);
     line-height: 1.6;
 }
 
 .clearLogButton {
     background: none;
     border: none;
-    color: #0070f3;
+    color: var(--primary, #0070f3);
     font-size: 0.8rem;
     cursor: pointer;
     font-weight: 600;
@@ -228,9 +229,9 @@
     text-decoration: underline;
 }
 
-.info { color: #0070f3; }
-.success { color: #00a854; }
-.error { color: #e00; }
+.info { color: var(--primary, #0070f3); }
+.success { color: var(--success, #00a854); }
+.error { color: var(--error, #e00); }
 
 @media (max-width: 600px) {
     .container { padding: 1rem; }
@@ -242,4 +243,58 @@
 .clearLogButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.finalTime {
+    font-size: 3rem;
+    color: var(--primary, #0070f3);
+}
+
+.correct {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+    border-color: #22c55e !important;
+}
+
+.wrong {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    border-color: #ef4444 !important;
+}
+
+.guideList {
+    text-align: left;
+    margin: 0 auto;
+    max-width: 100%;
+    padding-left: 1.5rem;
+    color: var(--text-secondary, #555);
+}
+
+.guideList li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.guideList strong {
+    color: var(--foreground, #333);
+}
+
+.faqContainer {
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+.faqItem {
+    margin-bottom: 1.5rem;
+}
+
+.faqQuestion {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--foreground, #333);
+    margin-bottom: 0.5rem;
+}
+
+.faqAnswer {
+    color: var(--text-secondary, #666);
+    margin: 0;
+    line-height: 1.5;
 }

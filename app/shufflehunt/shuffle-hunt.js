@@ -12,6 +12,7 @@ export default function ShuffleHuntGame() {
     const [isNfcScanning, setIsNfcScanning] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [elapsedTime, setElapsedTime] = useState(0);
+    const [feedback, setFeedback] = useState(null); // 'correct', 'wrong', or null
     const timerRef = useRef(null);
 
     // Refs for accessing state inside event listeners and debouncing
@@ -68,18 +69,28 @@ export default function ShuffleHuntGame() {
 
             if (serialNumber === targetSerial) {
                 // Correct card
+                setFeedback('correct');
+                setTimeout(() => setFeedback(null), 800);
+
                 const nextStep = currentStep + 1;
                 if (nextStep >= gameSequence.length) {
                     setGameState('won');
                     clearInterval(timerRef.current);
-                    const finalTime = ((Date.now() - startTime) / 1000).toFixed(1);
-                    addToLog(`🎉 YOU WIN! Sequence completed in ${finalTime}s!`, 'success');
+
+                    const finalTimeMs = Date.now() - startTime;
+                    const finalTimeSec = (finalTimeMs / 1000).toFixed(1);
+                    let winMsg = `🎉 YOU WIN! Sequence completed in ${finalTimeSec}s!`;
+
+                    addToLog(winMsg, 'success');
                 } else {
                     setCurrentStep(nextStep);
                     addToLog(`✅ Correct! That was Card #${currentStep + 1}. Now find Card #${nextStep + 1}`, 'success');
                 }
             } else {
                 // Wrong card
+                setFeedback('wrong');
+                setTimeout(() => setFeedback(null), 800);
+
                 setCurrentStep(0);
                 addToLog(`❌ Wrong card! Resetting to Card #1.`, 'error');
             }
@@ -185,7 +196,6 @@ export default function ShuffleHuntGame() {
                                 onClick={startGame}
                                 disabled={registeredTags.length < 2}
                                 className={styles.actionButton}
-                                style={{ marginTop: '1rem', backgroundColor: registeredTags.length < 2 ? '#ccc' : '#28a745' }}
                             >
                                 Start Game
                             </button>
@@ -195,9 +205,12 @@ export default function ShuffleHuntGame() {
                     {gameState === 'playing' && (
                         <div className={styles.inputGroup}>
                             <h2>2. Play</h2>
-                            <div className={styles.gameDisplay}>
+                            <div className={`${styles.gameDisplay} ${styles[feedback] || ''}`}>
                                 <div className={styles.timer}>
                                     ⏱️ {formatTime(elapsedTime)}s
+                                </div>
+                                <div style={{ marginBottom: '1rem', color: '#666', fontWeight: '500' }}>
+                                    Cards Left: {gameSequence.length - currentStep}
                                 </div>
                                 <h3>Find Card</h3>
                                 <div className={styles.targetNumber}>
@@ -216,7 +229,7 @@ export default function ShuffleHuntGame() {
                             <h2 style={{ color: '#28a745' }}>🎉 You Won! 🎉</h2>
                             <div className={styles.gameDisplay}>
                                 <h3>Final Time</h3>
-                                <div className={styles.targetNumber} style={{ fontSize: '3rem' }}>
+                                <div className={`${styles.targetNumber} ${styles.finalTime}`}>
                                     {formatTime(elapsedTime)}s
                                 </div>
                                 <p>You found all {gameSequence.length} cards in order.</p>
@@ -229,6 +242,40 @@ export default function ShuffleHuntGame() {
                             </button>
                         </div>
                     )}
+                </div>
+
+                <div className={styles.form}>
+                    <div className={styles.inputGroup}>
+                        <h2>How to Play</h2>
+                        <ol className={styles.guideList}>
+                            <li><strong>Gather Tags:</strong> Get a set of NFC tags or cards (at least 2).</li>
+                            <li><strong>Register:</strong> Tap &quot;Start NFC Scanner&quot; and tap each card one by one to register them.</li>
+                            <li><strong>Shuffle:</strong> Click &quot;Start Game&quot;. The app will shuffle the digital sequence of your cards.</li>
+                            <li><strong>Hunt:</strong> The app will ask for &quot;Card #1&quot;. Tap the physical cards until you find the one assigned to #1.</li>
+                            <li><strong>Sequence:</strong> Once found, look for #2, then #3, and so on.</li>
+                            <li><strong>Win:</strong> Complete the sequence as fast as you can!</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div className={styles.form}>
+                    <div className={styles.inputGroup}>
+                        <h2>FAQ</h2>
+                        <div className={styles.faqContainer}>
+                            <div className={styles.faqItem}>
+                                <div className={styles.faqQuestion}>What do I need?</div>
+                                <p className={styles.faqAnswer}>An Android phone with NFC enabled and Chrome browser, plus a few NFC tags (stickers, cards, or keychains).</p>
+                            </div>
+                            <div className={styles.faqItem}>
+                                <div className={styles.faqQuestion}>Does it write to the tags?</div>
+                                <p className={styles.faqAnswer}>No. The game only reads the unique Serial Number (UID) of the tags. It does not modify them.</p>
+                            </div>
+                            <div className={styles.faqItem}>
+                                <div className={styles.faqQuestion}>It says &quot;Web NFC not supported&quot;?</div>
+                                <p className={styles.faqAnswer}>Web NFC is currently only supported on Chrome for Android. Ensure NFC is turned on in your phone settings.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className={styles.logContainer}>

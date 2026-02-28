@@ -2,66 +2,33 @@ import ShuffleHuntGame from './shuffle-hunt';
 import { Fragment } from 'react';
 
 export const metadata = {
-    title: 'Free UPI QR Code Generator & NFC Writer | WebNfc',
-    description: 'Instantly generate a UPI QR code for payments. Our free tool also lets you write the UPI payment link directly to an NFC tag using your phone. No sign-up required.',
+    title: 'NFC Shuffle Hunt Game | WebNfc',
+    description: 'A fun memory and sequence game using NFC tags. Register cards, shuffle them, and find them in the correct order using your phone.',
     keywords: [
-        'UPI QR code generator',
-        'UPI QR generator',
-        'UPI QR code',
-        'UPI QR with fixed amount',
-        'generate UPI QR code',
-        'create UPI QR code',
-        'UPI QR code maker',
-        'UPI QR code creator',
-        'UPI QR code online',
-        'custom UPI QR code',
-        'colored UPI QR code',
-        'UPI QR code with logo',
-        'UPI QR code designer',
-        'UPI QR Fixed Amount',
-        'Fixed Amount UPI QR',
-        'UPI QR code fixed amount',
-        'UPI QR code generator with fixed amount',
-        'NFC UPI QR code',
-        'Free UPI QR code generator',
-        'free UPI QR code',
-        'UPI payment link',
-        'NFC UPI writer',
-        'WebNFC UPI',
-        'create UPI QR',
-        'NFC payment tag',
-        'UPI QR code for shops',
-        'online UPI tool',
-        'UPI NFC tag writer',
-        'UPI vCard',
-        'UPI contact sharing',
-        'WebNfc',
-        'UPI NFC',
-        'UPI NFC tag writer',
-        'NFC UPI writer',
-        'UPI to NFC tag'
+        'NFC game',
+        'Shuffle Hunt',
+        'NFC memory game',
+        'Web NFC game',
+        'browser NFC game',
+        'NFC tag game',
+        'interactive NFC',
+        'WebNfc'
     ],
 };
 
-export default function UpiPage() {
+export default function ShuffleHuntPage() {
     const gameSchema = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        name: 'UPI QR Code Generator & NFC Writer',
-        applicationCategory: 'Utilities',
+        name: 'NFC Shuffle Hunt',
+        applicationCategory: 'Game',
         operatingSystem: 'Web',
         browserRequirements: 'Requires a browser with WebNFC support (e.g., Chrome on Android).',
-        description: 'A free online tool to generate UPI QR codes for payments and write them directly to NFC tags.',
-        featureList: [
-            'Generate UPI QR codes',
-            'Write UPI links to NFC tags',
-            'Customize QR code colors',
-            'Add a logo to the QR code'
-        ],
+        description: 'A browser-based game where players register NFC tags, shuffle them, and attempt to scan them in the correct sequence.',
         offers: {
             '@type': 'Offer',
             price: '0',
-            priceCurrency: 'INR'
+            priceCurrency: 'USD'
         },
         publisher: {
             '@type': 'Organization',
