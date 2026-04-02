@@ -26,6 +26,9 @@ export const metadata = {
   icons: {
     icon: '/globe-white.jpg',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-4417247577413599',
+  },
 };
 
 export default function RootLayout({ children }) {
