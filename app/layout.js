@@ -3,6 +3,7 @@ import Header from "../app/components/Header";
 import Footer from "../app/components/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
 import ServiceWorkerRegistrar from "./components/ServiceWorkerRegistrar";
+import Script from "next/script";
 
 
 export const metadata = {
@@ -30,6 +31,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4417247577413599"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <ThemeProvider>
           <Header />
