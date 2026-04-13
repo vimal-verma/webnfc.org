@@ -7,11 +7,6 @@ import projects from './projects.json';
 export default function ShowCaseClient() {
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Web NFC Project Showcase</h1>
-            <p className={styles.subtitle}>
-                Explore innovative projects built with Web NFC technology or submit your own!
-            </p>
-
             <section className={styles.submissionSection}>
                 <h2>Have a Project to Share?</h2>
                 <p>

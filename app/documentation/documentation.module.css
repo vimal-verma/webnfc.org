@@ -52,12 +52,72 @@
     min-width: 0; /* Prevents overflow issues with grid */
 }
 
+.mobileNavToggle {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
+        gap: 0;
+        padding: 1rem;
     }
     .sidebar {
-        display: none; /* Hiding sidebar on mobile for simplicity */
+        display: none;
+    }
+    .mobileNavToggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        background: var(--card-background);
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        cursor: pointer;
+        margin-bottom: 0.75rem;
+        text-align: left;
+    }
+    .mobileNavToggleIcon {
+        font-size: 1rem;
+        width: 1.2rem;
+        text-align: center;
+    }
+    .mobileNav {
+        background: var(--card-background);
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        padding: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+    .mobileNav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    .mobileNav li a {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .mobileNav li a:hover {
+        background-color: var(--card-background-hover);
+        color: var(--text-primary);
+    }
+    .mobileNav li a.activeLink {
+        background-color: var(--primary-accent);
+        color: #fff;
+        font-weight: 500;
     }
 }
 

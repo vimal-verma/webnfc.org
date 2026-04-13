@@ -3,35 +3,29 @@ import { Fragment } from 'react';
 
 export const metadata = {
     title: 'Free Event QR Code Generator & NFC Writer | WebNfc',
-    description: 'Instantly generate an Event QR code (vEvent) to share calendar details. Our free tool also lets you write the event details directly to an NFC tag using your phone. No sign-up required.',
+    description: 'Generate a calendar event QR code (vEvent / iCal format). Scan to add the event to any calendar app. Also write to NFC tags. Free, no sign-up.',
     keywords: [
-        'Event QR code generator',
-        'Calendar QR generator',
-        'vEvent QR code',
-        'iCal QR code',
-        'generate Event QR code',
-        'create Event QR code',
-        'Event QR code maker',
-        'Event QR code creator',
-        'Event QR code online',
-        'custom Event QR code',
-        'NFC Event QR code',
-        'Free Event QR code generator',
-        'free Event QR code',
-        'Calendar link',
-        'NFC Event writer',
-        'WebNFC Event',
-        'create Event QR',
-        'online Event tool',
-        'Event NFC tag writer',
-        'QR code for calendar event',
-        'share event with QR code',
-        'WebNfc',
-        'Event NFC',
-        'Event NFC tag writer',
-        'NFC Event writer Free',
-        'Event to NFC tag'
+        'Event QR code generator', 'Calendar QR generator', 'vEvent QR code', 'iCal QR code',
+        'generate Event QR code', 'create calendar QR code', 'NFC Event QR code',
+        'Free Event QR code generator', 'Calendar link QR', 'NFC Event writer',
+        'Event to NFC tag', 'QR code for calendar event', 'share event with QR code',
+        'add event QR code', 'WebNfc', 'event NFC tag writer', 'WebNFC Event',
     ],
+    openGraph: {
+        title: 'Free Event QR Code Generator & NFC Writer | WebNfc',
+        description: 'Generate a vEvent QR code — scan to add to calendar. Works with Google, Apple, and Outlook. Also writes to NFC.',
+        url: 'https://webnfc.org/event',
+        siteName: 'WebNfc',
+        images: [{ url: 'https://webnfc.org/og-logo.png', width: 1200, height: 630, alt: 'Event QR Code Generator — WebNfc' }],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Event QR Code Generator & NFC Writer | WebNfc',
+        description: 'Create a calendar event QR code — scan to add to Google Calendar, iCal, or Outlook.',
+        images: ['https://webnfc.org/og-logo.png'],
+    },
+    alternates: { canonical: 'https://webnfc.org/event' },
 };
 
 export default function EventPage() {
@@ -41,32 +35,58 @@ export default function EventPage() {
         name: 'Event QR Code Generator & NFC Writer',
         applicationCategory: 'Utilities',
         operatingSystem: 'Web',
-        browserRequirements: 'Requires a browser with WebNFC support (e.g., Chrome on Android).',
-        description: 'A free online tool to generate Event QR codes (vEvent) and write them directly to NFC tags.',
-        featureList: [
-            'Generate Event QR codes',
-            'Write vEvent data to NFC tags',
-            'Customize QR code colors',
-            'Add a logo to the QR code'
-        ],
-        offers: {
-            '@type': 'Offer',
-            price: '0',
-            priceCurrency: 'INR'
-        },
-        publisher: {
-            '@type': 'Organization',
-            name: 'WebNfc'
-        }
+        description: 'A free online tool to generate calendar event QR codes (vEvent) and write them to NFC tags.',
+        featureList: ['Generate vEvent QR codes', 'Write event data to NFC tags', 'Compatible with Google Calendar, iCal, Outlook', 'Customize QR colors'],
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+        publisher: { '@type': 'Organization', name: 'WebNfc' }
     };
 
     return (
         <Fragment>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
-            />
-            <EventToolClient />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }} />
+            <div className="toolPageWrapper">
+                <header className="toolPageHero">
+                    <h1>Calendar Event QR Code Generator</h1>
+                    <p>Create a QR code for any event in vEvent (iCal) format. Attendees scan to add the event to Google Calendar, Apple Calendar, or Outlook automatically.</p>
+                    <div className="toolBadges">
+                        <span className="toolBadge">Free</span>
+                        <span className="toolBadge">vEvent / iCal format</span>
+                        <span className="toolBadge">Google · Apple · Outlook</span>
+                        <span className="toolBadge">QR + NFC</span>
+                    </div>
+                </header>
+
+                <EventToolClient />
+
+                <section className="toolHowTo">
+                    <h2>How to Create an Event QR Code</h2>
+                    <p>Let attendees add your event with one scan.</p>
+                    <div className="toolStepsGrid">
+                        <div className="toolStep">
+                            <div className="toolStepNum">1</div>
+                            <div><h3>Enter Event Details</h3><p>Add the event title, start and end date/time, location, and an optional description.</p></div>
+                        </div>
+                        <div className="toolStep">
+                            <div className="toolStepNum">2</div>
+                            <div><h3>QR Code is Ready</h3><p>The vEvent QR updates as you type. Compatible with all major calendar apps.</p></div>
+                        </div>
+                        <div className="toolStep">
+                            <div className="toolStepNum">3</div>
+                            <div><h3>Share or Print</h3><p>Download as PNG for invitations, posters, or flyers. Or write to NFC for tap-to-add at the venue.</p></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="toolUseCases">
+                    <h2>Common Uses</h2>
+                    <div className="toolUseCaseGrid">
+                        <div className="toolUseCase"><strong>🎉 Parties &amp; Weddings</strong>Add to invitations — guests scan to save the date.</div>
+                        <div className="toolUseCase"><strong>🎤 Conferences</strong>Session QR codes on the schedule — tap to add to calendar.</div>
+                        <div className="toolUseCase"><strong>🏫 Classes &amp; Workshops</strong>Print on handouts so students add recurring sessions.</div>
+                        <div className="toolUseCase"><strong>🏷️ NFC Venue Tags</strong>Tap at the entrance — event is added to your calendar instantly.</div>
+                    </div>
+                </section>
+            </div>
         </Fragment>
     );
 }

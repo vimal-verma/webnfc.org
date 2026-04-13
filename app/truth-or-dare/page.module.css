@@ -1,0 +1,394 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 140px);
+    padding: 1rem;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+/* ── Shared ── */
+.roundBadge {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 9999px;
+    padding: 0.3rem 1rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.resetLink {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: color 0.2s;
+}
+.resetLink:hover { color: var(--text-primary); }
+
+/* ── Setup ── */
+.setupScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 2rem 0;
+}
+
+.setupHeader {
+    text-align: center;
+}
+
+.bigIcon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.gameTitle {
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.75rem;
+}
+
+.gameSubtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* Mode selector */
+.modeSelector {
+    width: 100%;
+    text-align: center;
+}
+
+.modeLabel {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.modeBtns {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.modeBtn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 9999px;
+    border: 2px solid var(--card-border);
+    background: var(--card-background);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.modeBtn:hover {
+    border-color: var(--primary-accent);
+    color: var(--text-primary);
+}
+
+.modeBtnActive {
+    border-color: var(--primary-accent);
+    background: var(--primary-accent);
+    color: #fff;
+}
+
+/* Compat note */
+.compatNote {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    width: 100%;
+    text-align: center;
+}
+
+/* How to play */
+.howToPlay {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.howToPlay h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.howList {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.howList li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.startBtn {
+    background: var(--primary-accent);
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-family: inherit;
+}
+
+.startBtn:hover {
+    background: var(--primary-accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ── Waiting ── */
+.waitingScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+.cardPlaceholder {
+    width: 260px;
+    height: 360px;
+    margin-bottom: 2rem;
+    perspective: 1000px;
+}
+
+.cardBack {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ec4899, #8b5cf6);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: #fff;
+    box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3);
+    animation: cardPulse 2s ease-in-out infinite;
+}
+
+.cardBack span {
+    font-size: 4rem;
+}
+
+.cardBack p {
+    font-size: 1rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+@keyframes cardPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3); }
+    50% { transform: scale(1.02); box-shadow: 0 24px 48px rgba(236, 72, 153, 0.45); }
+}
+
+.revealBtn {
+    background: var(--primary-accent);
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-family: inherit;
+}
+
+.revealBtn:hover {
+    background: var(--primary-accent-hover);
+    transform: translateY(-2px);
+}
+
+/* ── Reveal ── */
+.revealScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+/* Card flip */
+.promptCard {
+    width: 280px;
+    height: 380px;
+    perspective: 1000px;
+    margin-bottom: 2rem;
+}
+
+.promptCardInner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promptCardFlipped .promptCardInner {
+    transform: rotateY(180deg);
+}
+
+.promptCardFront,
+.promptCardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.promptCardFront {
+    background: linear-gradient(135deg, #ec4899, #8b5cf6);
+    box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3);
+}
+
+.cardFrontIcon {
+    font-size: 5rem;
+}
+
+.promptCardBack {
+    transform: rotateY(180deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    gap: 1rem;
+}
+
+.promptCardTruth {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.promptCardDare {
+    background: linear-gradient(135deg, #f97316, #dc2626);
+}
+
+.promptTypeBadge {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 9999px;
+    padding: 0.3rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.08em;
+}
+
+.promptText {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: center;
+    margin: 0;
+}
+
+.tagHint {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+    margin: 0;
+    font-family: monospace;
+}
+
+.revealActions {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 360px;
+}
+
+.nextBtn {
+    flex: 1;
+    background: var(--color-success, #22c55e);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    font-family: inherit;
+}
+
+.nextBtn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.skipBtn {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    padding: 0.9rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: inherit;
+}
+
+.skipBtn:hover {
+    background: var(--button-secondary-hover);
+    color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+    .cardPlaceholder {
+        width: 220px;
+        height: 300px;
+    }
+
+    .promptCard {
+        width: 240px;
+        height: 320px;
+    }
+
+    .promptText {
+        font-size: 0.95rem;
+    }
+}

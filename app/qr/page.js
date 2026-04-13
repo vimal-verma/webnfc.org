@@ -10,8 +10,17 @@ export const metadata = {
         description: 'Explore our comprehensive collection of free tools to generate QR codes and write to NFC tags for URLs, WiFi, vCards, UPI, and more.',
         url: 'https://webnfc.org/qr',
         siteName: 'WebNfc',
-        images: '/og-logo.png',
+        images: [{ url: 'https://webnfc.org/og-logo.png', width: 1200, height: 630, alt: 'Free QR Code Generators — WebNfc' }],
         type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free QR Code Generators & NFC Writers | WebNfc',
+        description: 'Explore our comprehensive collection of free tools to generate QR codes and write to NFC tags.',
+        images: ['https://webnfc.org/og-logo.png'],
+    },
+    alternates: {
+        canonical: 'https://webnfc.org/qr',
     },
 };
 
@@ -102,13 +111,22 @@ export default function QrToolsPage() {
                 </header>
 
                 <div className={styles.grid}>
-                    {tools.map((tool) => (
-                        <Link key={tool.href} href={tool.href} className={styles.card}>
-                            <div className={styles.icon}>{tool.icon}</div>
-                            <h2 className={styles.cardTitle}>{tool.title}</h2>
-                            <p className={styles.cardDescription}>{tool.description}</p>
-                        </Link>
-                    ))}
+                    {tools.map((tool) => {
+                        const isExternal = tool.href.startsWith('http');
+                        return (
+                            <Link
+                                key={tool.href}
+                                href={tool.href}
+                                className={styles.card}
+                                {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                            >
+                                <div className={styles.icon}>{tool.icon}</div>
+                                <h2 className={styles.cardTitle}>{tool.title}</h2>
+                                <p className={styles.cardDescription}>{tool.description}</p>
+                                {isExternal && <span className={styles.externalBadge}>↗ External</span>}
+                            </Link>
+                        );
+                    })}
                 </div>
             </div>
         </>

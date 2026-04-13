@@ -222,3 +222,22 @@
         grid-template-columns: 1fr 1fr;
     }
 }
+
+/* Tab hint text */
+.tabHint {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: -1rem 0 1.5rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--button-secondary-hover);
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+/* Write hint below disabled button */
+.writeHint {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 0.5rem;
+}

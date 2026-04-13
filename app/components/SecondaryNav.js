@@ -12,7 +12,7 @@ export default function SecondaryNav() {
         <nav className={styles.secondaryNav}>
             <div className={styles.scrollContainer}>
                 {tools.map((tool) => (
-                    <Link key={tool.href} href={tool.href} className={`${styles.navLink} ${pathname === tool.href ? styles.active : ''}`}>
+                    <Link key={tool.href} href={tool.href} className={`${styles.navLink} ${pathname === tool.href ? styles.active : ''}`} aria-current={pathname === tool.href ? 'page' : undefined}>
                         {tool.name}
                     </Link>
                 ))}

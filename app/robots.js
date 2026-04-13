@@ -14,6 +14,7 @@ export default function robots() {
                 disallow: [
                     '/cart',
                     '/checkout',
+                    '/redirect',
                 ],
             },
             // Allow Google's AI crawler

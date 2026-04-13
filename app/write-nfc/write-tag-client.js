@@ -148,30 +148,46 @@ export default function WriteTagClient() {
         }
     };
 
+    const tabHints = {
+        text: 'Writes a plain text string. Good for instructions, notes, or simple messages.',
+        url: 'Writes a URL record. When scanned, the phone opens the link automatically.',
+        vcard: 'Writes a contact card (vCard). When scanned, the phone offers to save the contact.',
+    };
+
     return (
         <div className={styles.toolContainer}>
             <div className={styles.writerForm}>
                 <div className={styles.tabs}>
-                    <button className={recordType === 'text' ? styles.active : ''} onClick={() => setRecordType('text')}>Text</button>
-                    <button className={recordType === 'url' ? styles.active : ''} onClick={() => setRecordType('url')}>URL</button>
-                    <button className={recordType === 'vcard' ? styles.active : ''} onClick={() => setRecordType('vcard')}>Contact Card (vCard)</button>
+                    <button className={recordType === 'text' ? styles.active : ''} onClick={() => setRecordType('text')}>📝 Text</button>
+                    <button className={recordType === 'url' ? styles.active : ''} onClick={() => setRecordType('url')}>🔗 URL</button>
+                    <button className={recordType === 'vcard' ? styles.active : ''} onClick={() => setRecordType('vcard')}>📇 Contact Card</button>
                 </div>
+                <p className={styles.tabHint}>{tabHints[recordType]}</p>
                 <div className={styles.formContent}>
                     {renderForm()}
                 </div>
                 <button onClick={handleWrite} disabled={isWriteDisabled()} className={styles.actionButton}>
-                    Write to NFC Tag
+                    ✍️ Write to NFC Tag
                 </button>
+                {isWriteDisabled() && (
+                    <p className={styles.writeHint}>
+                        {recordType === 'vcard' ? 'Full Name is required to write a contact card.' : 'Fill in the field above to enable writing.'}
+                    </p>
+                )}
             </div>
 
             <div className={styles.logContainer}>
                 <div className={styles.logHeader}>
-                    <h3>Log</h3>
+                    <h3>Write Log</h3>
                     <button onClick={() => setLog([])} className={styles.clearLogButton} disabled={log.length === 0}>
                         Clear
                     </button>
                 </div>
-                <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} />
+                {log.length === 0 ? (
+                    <p style={{color:'var(--text-secondary)',fontSize:'0.85rem',padding:'0.25rem 0'}}>Fill in the form and press Write. The log will appear here.</p>
+                ) : (
+                    <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} aria-live="polite" />
+                )}
             </div>
         </div>
     );

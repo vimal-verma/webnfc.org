@@ -1,8 +1,45 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './page.module.css';
+import JsonLd from '../components/JsonLd';
+
+export const metadata = {
+  title: 'About WebNfc | Our Mission & Story',
+  description: 'Learn about WebNFC.org — a free, open-source project on a mission to make Web NFC technology accessible to developers and enthusiasts worldwide.',
+  keywords: ['About WebNfc', 'Web NFC project', 'NFC open source', 'WebNFC mission', 'Vimal Kumar', 'NFC developer tools'],
+  openGraph: {
+    title: 'About WebNfc | Our Mission & Story',
+    description: 'Learn about WebNFC.org — a free, open-source project on a mission to make Web NFC technology accessible to developers and enthusiasts worldwide.',
+    url: 'https://webnfc.org/about',
+    siteName: 'WebNfc',
+    images: [{ url: 'https://webnfc.org/og-logo.png', width: 1200, height: 630, alt: 'About WebNfc' }],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About WebNfc | Our Mission & Story',
+    description: 'Learn about WebNFC.org — a free, open-source project on a mission to make Web NFC technology accessible.',
+    images: ['https://webnfc.org/og-logo.png'],
+  },
+  alternates: {
+    canonical: 'https://webnfc.org/about',
+  },
+};
+
+const aboutSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About WebNfc',
+    description: 'Learn about WebNFC.org — a free, open-source project on a mission to make Web NFC technology accessible to developers and enthusiasts worldwide.',
+    url: 'https://webnfc.org/about',
+    publisher: {
+        '@type': 'Organization',
+        name: 'WebNfc',
+        url: 'https://webnfc.org',
+        logo: 'https://webnfc.org/logo.png',
+        sameAs: ['https://github.com/vimal-verma/webnfc'],
+    },
+};
 
 export default function AboutPage() {
     const teamMembers = [
@@ -92,6 +129,7 @@ export default function AboutPage() {
                     Contribute on GitHub
                 </Link>
             </section>
+            <JsonLd data={aboutSchema} />
         </div>
     );
 }

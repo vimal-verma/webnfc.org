@@ -7,14 +7,23 @@ import JsonLd from "./components/JsonLd";
 export const metadata = {
   title: "WebNfc | Learn, Build, and Use Web NFC Technology",
   description: "Your ultimate resource for Web NFC. Explore our free online tools to read and write NFC tags, generate vCards, and learn everything about Near Field Communication.",
-  keywords: ['Web NFC', 'WebNfc', 'Web Nfc API', 'WebNfc API', 'Nfc API Documentation', 'Learn NFC', 'NFC Reader', 'NFC Writer', 'NFC Guide', 'Near Field Communication', 'NFC Tag Writer', 'NFC Tag Reader', 'WebNFC Documentation', 'NFC Tutorials', 'NFC Examples', 'NFC Projects', 'NFC API', 'NFC Development', 'NFC Applications', 'NFC Solutions', 'Contactless Technology', 'NFC for IoT', 'NFC Programming', 'NFC Tag Management', 'NFC Tag Cloner', 'NFC Tag Eraser', 'NFC Tag Formatter', 'NFC Tag Locker'],
+  keywords: ['Web NFC', 'NFC tag reader', 'NFC tag writer', 'vCard generator', 'NFC tools', 'WebNFC API', 'Near Field Communication', 'NFC tutorials'],
   openGraph: {
     title: 'WebNfc | Learn, Build, and Use Web NFC Technology',
     description: 'The ultimate resource for learning and using Web NFC technology directly in your browser.',
     url: 'https://webnfc.org',
     siteName: 'WebNfc',
-    images: '/logo.jpg',
+    images: [{ url: 'https://webnfc.org/og-logo.png', width: 1200, height: 630, alt: 'WebNfc — Learn, Build, and Use Web NFC Technology' }],
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'WebNfc | Learn, Build, and Use Web NFC Technology',
+    description: 'The ultimate resource for learning and using Web NFC technology directly in your browser.',
+    images: ['https://webnfc.org/og-logo.png'],
+  },
+  alternates: {
+    canonical: 'https://webnfc.org',
   },
 };
 
@@ -25,15 +34,27 @@ const faqs = [
   },
   {
     question: 'Which browsers support Web NFC?',
-    answer: 'Currently, Web NFC is primarily supported by Chrome on Android (version 89 or newer). It is not available on iOS (iPhone/iPad) or desktop browsers like Safari, Firefox, or Edge.',
+    answer: 'Currently, Web NFC is supported by Chrome on Android (version 89 or newer). It is not available on iOS (iPhone/iPad) or desktop browsers like Safari, Firefox, or Edge. Make sure your Android device supports NFC and that NFC is enabled in system settings.',
   },
   {
     question: 'What can I do with your NFC tools?',
-    answer: 'Our free tools allow you to read the contents of any standard NFC tag, write data like text or URLs, create and write digital contact cards (vCards), and generate UPI payment QR codes and NFC tags.',
+    answer: 'Our free tools allow you to read the contents of any standard NFC tag, write data like text or URLs, create and write digital contact cards (vCards), generate UPI payment QR codes and NFC tags, and share WiFi credentials via QR or NFC.',
   },
   {
     question: 'Is it free to use your tools?',
-    answer: 'Yes, all our Web NFC tools—the reader, writer, vCard generator, and UPI QR generator—are completely free to use directly in your browser. No sign-up is required.',
+    answer: 'Yes, all our Web NFC tools—the reader, writer, vCard generator, UPI QR generator, and all QR code tools—are completely free to use directly in your browser. No sign-up, no account, and no installation required.',
+  },
+  {
+    question: 'What types of NFC tags are compatible?',
+    answer: 'Our tools work with standard NDEF-formatted NFC tags. Most commonly available tags like NTAG213, NTAG215, and NTAG216 are fully compatible. The tool will indicate the estimated tag type and capacity after scanning.',
+  },
+  {
+    question: 'Can I use these tools without an NFC tag?',
+    answer: 'Yes! All our QR code generators (URL, WiFi, vCard, UPI, Email, SMS, and more) work on any device without NFC hardware. You can generate, customize, and download QR codes even on a desktop browser.',
+  },
+  {
+    question: 'Is my data safe when using these tools?',
+    answer: 'All processing happens directly in your browser. We do not send your NFC tag data, vCard details, or payment information to any server. Your data never leaves your device.',
   },
 ];
 
@@ -46,6 +67,7 @@ export default function Home() {
     'name': 'WebNfc',
     'url': 'https://webnfc.org',
     'logo': 'https://webnfc.org/logo.png',
+    'sameAs': ['https://github.com/vimal-verma/webnfc'],
     'contactPoint': {
       '@type': 'ContactPoint',
       'contactType': 'customer service',
@@ -70,17 +92,37 @@ export default function Home() {
     <div className={styles.main}>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1 className={styles.title}>Explore the World of Web NFC</h1>
+          <div className={styles.heroBadge}>
+            <span className={styles.heroBadgeDot}></span>
+            Works on Chrome for Android · No install needed
+          </div>
+          <h1 className={styles.title}>Read & Write NFC Tags<br />Directly in Your Browser</h1>
           <p className={styles.subtitle}>
-            Your ultimate resource for learning, experimenting, and building with Near Field Communication technology, directly in your browser.
+            The free, open-source toolkit for Web NFC. Scan tags, write contact cards, generate QR codes, and learn everything about Near Field Communication — no app required.
           </p>
           <div className={styles.ctaContainer}>
             <Link href="/nfc-tool" className={styles.primary}>
-              Explore NFC Tools
+              Open NFC Tool
             </Link>
             <Link href="/documentation" className={styles.secondary}>
-              Read Guides
+              Read the Docs
             </Link>
+          </div>
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <strong>13+</strong>
+              <span>Free Tools</span>
+            </div>
+            <div className={styles.heroStatDivider}></div>
+            <div className={styles.heroStat}>
+              <strong>100%</strong>
+              <span>Browser-based</span>
+            </div>
+            <div className={styles.heroStatDivider}></div>
+            <div className={styles.heroStat}>
+              <strong>0</strong>
+              <span>Sign-up required</span>
+            </div>
           </div>
         </div>
       </section>
@@ -162,10 +204,11 @@ export default function Home() {
                 />
               </div>
               <div className={styles.postContent}>
-                <h2 className={styles.postTitle}>{post.title}</h2>
+                <h3 className={styles.postTitle}>{post.title}</h3>
                 <p className={styles.postExcerpt}>{post.excerpt}</p>
                 <div className={styles.postMeta}>
                   <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  <span className={styles.readMore}>Read more →</span>
                 </div>
               </div>
             </Link>
@@ -174,6 +217,28 @@ export default function Home() {
         <Link href="/blog" className={styles.secondary}>
           View All Posts
         </Link>
+      </section>
+
+      <section className={styles.howItWorksSection}>
+        <h2 className={styles.sectionTitle}>How It Works</h2>
+        <p className={styles.sectionSubtitle}>Get started in three simple steps — no installation needed.</p>
+        <div className={styles.stepsGrid}>
+          <div className={styles.stepCard}>
+            <div className={styles.stepNumber}>1</div>
+            <h3>Open a Tool</h3>
+            <p>Choose the NFC Reader, Writer, or any QR generator from the tools menu. Everything runs in your browser — nothing to install.</p>
+          </div>
+          <div className={styles.stepCard}>
+            <div className={styles.stepNumber}>2</div>
+            <h3>Enter Your Data</h3>
+            <p>Type a URL, paste contact info, enter WiFi credentials — or just tap to scan an existing NFC tag and see what&apos;s on it.</p>
+          </div>
+          <div className={styles.stepCard}>
+            <div className={styles.stepNumber}>3</div>
+            <h3>Tap or Download</h3>
+            <p>Hold your phone near an NFC tag to write instantly, or download your QR code as a PNG to share anywhere.</p>
+          </div>
+        </div>
       </section>
 
       <section className={styles.faqSection}>

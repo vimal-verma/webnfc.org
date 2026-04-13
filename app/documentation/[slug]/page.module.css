@@ -24,19 +24,57 @@
 }
 
 .guideCard {
-  display: block;
-  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
   border: 1px solid var(--card-border);
   border-radius: 12px;
   text-decoration: none;
   color: var(--text-primary);
+  background: var(--card-background);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .guideCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
   border-color: var(--primary-accent);
+}
+
+.guideIcon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.guideCardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--text-primary);
+}
+
+.guideCardDesc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.introLink {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--primary-accent);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.introLink:hover {
+  border-bottom-color: var(--primary-accent);
 }
 
 .title {

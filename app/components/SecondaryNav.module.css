@@ -40,7 +40,7 @@
 
 .navLink {
     padding: 0.5rem 1rem;
-    color: var(--text-color-secondary);
+    color: var(--text-secondary);
     text-decoration: none;
     border-radius: 6px;
     font-weight: 500;
@@ -50,10 +50,16 @@
 
 .navLink:hover {
     background-color: var(--secondary-nav-hover-bg);
-    color: var(--text-color);
+    color: var(--text-primary);
+}
+
+.navLink:focus-visible {
+    outline: 2px solid var(--primary-accent);
+    outline-offset: 2px;
+    color: var(--text-primary);
 }
 
 .navLink.active {
-    background-color: var(--primary-color);
+    background-color: var(--primary-accent);
     color: white;
 }

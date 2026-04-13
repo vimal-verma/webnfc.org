@@ -196,3 +196,82 @@
 .log .error { color: #dc3545; }
 .log .info { color: var(--text-primary); }
 .log a { color: var(--primary-accent); text-decoration: underline; }
+
+/* Empty state */
+.emptyState {
+    width: 100%;
+    background: var(--card-background);
+    border: 1px dashed var(--card-border);
+    border-radius: 14px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+}
+
+.emptyStateIcon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+    line-height: 1;
+}
+
+.emptyStateTitle {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    color: var(--text-primary);
+}
+
+.emptyStateHint {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+/* Scanning pulse animation */
+.scanningIndicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.scanPulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* WiFi card */
+.wifiCard {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-sm);
+    padding: 0 1.25rem 1.25rem;
+    background: var(--card-background);
+}
+
+.wifiCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0 0.75rem;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.wifiCardHeader h3 {
+    margin: 0;
+    font-size: 1rem;
+}

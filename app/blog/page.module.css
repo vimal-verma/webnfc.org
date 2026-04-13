@@ -84,8 +84,71 @@
 .postMeta {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
+  align-items: center;
+  font-size: 0.85rem;
   color: var(--text-secondary);
+  gap: 0.5rem;
+}
+
+.postAuthor {
+  white-space: nowrap;
+}
+
+.postMetaRight {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.readingTime {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 9999px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.78rem;
+}
+
+.postTags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.postTag {
+  background: var(--button-secondary-hover);
+  border: 1px solid var(--card-border);
+  border-radius: 9999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.readMoreBar {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary-accent);
+  border-top: 1px solid var(--card-border);
+  text-align: right;
+  transition: background-color 0.2s ease;
+}
+
+.postCard:hover .readMoreBar {
+  background: var(--card-background-hover);
+}
+
+.heroBadge {
+  display: inline-block;
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 9999px;
+  padding: 0.3rem 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {

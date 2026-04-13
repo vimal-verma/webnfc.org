@@ -14,14 +14,24 @@ export const metadata = {
   },
   description: "Leading Web NFC tools and resources to read, write, and manage NFC tags directly from your browser.",
   manifest: '/manifest.json',
-  keywords: ['NFC tools', 'Web NFC guide', 'NFC tag reader', 'NFC tag writer', 'vCard generator', 'NFC business cards', 'Contactless technology', 'NFC tutorials', 'WebNFC API', 'NFC applications', 'Digital business cards', 'Custom NFC cards', 'Smart business cards', 'NFC technology', 'Networking', 'Contactless cards', 'NFC card design', 'Digital networking', 'NFC card printing', 'Customizable NFC cards', 'Eco-friendly business cards', 'NFC card solutions', 'Professional networking tools', 'Design your NFC card', 'NFC card features', 'NFC card pricing', 'Order NFC cards online', 'Low cost NFC cards', 'NFC card reviews', 'NFC card blog', 'NFC card contact', 'NFC card FAQ'],
+  keywords: ['Web NFC', 'NFC tools', 'NFC tag reader', 'NFC tag writer', 'vCard generator', 'NFC business cards', 'WebNFC API', 'NFC tutorials'],
   openGraph: {
     title: 'WebNfc | NFC Tools & Guide',
     description: 'Leading Web NFC tools and resources to read, write, and manage NFC tags directly from your browser.',
     url: 'https://webnfc.org',
     siteName: 'WebNfc',
-    images: '/logo.jpg',
+    images: [{ url: 'https://webnfc.org/og-logo.png', width: 1200, height: 630, alt: 'WebNfc — NFC Tools & Guide' }],
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'WebNfc | NFC Tools & Guide',
+    description: 'Leading Web NFC tools and resources to read, write, and manage NFC tags directly from your browser.',
+    images: ['https://webnfc.org/og-logo.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
   icons: {
     icon: '/globe-white.jpg',
@@ -43,8 +53,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ThemeProvider>
+          <a href="#main-content" className="skipLink">Skip to main content</a>
           <Header />
-          <main className="main-content">{children}</main>
+          <main id="main-content" className="main-content">{children}</main>
           <Footer />
           <ServiceWorkerRegistrar />
         </ThemeProvider>

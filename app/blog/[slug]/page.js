@@ -22,7 +22,30 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  return { title: post.title, description: post.description, keywords: post.keywords };
+  return {
+    title: `${post.title} | WebNfc Blog`,
+    description: post.description,
+    keywords: post.keywords,
+    alternates: {
+      canonical: `https://webnfc.org/blog/${slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `https://webnfc.org/blog/${slug}`,
+      siteName: 'WebNfc',
+      type: 'article',
+      publishedTime: post.date,
+      authors: [post.author],
+      images: [{ url: `https://webnfc.org${post.image}`, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: [`https://webnfc.org${post.image}`],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }) {
@@ -63,6 +86,7 @@ export default async function BlogPostPage({ params }) {
 
   return (
     <div className={styles.container}>
+      <Link href="/blog" className={styles.backLink}>← Back to Blog</Link>
       <article className={styles.article}>
         <header className={styles.header}>
           <h1 className={styles.title}>{post.title}</h1>

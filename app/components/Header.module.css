@@ -7,11 +7,15 @@
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: var(--background);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--button-secondary-border);
   transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+:global(.dark) .header {
+  background-color: rgba(10, 10, 10, 0.85);
 }
 
 .headerContent {
@@ -69,8 +73,21 @@
 .navButton:hover {
   background-color: var(--button-secondary-hover);
 }
-.nav a.active {
-  color: var(--primary-accent);
+.nav a.active,
+.activeLink {
+  color: var(--primary-accent) !important;
+}
+
+.chevron {
+  font-size: 0.75rem;
+  margin-left: 2px;
+  display: inline-block;
+  transition: transform 0.2s ease;
+  vertical-align: middle;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
 }
 
 .cartLink {
@@ -154,9 +171,6 @@
   border: 1px solid var(--primary-accent) !important;
 }
 
-.dark .header {
-    background-color: rgba(10, 10, 10, 0.8);
-  }
 .dark .nav a {
     color: var(--text-primary);
   }

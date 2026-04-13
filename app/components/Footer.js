@@ -30,7 +30,7 @@ export default function Footer() {
             <div className={styles.footerContent}>
                 <div className={styles.footerBrand}>
                     <Link href="/" className={styles.logo}>WebNfc</Link>
-                    <p>learn, build, and use Web NFC technology directly in your browser.</p>
+                    <p>Learn, build, and use Web NFC technology directly in your browser.</p>
                     <br />
                     <a href="https://github.com/vimal-verma/webnfc" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
@@ -42,32 +42,33 @@ export default function Footer() {
                         <Link href="/blog">Blog</Link>
                         <Link href="/contact">Contact Us</Link>
                         <Link href="/showcase">Showcase</Link>
+                        <Link href="/games">🎮 Games</Link>
                     </div>
                     <div className={styles.linkColumn}>
-                        <h4>Our Tools</h4>
+                        <h4>NFC Tools</h4>
                         <Link href="/vcard">vCard Generator</Link>
-                        <Link href="/upi">Upi QR Generator</Link>
+                        <Link href="/upi">UPI QR Generator</Link>
                         <Link href="/qr">QR Tools</Link>
                         <Link href="/read-nfc">Read NFC Tag</Link>
                         <Link href="/write-nfc">Write NFC Tag</Link>
-                        <Link href="/nfc-tool">Legacy NFC Tool</Link>
+                        <Link href="/nfc-tool">Advanced NFC Tool</Link>
                     </div>
                     <div className={styles.linkColumn}>
-                        <h4>Our Tools</h4>
-                        <Link href="/call">Call Tool</Link>
-                        <Link href="/email">Email Tool</Link>
-                        <Link href="/sms">SMS Tool</Link>
-                        <Link href="/url">URL Tool</Link>
-                        <Link href="/location">Location Tool</Link>
-                        <Link href="/wifi">WiFi Tool</Link>
-                        <Link href="/event">Event Tool</Link>
+                        <h4>QR & Communication</h4>
+                        <Link href="/call">Phone Call QR</Link>
+                        <Link href="/email">Email QR</Link>
+                        <Link href="/sms">SMS QR</Link>
+                        <Link href="/url">URL QR</Link>
+                        <Link href="/location">Location QR</Link>
+                        <Link href="/wifi">WiFi QR</Link>
+                        <Link href="/event">Event QR</Link>
                     </div>
                 </div>
                 <div className={styles.newsletter}>
                     <h4>Subscribe to our Newsletter</h4>
                     <p>Get the latest on NFC tech, new products, and exclusive offers.</p>
                     <form className={styles.newsletterForm} onSubmit={handleSubscribe}>
-                        <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <input type="email" placeholder="Enter your email" aria-label="Email address for newsletter" value={email} onChange={(e) => setEmail(e.target.value)} required />
                         <button type="submit">Subscribe</button>
                     </form>
                 </div>

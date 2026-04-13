@@ -1,0 +1,333 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* ── Hero ── */
+.hero {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.heroIcon {
+    font-size: 3.5rem;
+    line-height: 1;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.title {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.heroBadges {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 9999px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ── Games Grid ── */
+.gamesSection {
+    width: 100%;
+    max-width: 1100px;
+    padding: 1rem 1rem 3rem;
+}
+
+.gamesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.gameCard {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gameCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.gameCardSoon {
+    opacity: 0.75;
+}
+
+.gameCardSoon:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.gameCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+}
+
+.gameIcon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.gameCardBadge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #111;
+    letter-spacing: 0.01em;
+}
+
+.dark .gameCardBadge {
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+}
+
+.gameCardBadge[data-status='soon'] {
+    opacity: 0.7;
+}
+
+.gameCardBody {
+    padding: 1.25rem 1.5rem;
+    flex: 1;
+}
+
+.gameTitle {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: var(--text-primary);
+}
+
+.gameDesc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 1.1rem;
+}
+
+.gameMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.gameMetaChip {
+    background: var(--button-secondary-hover);
+    border: 1px solid var(--card-border);
+    border-radius: 9999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.nfcChip {
+    background: #fef3c7;
+    border-color: #f59e0b;
+    color: #92400e;
+}
+
+.dark .nfcChip {
+    background: #78350f;
+    border-color: #d97706;
+    color: #fde68a;
+}
+
+.gameCardFooter {
+    padding: 1rem 1.5rem 1.25rem;
+    border-top: 1px solid var(--card-border);
+}
+
+.playButton {
+    display: block;
+    text-align: center;
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.playButton:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.soonButton {
+    display: block;
+    text-align: center;
+    background: var(--button-secondary-hover);
+    color: var(--text-secondary);
+    border: 1px solid var(--card-border);
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: default;
+}
+
+/* ── Requirements ── */
+.requirementsSection {
+    width: 100%;
+    max-width: 1100px;
+    padding: 2rem 1rem 3rem;
+    text-align: center;
+}
+
+.requirementsSection h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.requirementsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+.requirementCard {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
+    text-align: left;
+    box-shadow: var(--shadow-sm);
+}
+
+.requirementIcon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.requirementCard h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.requirementCard p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* ── How to start ── */
+.howSection {
+    width: 100%;
+    max-width: 1100px;
+    padding: 2rem 1rem 4rem;
+    text-align: center;
+}
+
+.howSection h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+}
+
+.stepsRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+}
+
+.stepItem {
+    flex: 1;
+    min-width: 200px;
+    max-width: 280px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+.stepNum {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary-accent);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.stepItem h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.stepItem p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.stepConnector {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    padding-top: 2.75rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .gamesGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .stepConnector {
+        display: none;
+    }
+
+    .stepsRow {
+        gap: 0.5rem;
+    }
+}

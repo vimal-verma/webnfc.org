@@ -1,89 +1,38 @@
-'use client';
-
-import { useState, useRef } from 'react';
 import styles from './page.module.css';
+import ContactFormClient from './ContactFormClient';
+
+export const metadata = {
+    title: 'Contact Us | WebNfc',
+    description: 'Get in touch with the WebNfc team. Ask questions, report issues, or share your ideas about NFC technology and our tools.',
+    keywords: ['contact WebNfc', 'NFC support', 'WebNFC contact', 'NFC help', 'contact NFC team', 'WebNfc feedback'],
+    alternates: {
+        canonical: 'https://webnfc.org/contact',
+    },
+    openGraph: {
+        title: 'Contact Us | WebNfc',
+        description: 'Get in touch with the WebNfc team. Ask questions, report issues, or share your ideas about NFC technology.',
+        url: 'https://webnfc.org/contact',
+        siteName: 'WebNfc',
+        images: [{ url: '/og-logo.png', width: 1200, height: 630, alt: 'WebNfc' }],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Contact Us | WebNfc',
+        description: 'Get in touch with the WebNfc team. Ask questions, report issues, or share your ideas.',
+        images: ['/og-logo.png'],
+    },
+};
 
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: '',
-    });
-    const [status, setStatus] = useState('');
-    const [isSending, setIsSending] = useState(false);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setIsSending(true);
-
-        const { name, email, message } = formData;
-        const subject = `Contact Form Message from ${name}`;
-        // Constructing a body with line breaks for the email client
-        const body = `\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-
-        // Create the mailto link and trigger it
-        const mailtoLink = `mailto:NFCBuzz.com@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailtoLink;
-
-        // Reset form after a short delay to allow the email client to open
-        setTimeout(() => {
-            setIsSending(false);
-            setStatus('Your email client should now be open. Thank you!');
-            setFormData({ name: '', email: '', message: '' });
-        }, 1000);
-    };
-
     return (
         <div className={styles.container}>
             <div className={styles.formWrapper}>
                 <h1 className={styles.title}>Contact Us</h1>
                 <p className={styles.subtitle}>
-                    Have a question or want to work with us? Drop us a message!
+                    Have a question or want to work with us? Drop us a message and we&apos;ll get back to you.
                 </p>
-                <form onSubmit={handleSubmit} className={styles.contactForm}>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="name">Full Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="email">Email Address</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="message">Message</label>
-                        <textarea
-                            id="message"
-                            name="message"
-                            rows="5"
-                            value={formData.message}
-                            onChange={handleChange}
-                            required
-                        ></textarea>
-                    </div>
-                    <button type="submit" className={styles.submitButton} disabled={isSending}>
-                        {isSending ? 'Opening Email...' : 'Send Message'}
-                    </button>
-                </form>
-                {status && <p className={styles.statusMessage}>{status}</p>}
+                <ContactFormClient />
             </div>
         </div>
     );

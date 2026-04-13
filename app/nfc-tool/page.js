@@ -4,23 +4,34 @@ import NfcClientTool from './nfc-client-tool';
 import { Fragment } from 'react';
 
 export const metadata = {
-  title: 'Advanced NFC Web Tool | WebNfc',
-  description: 'An all-in-one Web NFC tool to read, write, clone, erase, format, and lock NFC tags directly from your browser. Supports text, URL, and vCard records. No installation needed.',
-  keywords: ['NFC', 'Web NFC', 'NFC Tool', 'NFC Reader', 'NFC Writer', 'Clone NFC', 'Erase NFC', 'vCard NFC', 'NFC Formatting', 'Lock NFC Tags', 'Contactless Technology', 'NFC for IoT', 'NFC Development', 'NFC Programming', 'NFC Applications', 'NFC Solutions', 'WebNfc', 'NFC Online Tool', 'NFC Tag Management', 'NFC Tag Writer', 'NFC Tag Reader', 'NFC Tag Cloner', 'NFC Tag Eraser', 'NFC Tag Formatter', 'NFC Tag Locker'],
+  title: 'Advanced NFC Tool — Read, Write, Clone, Erase & Lock | WebNfc',
+  description: 'All-in-one Web NFC tool to read, write, clone, erase, format, and lock NFC tags directly from your browser. Supports text, URL, and vCard records. No installation needed.',
+  keywords: [
+    'NFC', 'Web NFC', 'NFC Tool', 'NFC Reader', 'NFC Writer', 'Clone NFC', 'Erase NFC',
+    'vCard NFC', 'NFC Formatting', 'Lock NFC Tags', 'NFC for IoT', 'NFC Development',
+    'NFC Programming', 'WebNfc', 'NFC Online Tool', 'NFC Tag Management',
+    'NFC Tag Cloner', 'NFC Tag Eraser', 'NFC Tag Formatter', 'NFC Tag Locker',
+    'advanced NFC tool', 'NFC tag operations', 'NDEF tag tool'
+  ],
   openGraph: {
-    title: 'Advanced NFC Web Tool | WebNfc',
-    description: 'An all-in-one Web NFC tool to read, write, clone, erase, format, and lock NFC tags directly from your browser.',
+    title: 'Advanced NFC Tool — Read, Write, Clone, Erase & Lock | WebNfc',
+    description: 'All-in-one Web NFC tool for reading, writing, cloning, erasing, formatting, and locking NFC tags directly in your browser.',
     url: 'https://webnfc.org/nfc-tool',
     siteName: 'WebNfc',
-    images: '/og-logo.png',
+    images: [{ url: 'https://webnfc.org/og-logo.png', width: 1200, height: 630, alt: 'Advanced NFC Tool — WebNfc' }],
     type: 'website',
   },
-  icons: {
-    icon: '/logo.png',
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Advanced NFC Tool — Read, Write, Clone, Erase & Lock | WebNfc',
+    description: 'All-in-one NFC tool: read, write, clone, erase, format, lock — right in your browser.',
+    images: ['https://webnfc.org/og-logo.png'],
+  },
+  alternates: {
+    canonical: 'https://webnfc.org/nfc-tool',
   },
 };
 
-// This is the new main page component (Server Component)
 export default function NfcToolPage() {
   const softwareApplicationSchema = {
     '@context': 'https://schema.org',
@@ -28,35 +39,66 @@ export default function NfcToolPage() {
     name: 'Advanced NFC Web Tool',
     applicationCategory: 'Utilities',
     operatingSystem: 'Web',
-    browserRequirements: 'Requires a browser with WebNFC support (e.g., Chrome on Android).',
+    browserRequirements: 'Chrome on Android (version 89+). Web NFC API required.',
     description: 'An all-in-one Web NFC tool to read, write, clone, erase, format, and lock NFC tags directly from your browser.',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD'
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'WebNfc'
-    }
+    featureList: ['Read NFC tags', 'Write NFC tags', 'Clone NFC tags', 'Erase NFC tags', 'Format NFC tags', 'Lock NFC tags'],
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    publisher: { '@type': 'Organization', name: 'WebNfc' }
   };
 
   return (
     <Fragment>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
-      />
-      <div className={styles.container}>
-        <header className={styles.hero}>
-          <h1 className={styles.title}>NFC Tool</h1>
-          <p className={styles.subtitle}>Read from and Write to NFC tags directly in your browser.</p>
-          <p className={styles.warning}>
-            <strong>Note:</strong> This tool requires a browser that supports the Web NFC API (like Chrome on Android).
-          </p>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }} />
+      <div className="toolPageWrapper">
+        <header className="toolPageHero">
+          <h1>Advanced NFC Tool</h1>
+          <p>The complete NFC toolkit — read, write, clone, erase, format, and permanently lock any NFC tag, all from your phone&apos;s browser.</p>
+          <div className="toolBadges">
+            <span className="toolBadge">Read · Write · Clone · Erase · Lock</span>
+            <span className="toolBadge">Text · URL · vCard</span>
+            <span className="toolBadge nfcBadge">⚡ Chrome for Android only</span>
+          </div>
         </header>
 
-        <NfcClientTool />
+        <div className="toolCompatNote">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span><strong>Requires Chrome on Android (v89+)</strong> with NFC enabled. For simpler read/write, try the <Link href="/read-nfc" style={{color:'inherit',textDecoration:'underline'}}>NFC Reader</Link> or <Link href="/write-nfc" style={{color:'inherit',textDecoration:'underline'}}>NFC Writer</Link>.</span>
+        </div>
+
+        <div className={styles.container} style={{width:'100%'}}>
+          <NfcClientTool />
+        </div>
+
+        <section className="toolHowTo">
+          <h2>Tool Operations Guide</h2>
+          <p>Each panel handles a different NFC operation.</p>
+          <div className="toolStepsGrid">
+            <div className="toolStep">
+              <div className="toolStepNum">📖</div>
+              <div><h3>Read</h3><p>Scan a tag to see all its records — serial number, size, type, writability, and content.</p></div>
+            </div>
+            <div className="toolStep">
+              <div className="toolStepNum">✏️</div>
+              <div><h3>Write</h3><p>Write text, a URL, or a vCard contact to a blank or writable tag.</p></div>
+            </div>
+            <div className="toolStep">
+              <div className="toolStepNum">🔄</div>
+              <div><h3>Clone</h3><p>Read a source tag, then write the same NDEF data to a new blank tag. Note: the UID cannot be cloned.</p></div>
+            </div>
+            <div className="toolStep">
+              <div className="toolStepNum">🗑️</div>
+              <div><h3>Erase</h3><p>Wipe all NDEF records from a tag. The tag remains writable and can be reprogrammed.</p></div>
+            </div>
+            <div className="toolStep">
+              <div className="toolStepNum">⚙️</div>
+              <div><h3>Format</h3><p>Prepare a new tag for NDEF use. Use on factory-blank tags that don&apos;t have NDEF yet.</p></div>
+            </div>
+            <div className="toolStep">
+              <div className="toolStepNum">🔒</div>
+              <div><h3>Lock</h3><p><strong>Permanent &amp; irreversible.</strong> Makes the tag permanently read-only. Cannot be undone.</p></div>
+            </div>
+          </div>
+        </section>
       </div>
     </Fragment>
   );

@@ -9,16 +9,25 @@
   --button-primary-hover: #2d3748;
   --button-secondary-hover: #f2f2f2;
   --button-secondary-border: #ebebeb;
-  --card-background: #e4e4e4;
-  --card-border: #eaeaea;
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
-  --hero-background: transparent;
+  --card-background: #f8f8f8;
+  --card-border: #e8e8e8;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.12);
+  --hero-background: radial-gradient(ellipse at top, #e8f0fe, transparent);
+  --card-background-hover: #f0f0f0;
   --secondary-nav-bg: #f9f9f9;
   --secondary-nav-hover-bg: #f0f0f0;
   --text-color-secondary: #555;
   --primary-color: #0070f3;
   --border-color: #eaeaea;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-danger-bg: #fee2e2;
+  --color-danger-border: #fecaca;
+  --color-info-bg: #e3f2fd;
+  --color-info-text: #0d47a1;
+  --color-info-border: #90caf9;
 }
 
 .dark {
@@ -38,10 +47,19 @@
     --shadow-md: 0 8px 24px rgba(255, 255, 255, 0.08);
     --hero-background: radial-gradient(ellipse at top, #1a202c, transparent),
     radial-gradient(ellipse at bottom, #1a202c, transparent);
+    --card-background-hover: #1a1a1a;
     --secondary-nav-bg: #1c1c1c;
     --secondary-nav-hover-bg: #2c2c2c;
     --text-color-secondary: #aaa;
     --border-color: #333;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+  --color-danger-bg: #450a0a;
+  --color-danger-border: #7f1d1d;
+  --color-info-bg: #0c2461;
+  --color-info-text: #93c5fd;
+  --color-info-border: #1e40af;
 }
 
 html,
@@ -98,5 +116,224 @@ a, button, input, select, textarea {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+/* ── Skip to main content (accessibility) ── */
+.skipLink {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--primary-accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 8px 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 9999;
+  transition: top 0.2s ease;
+  text-decoration: none;
+}
+
+.skipLink:focus {
+  top: 0;
+}
+
+/* ── Shared Tool Page Layout ── */
+.toolPageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.toolPageHero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.toolPageHero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.03em;
+}
+
+.toolPageHero p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.toolBadges {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.toolBadge {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.toolBadge.nfcBadge {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.dark .toolBadge.nfcBadge {
+  background: #78350f;
+  border-color: #d97706;
+  color: #fde68a;
+}
+
+.toolCompatNote {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: #9a3412;
+  max-width: 760px;
+  width: calc(100% - 2rem);
+  margin: 0 auto 1.5rem;
+}
+
+.dark .toolCompatNote {
+  background: #431407;
+  border-color: #9a3412;
+  color: #fed7aa;
+}
+
+.toolCompatNote svg {
+  flex-shrink: 0;
+}
+
+.toolHowTo {
+  width: 100%;
+  max-width: 900px;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.toolHowTo h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.toolHowTo > p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.toolStepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.toolStep {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem;
+  text-align: left;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+}
+
+.toolStepNum {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: var(--primary-accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolStep h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.toolStep p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.toolUseCases {
+  width: 100%;
+  max-width: 900px;
+  padding: 1rem 1rem 3rem;
+  text-align: center;
+}
+
+.toolUseCases h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.toolUseCaseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.toolUseCase {
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.toolUseCase strong {
+  display: block;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+@media (max-width: 600px) {
+  .toolPageHero h1 { font-size: 1.75rem; }
+  .toolStepsGrid { grid-template-columns: 1fr; }
+  .toolUseCaseGrid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

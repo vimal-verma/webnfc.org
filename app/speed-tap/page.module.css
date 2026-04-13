@@ -1,0 +1,477 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 140px);
+    padding: 1rem;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+/* ── Setup ── */
+.setupScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 2rem 0;
+}
+
+.bigIcon {
+    font-size: 3.5rem;
+    display: block;
+}
+
+.gameTitle {
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.gameSubtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 480px;
+    text-align: center;
+    margin: 0;
+}
+
+.errorNote {
+    background: var(--color-danger-bg);
+    border: 1px solid var(--color-danger-border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: var(--color-danger);
+    width: 100%;
+    text-align: center;
+}
+
+/* Duration selector */
+.durationSelector {
+    width: 100%;
+    text-align: center;
+}
+
+.durationLabel {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.durationBtns {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.durationBtn {
+    padding: 0.65rem 1.75rem;
+    border-radius: 9999px;
+    border: 2px solid var(--card-border);
+    background: var(--card-background);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.durationBtn:hover {
+    border-color: var(--primary-accent);
+    color: var(--text-primary);
+}
+
+.durationBtnActive {
+    border-color: #f59e0b;
+    background: #f59e0b;
+    color: #fff;
+}
+
+/* Scoring info */
+.scoringInfo {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    width: 100%;
+}
+
+.scoringInfo h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.scoringRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.scoringRow:last-of-type {
+    border-bottom: none;
+}
+
+.scoringRow span {
+    color: var(--text-secondary);
+}
+
+.scoringRow strong {
+    color: var(--primary-accent);
+    font-weight: 700;
+}
+
+.scoringHint {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.startBtn {
+    background: #f59e0b;
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-family: inherit;
+}
+
+.startBtn:hover:not(.startBtnDisabled) {
+    background: #d97706;
+    transform: translateY(-2px);
+}
+
+.startBtnDisabled {
+    background: var(--button-secondary-hover);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+/* Leaderboard */
+.leaderboard {
+    width: 100%;
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+}
+
+.leaderboard h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.scoreList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.scoreRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    background: var(--button-secondary-hover);
+}
+
+.scoreRowHighlight {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.scoreRank {
+    font-size: 1rem;
+    width: 2rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.scoreVal {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--primary-accent);
+    flex-shrink: 0;
+    min-width: 70px;
+}
+
+.scoreMeta {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Playing ── */
+.playingScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0;
+    gap: 1.75rem;
+    transition: background-color 0.15s ease;
+}
+
+.flashScreen {
+    background: rgba(34, 197, 94, 0.08);
+    border-radius: 16px;
+}
+
+/* Timer ring */
+.timerRing {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.timerSvg {
+    width: 100%;
+    height: 100%;
+}
+
+.timerInner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.timerValue {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+
+.timerLabel {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Live stats */
+.liveStats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    width: 100%;
+}
+
+.liveStat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.liveStat strong {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.liveStat span {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 0.2rem;
+}
+
+.liveStatDivider {
+    width: 1px;
+    height: 40px;
+    background: var(--card-border);
+    flex-shrink: 0;
+}
+
+.lastTagBadge {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 9999px;
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    color: var(--color-success, #22c55e);
+}
+
+.lastTagBadge code {
+    font-family: monospace;
+}
+
+.tapInstruction {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 0;
+}
+
+.stopBtn {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    padding: 0.7rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.stopBtn:hover {
+    background: var(--button-secondary-hover);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+/* ── Results ── */
+.resultsScreen {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+}
+
+.resultsHeader {
+    text-align: center;
+}
+
+.resultsIcon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.resultsTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0;
+}
+
+.finalScore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #f59e0b22, #f97316 11);
+    border: 2px solid #f59e0b;
+    border-radius: 20px;
+    padding: 1.5rem 3rem;
+}
+
+.finalScoreNum {
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #f59e0b;
+    line-height: 1;
+}
+
+.finalScoreLabel {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+}
+
+.resultStats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.resultStat {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.resultStat strong {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.resultStat span {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+    text-align: center;
+}
+
+.newHighScore {
+    background: linear-gradient(135deg, #22c55e22, #16a34a22);
+    border: 1px solid #22c55e;
+    border-radius: 9999px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+    color: var(--color-success, #22c55e);
+    font-size: 0.95rem;
+}
+
+.resultActions {
+    width: 100%;
+    max-width: 320px;
+}
+
+.playAgainBtn {
+    background: #f59e0b;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-family: inherit;
+}
+
+.playAgainBtn:hover {
+    background: #d97706;
+    transform: translateY(-2px);
+}

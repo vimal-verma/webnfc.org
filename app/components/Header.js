@@ -45,12 +45,13 @@ export default function Header() {
                     </Link>
 
                     <nav className={`${styles.nav} ${isNavOpen ? styles.navOpen : ''}`}>
-                        <Link href="/" onClick={() => setIsNavOpen(false)}>Home</Link>
-                        <button onClick={() => { setIsToolsNavVisible(prev => !prev); setIsNavOpen(false); }} className={styles.navButton}>
-                            Our Tools
+                        <Link href="/" onClick={() => setIsNavOpen(false)} className={pathname === '/' ? styles.activeLink : ''}>Home</Link>
+                        <button onClick={() => { setIsToolsNavVisible(prev => !prev); setIsNavOpen(false); }} className={`${styles.navButton} ${isToolsNavVisible ? styles.activeLink : ''}`}>
+                            Our Tools <span className={`${styles.chevron} ${isToolsNavVisible ? styles.chevronOpen : ''}`}>▾</span>
                         </button>
-                        <Link href="/blog" onClick={() => setIsNavOpen(false)}>Blog</Link>
-                        <Link href="/documentation" onClick={() => setIsNavOpen(false)}>Documentation</Link>
+                        <Link href="/games" onClick={() => setIsNavOpen(false)} className={pathname.startsWith('/games') || pathname === '/shufflehunt' ? styles.activeLink : ''}>🎮 Games</Link>
+                        <Link href="/blog" onClick={() => setIsNavOpen(false)} className={pathname.startsWith('/blog') ? styles.activeLink : ''}>Blog</Link>
+                        <Link href="/documentation" onClick={() => setIsNavOpen(false)} className={pathname.startsWith('/documentation') ? styles.activeLink : ''}>Documentation</Link>
                     </nav>
 
                     <div className={styles.headerActions}>

@@ -232,7 +232,12 @@ export default function ReadNfcClient() {
         <div className={styles.toolContainer}>
             <div className={styles.actionButtonsContainer}>
                 <button onClick={handleRead} disabled={isScanning} className={styles.actionButton}>
-                    {isScanning ? 'Scanning...' : 'Start Scan'}
+                    {isScanning ? (
+                        <span className={styles.scanningIndicator}>
+                            <span className={styles.scanPulse}></span>
+                            Scanning…
+                        </span>
+                    ) : '📡 Start Scan'}
                 </button>
                 {lastScannedContent && (
                     <button onClick={handleCopy} className={styles.copyButton}>
@@ -241,21 +246,38 @@ export default function ReadNfcClient() {
                 )}
                 {isVCard && lastScannedContent && (
                     <button onClick={handleSaveVCard} className={`${styles.copyButton} ${styles.saveVcfButton}`}>
-                        Save vCard (.vcf)
+                        💾 Save vCard (.vcf)
                     </button>
                 )}
                 {scannedUrl && (
                     <a href={scannedUrl} target="_blank" rel="noopener noreferrer" className={`${styles.copyButton} ${styles.openUrlButton}`}>
-                        Open URL
+                        🔗 Open URL
                     </a>
                 )}
             </div>
+
+            {!tagDetails && !isScanning && (
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyStateIcon}>📱</div>
+                    <p className={styles.emptyStateTitle}>Ready to scan</p>
+                    <p className={styles.emptyStateHint}>Press &ldquo;Start Scan&rdquo;, then hold the back of your phone near an NFC tag (within 4 cm).</p>
+                </div>
+            )}
+
+            {isScanning && !tagDetails && (
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyStateIcon} style={{animation:'pulse 1.5s ease-in-out infinite'}}>🔍</div>
+                    <p className={styles.emptyStateTitle}>Waiting for a tag…</p>
+                    <p className={styles.emptyStateHint}>Hold your phone&apos;s back close to an NFC tag. Keep it steady until you hear a notification.</p>
+                </div>
+            )}
+
             {tagDetails && (
                 <div className={styles.tagInfoContainer}>
                     <p><strong>Serial Number:</strong> <span>{tagDetails.serialNumber}</span></p>
                     <p><strong>Data Size:</strong> <span>{tagDetails.size} bytes</span></p>
                     <p><strong>Est. Tag Type:</strong> <span>{tagDetails.type}</span></p>
-                    <p><strong>Writable:</strong> <span>{tagDetails.isWritable}</span></p>
+                    <p><strong>Writable:</strong> <span style={{color: tagDetails.isWritable === 'Yes' ? '#22c55e' : tagDetails.isWritable === 'No' ? '#ef4444' : 'inherit'}}>{tagDetails.isWritable}</span></p>
                     <p><strong>Record Count:</strong> <span>{tagDetails.recordCount}</span></p>
                     <p><strong>Record Types:</strong> <span>{tagDetails.recordTypes}</span></p>
                 </div>
@@ -266,27 +288,30 @@ export default function ReadNfcClient() {
                 </div>
             )}
             {isWifi && scannedWifiData && (
-                <div className={styles.tagInfoContainer}>
-                    <h3>WiFi Network Details</h3>
-                    <p><strong>SSID:</strong> <span>{scannedWifiData.ssid}</span></p>
-                    <p><strong>Password:</strong> <span>{scannedWifiData.password || 'No Password'}</span></p>
-                    <p><strong>Encryption:</strong> <span>{scannedWifiData.encryption || 'Unknown'}</span></p>
+                <div className={styles.wifiCard}>
+                    <div className={styles.wifiCardHeader}>
+                        <span>📶</span>
+                        <h3>WiFi Network Detected</h3>
+                    </div>
+                    <div className={styles.tagInfoContainer} style={{marginTop:0, borderRadius:'0 0 12px 12px', borderTop:'none'}}>
+                        <p><strong>Network (SSID):</strong> <span>{scannedWifiData.ssid}</span></p>
+                        <p><strong>Password:</strong> <span>{scannedWifiData.password || 'No Password'}</span></p>
+                        <p><strong>Security:</strong> <span>{scannedWifiData.encryption || 'Unknown'}</span></p>
+                    </div>
                     {scannedWifiData.password && (
                         <button onClick={() => {
                             navigator.clipboard.writeText(scannedWifiData.password);
                             addToLog('✅ Password copied to clipboard!', 'success');
-                        }} className={styles.copyButton}>
+                        }} className={styles.copyButton} style={{marginTop:'0.75rem'}}>
                             Copy Password
                         </button>
                     )}
-                    <p className={styles.instructionText} style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
-                        For security reasons, browsers cannot automatically connect to WiFi. Please copy the password and connect manually in your device&apos;s settings.
+                    <p className={styles.instructionText} style={{ marginTop: '0.75rem' }}>
+                        Browsers cannot connect to WiFi automatically. Copy the password and connect in your device settings.
                     </p>
                 </div>
             )}
-            <p className={styles.instructionText}>
-                Click &quot;Start Scan&quot; and bring an NFC tag close to the back of your phone.
-            </p>
+
             <div className={styles.logContainer}>
                 <div className={styles.logHeader}>
                     <h3>Scan Log</h3>
@@ -294,7 +319,11 @@ export default function ReadNfcClient() {
                         Clear
                     </button>
                 </div>
-                <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} />
+                {log.length === 0 ? (
+                    <p style={{color:'var(--text-secondary)',fontSize:'0.85rem',padding:'0.5rem 0'}}>Log is empty. Scan a tag to see output here.</p>
+                ) : (
+                    <div className={styles.log} dangerouslySetInnerHTML={{ __html: log.join('<br />') }} aria-live="polite" />
+                )}
             </div>
         </div>
     );

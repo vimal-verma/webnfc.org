@@ -16,6 +16,11 @@ export default function Toast({ message, onClose }) {
     if (!message) return null;
 
     return (
-        <div className={styles.toast}>{message}</div>
+        <div role="status" aria-live="polite" className={styles.toastWrapper}>
+            <div className={styles.toast}>
+                <span>{message}</span>
+                <button onClick={onClose} className={styles.dismissBtn} aria-label="Dismiss notification">×</button>
+            </div>
+        </div>
     );
 }

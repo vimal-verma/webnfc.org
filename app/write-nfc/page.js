@@ -4,38 +4,29 @@ import styles from './page.module.css';
 
 export const metadata = {
     title: 'Write to NFC Tag Online | Free Web NFC Writer | WebNfc',
-    description: 'Use our free online tool to write data to any NFC tag directly in your browser. Write text, URLs, or contact cards (vCards) with a single tap. No app installation required.',
+    description: 'Use our free online tool to write text, URLs, or contact cards (vCards) to any NFC tag directly in your browser. No app installation required.',
     keywords: [
-        'Write NFC',
-        'NFC tag writer online',
-        'NFC tag writer',
-        'Free NFC tag writer online',
-        'Free NFC tag writer',
-        'NFC Writer',
-        'Web NFC Writer',
-        'Program NFC Tag',
-        'NFC Data Writer',
-        'Online NFC Tool',
-        'Write vCard to NFC',
-        'Write URL to NFC',
-        'WebNFC',
-        'NFC Tag Encoder',
-        'NFC Tag Programmer',
-        'NFC Tag Copier',
-        'NFC Tag Editor',
-        'NFC Tag Tool',
-        'NFC Tag Utility',
-        'NFC Tag Manager',
-        'NFC Tag Application',
-        'NFC Tag Service',
+        'Write NFC', 'NFC tag writer online', 'NFC tag writer', 'Free NFC tag writer',
+        'NFC Writer', 'Web NFC Writer', 'Program NFC Tag', 'NFC Data Writer', 'Online NFC Tool',
+        'Write vCard to NFC', 'Write URL to NFC', 'WebNFC', 'NFC Tag Encoder',
+        'NFC Tag Programmer', 'NFC Tag Editor', 'NFC Tag Tool', 'NFC Tag Manager',
     ],
     openGraph: {
         title: 'Write to NFC Tag Online | Free Web NFC Writer | WebNfc',
-        description: 'Use our free online tool to write data to any NFC tag directly in your browser. Write text, URLs, or contact cards (vCards) with a single tap.',
+        description: 'Write text, URLs, or vCards to any NFC tag with a single tap — directly in your browser. No app required.',
         url: 'https://webnfc.org/write-nfc',
         siteName: 'WebNfc',
-        images: '/og-logo.png',
+        images: [{ url: 'https://webnfc.org/og-logo.png', width: 1200, height: 630, alt: 'NFC Tag Writer — WebNfc' }],
         type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Write to NFC Tag Online | Free Web NFC Writer | WebNfc',
+        description: 'Write text, URLs, or vCards to any NFC tag in your browser. Free, no app needed.',
+        images: ['https://webnfc.org/og-logo.png'],
+    },
+    alternates: {
+        canonical: 'https://webnfc.org/write-nfc',
     },
 };
 
@@ -46,35 +37,76 @@ export default function WriteTagPage() {
         name: 'Online NFC Tag Writer',
         applicationCategory: 'Utilities',
         operatingSystem: 'Web',
-        browserRequirements: 'Requires a browser with WebNFC support (e.g., Chrome on Android).',
+        browserRequirements: 'Chrome on Android (version 89+). Web NFC API required.',
         description: 'A free online tool to write text, URLs, and vCards to NFC tags directly in your browser.',
-        offers: {
-            '@type': 'Offer',
-            price: '0',
-            priceCurrency: 'USD'
-        },
-        publisher: {
-            '@type': 'Organization',
-            name: 'WebNfc'
-        }
+        featureList: ['Write text to NFC tags', 'Write URLs to NFC tags', 'Write vCard contacts to NFC tags', 'Automatic tag size suggestion'],
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        publisher: { '@type': 'Organization', name: 'WebNfc' }
     };
 
     return (
         <Fragment>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
-            />
-            <div className={styles.container}>
-                <header className={styles.hero}>
-                    <h1 className={styles.title}>Online NFC Tag Writer</h1>
-                    <p className={styles.subtitle}>
-                        Choose a record type, enter your data, and tap your NFC tag to write.
-                    </p>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }} />
+            <div className="toolPageWrapper">
+                <header className="toolPageHero">
+                    <h1>Online NFC Tag Writer</h1>
+                    <p>Choose a data type, enter your content, and tap your NFC tag to write — instantly, from any Chrome for Android browser.</p>
+                    <div className="toolBadges">
+                        <span className="toolBadge">Free</span>
+                        <span className="toolBadge">Text · URL · vCard</span>
+                        <span className="toolBadge">Blank tag required</span>
+                        <span className="toolBadge nfcBadge">⚡ Chrome for Android only</span>
+                    </div>
                 </header>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <WriteTagClient />
-                </Suspense>
+
+                <div className="toolCompatNote">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span><strong>Requires:</strong> Chrome on Android (v89+) with NFC enabled. Use a blank or writable NDEF tag (NTAG213/215/216 recommended).</span>
+                </div>
+
+                <div className={styles.toolContainer} style={{width:'100%', padding:'0 1rem'}}>
+                    <Suspense fallback={<div style={{padding:'2rem',textAlign:'center',color:'var(--text-secondary)'}}>Loading writer…</div>}>
+                        <WriteTagClient />
+                    </Suspense>
+                </div>
+
+                <section className="toolHowTo">
+                    <h2>How to Write to an NFC Tag</h2>
+                    <p>Program a blank NFC tag in three simple steps.</p>
+                    <div className="toolStepsGrid">
+                        <div className="toolStep">
+                            <div className="toolStepNum">1</div>
+                            <div>
+                                <h3>Choose a Type</h3>
+                                <p>Select <em>Text</em>, <em>URL</em>, or <em>Contact Card (vCard)</em> and fill in your data.</p>
+                            </div>
+                        </div>
+                        <div className="toolStep">
+                            <div className="toolStepNum">2</div>
+                            <div>
+                                <h3>Tap &ldquo;Write to NFC Tag&rdquo;</h3>
+                                <p>Press the write button, then hold your phone&apos;s back to the NFC tag when prompted.</p>
+                            </div>
+                        </div>
+                        <div className="toolStep">
+                            <div className="toolStepNum">3</div>
+                            <div>
+                                <h3>Done &mdash; Tag is Programmed</h3>
+                                <p>The log confirms success. Your tag now stores the data and can be read by any NFC-enabled phone.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="toolUseCases">
+                    <h2>What Can You Write?</h2>
+                    <div className="toolUseCaseGrid">
+                        <div className="toolUseCase"><strong>📝 Plain Text</strong>Write any message — instructions, notes, or product info.</div>
+                        <div className="toolUseCase"><strong>🔗 URL / Link</strong>Tap to open a website, app link, or payment page instantly.</div>
+                        <div className="toolUseCase"><strong>📇 vCard Contact</strong>Share your name, phone, email, and company. Saves directly to contacts.</div>
+                        <div className="toolUseCase"><strong>💡 Tag Size Guide</strong>NTAG213 (144B) for URLs · NTAG215 (504B) for vCards · NTAG216 (888B) for large data.</div>
+                    </div>
+                </section>
             </div>
         </Fragment>
     );
